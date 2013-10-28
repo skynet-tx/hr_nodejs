@@ -19,15 +19,31 @@ var helper = {
         });
     },
 
+//    loadFile: function (path) {
+//        var self = this;
+//        $.getScript(path)
+//            .done(function (script, textStatus) {
+//                self.log( 'file - ' + path + ' loaded: ' + textStatus);
+//            })
+//            .fail(function (jqxhr, settings, exception) {
+//                self.log("Triggered ajaxError handler.");
+//            });
+//    }
+
     loadFile: function (path) {
-        var self = this;
-        $.getScript(path)
-            .done(function (script, textStatus) {
-                self.log( 'file - ' + path + ' loaded: ' + textStatus);
-            })
-            .fail(function (jqxhr, settings, exception) {
-                self.log("Triggered ajaxError handler.");
-            });
+        var self = this,
+            scriptTpl = [],
+            tpl = null;
+
+        if (typeof(path) != "object"){
+            throw  "The variable is not an Object!"
+        }
+
+        $.each(function(key, val){
+            scriptTpl.push("<script src=" + path.src +"></script>");
+        });
+
+        tpl = $('<script class="temp-script"></script>').html();
     }
 
 
