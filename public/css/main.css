@@ -1,0 +1,22 @@
+.main-menu{
+    padding-left: 0;
+    list-style-type: none;
+}
+.main-menu a{
+    margin: 5px 0;
+}
+.employees-list{
+    margin-top: 25px;
+}
+.filter-aria{
+    display: block;
+    margin-bottom: 15px;
+    margin-top: -10px;
+}
+
+#add-new{
+    margin-bottom:  15px;
+}
+.datepicker.dropdown-menu{
+    z-index: 2000;
+}

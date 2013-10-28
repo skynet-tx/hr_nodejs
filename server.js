@@ -11,6 +11,7 @@ var express = require('express'),
     application_root = __dirname,
     mysql      = require('mysql');
 
+
 // Config
 app.configure(function () {
     app.use(express.bodyParser());
@@ -20,10 +21,14 @@ app.configure(function () {
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
+
+
 app.get('/help', function (req, res) {
     res.send('Hello, World!')
-})
+});
+
+
 
 app.listen(port, function () {
-    console.log('Listening on port ', port)
+    console.log('Server is ready. Listening on port ', port)
 })
