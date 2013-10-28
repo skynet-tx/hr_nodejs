@@ -4,10 +4,13 @@
  * Time: 16:00
  * File name:
  */
-App.StaffPage = Backbone.View.extend({
+Include({src: 'js/app/core/views/mainTpl.js'}, true);
+
+App.StaffPage = App.MainTemplate.extend({
+    el: 'body',
+    template: new EJS({url: 'templates/general/main-page-tpl.ejs'}),
     render: function(){
-        this.$el.html(this.template().render());
-        helper.dataPickerStart();
+        this.$el.html(this.template.render());
         return this;
     }
 });

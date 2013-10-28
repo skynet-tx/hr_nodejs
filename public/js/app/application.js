@@ -23,21 +23,19 @@ $(function(){
         },
 
         staff: function(){
-            helper.loadFile('js/app/core/views/mainTpl.js');
-            helper.log(App.MainTemplate);
-            helper.loadFile('js/app/hr_manager/views/staff_page.js');
-
-            new App.StaffPage();
-            helper.log('page: staff');
+            Include({src: 'js/app/hr_manager/views/staff_page.js'});
+            var test = new App.StaffPage();
+            helper.selectMenuButton();
+            Log('page: staff');
         },
 
         departmant: function() {
-
+            helper.selectMenuButton();
             helper.log('page: departmant');
         },
 
         positions: function() {
-
+            helper.selectMenuButton();
             helper.log('page: positions');
         },
 

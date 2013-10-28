@@ -4,13 +4,16 @@
  * Time: 15:57
  * File name:
  */
-(function(){
-    App.MainTemplate = Backbone.View.extend({
-        el: 'body',
-        template: new EJS({url: 'templates/general/main-page-tpl.ejs'}),
-        initialize: function(){
-            this.render();
-        }
-    });
-    return App.MainTemplate;
-})()
+
+
+App.MainTemplate = Backbone.View.extend({
+    initialize: function(){
+        this.render();
+    },
+    close: function () {
+        helper.log('Removed all events...');
+        this.stopListening();
+        this.remove();
+    }
+});
+
