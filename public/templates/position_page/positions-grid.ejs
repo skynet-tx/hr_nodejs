@@ -1,0 +1,67 @@
+<script>
+    var self = this;
+    $("#grid").kendoGrid({
+        dataSource: {
+            type: "json",
+            pageable: true,
+            transport: {
+                read: {
+                    type: "GET",
+                    dataType: "json",
+                    url: location.origin + '/hr/server/index.php/baseController/getPositionsList'
+                }
+            },
+            schema: {
+                data: "Result",
+                total: "PageSize",
+                fields: {
+                    id: { type: "number" },
+                    skills: { type: "number", validation: { required: true, min: 0, max: 3} },
+                    description: { type: "string" },
+                    name: { type: "string", validation: { required: true} }
+                }
+            },
+            pageSize: 20,
+            serverPaging: true,
+            serverFiltering: true,
+            serverSorting: true
+        },
+        height: 430,
+        filterable: true,
+        sortable: true,
+        pageable: true,
+        columns: [
+            {
+                field: "name",
+                title: "Position",
+                width: 120
+            },
+            {
+                field: "skills",
+                title: "Skills",
+                width: 80,
+                template: function (items) {
+                    return self.getSkill(items.skills);
+                }
+            },
+            {
+                field: "description",
+                title: "Description",
+                width: 260
+            },
+            {
+                width: 80,
+                template:function(items){
+//                        console.log(JSON.stringify(items));
+//                        console.log(JSON.parse((JSON.stringify(items))));
+
+                    return '<button id="edit-' + items.id + '" type="button" data-obj=\'' + JSON.stringify(items) + '\' ' +
+                            'class="glyphicon glyphicon-plus btn btn-info btn-xs btn-edit-record">Edit</button>' +
+                            '&nbsp;' +
+                            '<button id="delete-' + items.id + '" type="button" class="glyphicon glyphicon-remove btn btn-danger btn-xs">Delete</button>';
+                }
+            }
+        ],
+        editable: "inline"
+    });
+</script>

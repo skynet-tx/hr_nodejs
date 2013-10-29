@@ -4,4 +4,4 @@ class App.MainTemplate extends Backbone.View
   close: ->
     helper.log 'Removed all events...'
     @stopListening()
-    @remove()
+    $(@.el).empty();

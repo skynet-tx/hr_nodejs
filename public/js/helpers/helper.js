@@ -22,7 +22,7 @@ var helper = {
     /**
      * Dynamically loading file JavaScript
      * The loading is in the head section of the dom
-     * Can load js file and make partial loading the files
+     * Can load js file and make
      * @param path
      * @param isInclude
      */

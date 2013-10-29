@@ -23,7 +23,7 @@ app.configure(function () {
 /**
  * Get positions
  */
-app.get('/get-positions', function (req, res) {
+app.get('/positions-list', function (req, res) {
     query_model.getPositions(req, res);
 });
 

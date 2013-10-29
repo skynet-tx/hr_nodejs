@@ -19,7 +19,7 @@
     MainTemplate.prototype.close = function() {
       helper.log('Removed all events...');
       this.stopListening();
-      return this.remove();
+      return $(this.el).empty();
     };
 
     return MainTemplate;
