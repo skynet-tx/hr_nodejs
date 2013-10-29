@@ -19,20 +19,23 @@ var helper = {
         });
     },
 
+    /**
+     * Dynamically loading file JavaScript
+     * The loading is in the head section of the dom
+     * Can load js file and make partial loading the files
+     * @param path
+     * @param isInclude
+     */
     loadFile: function (path, isInclude) {
-        var self = this,
-            scriptTpl = [],
-            tpl = null,
-            type = isInclude ? 'append' : 'html';
+        var scriptTpl = [];
 
-        if (typeof(path) != "object") {
-            throw  "The variable is not an Object!"
+        if (typeof(path) === "string") {
+            scriptTpl.push("<script class='temp-script' src=" + path + "></script>");
+        } else {
+            _.each(path, function (val) {
+                scriptTpl.push("<script class='temp-script' src=" + val + "></script>");
+            });
         }
-
-
-        $.each(path, function (key, val) {
-            scriptTpl.push("<script class='temp-script' src=" + path.src + "></script>");
-        });
 
         if (!isInclude && $('.temp-script12').length === 0) {
             $('.temp-script').remove();
@@ -43,8 +46,8 @@ var helper = {
     },
 
     selectMenuButton: function (btn) {
-        if(!btn){
-           var locationHash = location.hash;
+        if (!btn) {
+            var locationHash = location.hash;
             btn = !locationHash.substr(1) ? 'staff' : locationHash.substr(1);
         }
 
@@ -74,13 +77,24 @@ var Log = function (val) {
 
 /**
  * Shot name of helper.loadFile
+ * Add js library
  * @param pathObj
  * @param isInclude
  * @returns {*}
  * @constructor
  */
-var Include = function (pathObj, isInclude) {
-    return helper.loadFile(pathObj, isInclude);
+var include = function (path) {
+    return helper.loadFile(path, true);
+}
+
+/**
+ * Shot name of helper.loadFile
+ * connect file js
+ * @param pathObj
+ * @returns {*}
+ */
+var requere = function (path) {
+    return helper.loadFile(path, false);
 }
 
 

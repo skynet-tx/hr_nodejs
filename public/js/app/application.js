@@ -15,6 +15,7 @@ App = {
 
 $(function(){
     App.Start = Backbone.Router.extend({
+        currentView: null,
         routes: {
             '(staff)': 'staff',
             'departmant': 'departmant',
@@ -23,7 +24,7 @@ $(function(){
         },
 
         staff: function(){
-            Include({src: 'js/app/hr_manager/views/staff_page.js'});
+            requere('js/app/hr_manager/views/staff_page.js');
             var test = new App.StaffPage();
             helper.selectMenuButton();
             Log('page: staff');
