@@ -56,14 +56,10 @@
           }));
         },
         success: function() {
-          var positions;
           $('#popup-window').modal('hide');
-          positions = new App.PosColl();
-          positions.fetch({
+          Log('Add new position window was closed');
+          return _this.collection.fetch({
             reset: true
-          });
-          return new App.PosPanel({
-            collection: positions
           });
         }
       });

@@ -26,14 +26,10 @@ class App.addNewPosition extends App.PopupWondow
         $('#alert-message').html alertTpl.render
           alertMessage: "Server Error. Can't save your data. Try again later."
 
-      success: ->
+      success: =>
         $('#popup-window').modal 'hide'
-        positions = new App.PosColl()
-        positions.fetch reset: true
-        new App.PosPanel collection: positions
-#        @stopListening()
-#        @.remove();
-
+        Log('Add new position window was closed')
+        @collection.fetch({reset: true})
 
   _serializeForm: ->
     formFields = @$el.find('#add-position-form').serializeArray()

@@ -25,7 +25,8 @@
     };
 
     PosPanel.prototype.initialize = function() {
-      return this.collection.on('reset', this.addPositionsList, this);
+      this.collection.on('sync', this.addPositionsList, this);
+      return this.collection.on('destroy', this.reloadGrid, this);
     };
 
     PosPanel.prototype.render = function() {
@@ -35,6 +36,16 @@
       return this;
     };
 
+    PosPanel.prototype.reloadGrid = function() {
+      var gridTpl;
+      $('#grid').html(' ');
+      gridTpl = new EJS({
+        url: 'templates/position_page/positions-grid.ejs'
+      });
+      App.gridData = this.collection.toJSON();
+      return $('#grid').html(gridTpl.render());
+    };
+
     PosPanel.prototype.addPositionsList = function(positions) {
       var gridTpl;
       Log('Show Grid');
@@ -42,15 +53,18 @@
         url: 'templates/position_page/positions-grid.ejs'
       });
       App.gridData = positions.toJSON();
-      return $('#grid').html(gridTpl.render());
+      $('#grid').html(gridTpl.render());
+      return this;
     };
 
     PosPanel.prototype.addNewPosition = function() {
       var addWindow;
-      addWindow = new App.addNewPosition();
+      addWindow = new App.addNewPosition({
+        collection: this.collection
+      });
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();
-      return Log('Add new position event on');
+      return Log('Add new position window open');
     };
 
     PosPanel.prototype.deleteItem = function(eve) {
@@ -64,7 +78,7 @@
       });
       $('#for-modal').html(deleteAlertWindow.el);
       $('#popup-window').modal();
-      return Log('Delet alert window was opened');
+      return Log('Delet alert window open');
     };
 
     return PosPanel;

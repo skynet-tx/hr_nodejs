@@ -19,10 +19,6 @@ class App.DeleteAlertWindow extends App.PopupWondow
       error: ->
         $('#alert-message').html alertTpl.render
           alertMessage: "Server Error. Can't save your data. Try again later."
-
       success: ->
         $('#popup-window').modal 'hide'
-        positions = new App.PosColl()
-        positions.fetch reset: true
-        new App.PosPanel collection: positions
-
+        Log('Delet alert window was closed');

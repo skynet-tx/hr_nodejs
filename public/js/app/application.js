@@ -60,10 +60,10 @@ $(function(){
             ]);
 
             var positions = new App.PosColl();
-            positions.fetch({reset: true});
             this.currentView = new App.PosPanel({collection: positions});
             this.currentView.render();
 
+            positions.fetch();
             helper.selectMenuButton();
             Log('page: positions');
         },
@@ -73,7 +73,7 @@ $(function(){
         }
     });
 
-    var startApp = new App.Start()
+    App.startApp = new App.Start()
     Backbone.history.start();
 
 });

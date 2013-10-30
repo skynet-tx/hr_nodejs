@@ -43,15 +43,8 @@
           }));
         },
         success: function() {
-          var positions;
           $('#popup-window').modal('hide');
-          positions = new App.PosColl();
-          positions.fetch({
-            reset: true
-          });
-          return new App.PosPanel({
-            collection: positions
-          });
+          return Log('Delet alert window was closed');
         }
       });
     };
