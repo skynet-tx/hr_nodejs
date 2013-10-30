@@ -16,6 +16,10 @@
       url: 'templates/general/modal-tpl.ejs'
     });
 
+    addNewPosition.prototype.isEdit = false;
+
+    addNewPosition.prototype.model = new App.PositionModel;
+
     addNewPosition.prototype.events = {
       'click #form-save': 'saveNewPosition'
     };
@@ -37,19 +41,18 @@
     };
 
     addNewPosition.prototype.saveNewPosition = function() {
-      var alertTpl, positonModel,
+      var alertTpl,
         _this = this;
-      positonModel = new App.PositionModel;
       alertTpl = new EJS({
         url: 'templates/general/alert-danger-tpl.ejs'
       });
-      positonModel.set(this._serializeForm());
-      positonModel.on('invalid', function(model, error) {
+      this.model.set(this._serializeForm());
+      this.model.on('invalid', function(model, error) {
         return $('#alert-message').html(alertTpl.render({
           alertMessage: error
         }));
       });
-      return positonModel.save(positonModel.toJSON(), {
+      return this.model.save(this.model.toJSON(), {
         error: function() {
           return $('#alert-message').html(alertTpl.render({
             alertMessage: "Server Error. Can't save your data. Try again later."

@@ -33,7 +33,15 @@
             {
                 field: "description",
                 title: "Description",
-                width: 260
+                width: 200
+            },
+            {
+                field: "date",
+                title: "Create Date",
+                width: 80,
+                template: function(item){
+                    return new Date(item.date).toLocaleString();
+                }
             },
             {
                 width: 90,

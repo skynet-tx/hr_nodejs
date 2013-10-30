@@ -1,5 +1,7 @@
 class App.addNewPosition extends App.PopupWondow
   template: new EJS url: 'templates/general/modal-tpl.ejs'
+  isEdit: false
+  model: new App.PositionModel
 
   events:
     'click #form-save': 'saveNewPosition'
@@ -12,16 +14,17 @@ class App.addNewPosition extends App.PopupWondow
     @$el.html @template.render
       modalTitle: 'Add New Position'
       modalBody: formTpl.render()
+      # TODO: make Edit mod of App(add btn name, fill the empty fields and ets
+
     @
   saveNewPosition: ->
-    positonModel = new App.PositionModel
     alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
-    positonModel.set(@_serializeForm())
+    @model.set(@_serializeForm())
 
-    positonModel.on 'invalid', (model, error) =>
+    @model.on 'invalid', (model, error) =>
       $('#alert-message').html(alertTpl.render alertMessage: error)
 
-    positonModel.save positonModel.toJSON(),
+    @model.save  @model.toJSON(),
       error: ->
         $('#alert-message').html alertTpl.render
           alertMessage: "Server Error. Can't save your data. Try again later."
