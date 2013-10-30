@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "staff_page.js",
+  "sourceRoot": "",
+  "sources": [
+    "staff_page.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,GAAA,EAAA;KAAA;oSAAA;;CAAA,CAAA,KAAA,uBAAQ;;CAAR,CAEM,CAAG;CACP;;;;;CAAA;;CAAA,CAAA,CAAI,GAAJ;;CAAA,EACc,CAAA,IAAd;CAAkB,CAAM,CAAL,GAAA,+BAAD;CADlB,KACc;;CADd,EAEQ,GAAR,GAAQ;CACN,EAAI,CAAH,EAAD,EAAmB;CACnB,GAAA,SAAO;CAJT,IAEQ;;CAFR;;CAD0B,EAAG;CAF/B"
+}

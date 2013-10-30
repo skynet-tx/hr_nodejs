@@ -26,6 +26,18 @@ app.configure(function () {
 app.get('/positions-list', function (req, res) {
     query_model.getPositions(req, res);
 });
+/**
+ * Add new position
+ */
+app.post('/position', function(req, res) {
+    query_model.setPosition(req, res);
+});
+/**
+ * Delete position
+ */
+app.delete('/position/:id', function(req, res){
+    query_model.deletePosition(req, res);
+});
 
 
 

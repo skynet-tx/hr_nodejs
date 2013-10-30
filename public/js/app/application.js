@@ -4,7 +4,7 @@
  * Time: 16:32
  * File name:
  */
-App = {};
+var App = {};
 
 App = {
     Models: {},
@@ -50,14 +50,19 @@ $(function(){
 
         positions: function() {
             this.currentView ? this.currentView.close() : null;
-            requere('js/app/hr_manager/views/position-panel.js');
-            include([
+            requere([
                 'js/app/hr_manager/models/position_model.js',
-                'js/app/hr_manager/collections/postions_collection.js'
+                'js/app/hr_manager/collections/postions_collection.js',
+                'js/app/core/views/popupWindow.js',
+                'js/app/hr_manager/views/add_new_position.js',
+                'js/app/hr_manager/views/position-panel.js',
+                'js/app/hr_manager/views/delete-alert-window.js'
             ]);
 
-            this.currentView = new App.PosPanel();
-            new App.PosColl().fetch();
+            var positions = new App.PosColl();
+            positions.fetch({reset: true});
+            this.currentView = new App.PosPanel({collection: positions});
+            this.currentView.render();
 
             helper.selectMenuButton();
             Log('page: positions');

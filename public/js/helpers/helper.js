@@ -36,6 +36,7 @@ var helper = {
                 scriptTpl.push("<script class='temp-script' src=" + val + "></script>");
             });
         }
+        scriptTpl = _.uniq(scriptTpl);
 
         if (!isInclude && $('.temp-script12').length === 0) {
             $('.temp-script').remove();
