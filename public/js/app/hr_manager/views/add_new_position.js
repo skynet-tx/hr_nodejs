@@ -40,9 +40,10 @@
       return this;
     };
 
-    addNewPosition.prototype.saveNewPosition = function() {
+    addNewPosition.prototype.saveNewPosition = function(eve) {
       var alertTpl,
         _this = this;
+      eve.preventDefault();
       alertTpl = new EJS({
         url: 'templates/general/alert-danger-tpl.ejs'
       });

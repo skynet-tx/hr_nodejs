@@ -17,7 +17,8 @@ class App.addNewPosition extends App.PopupWondow
       # TODO: make Edit mod of App(add btn name, fill the empty fields and ets
 
     @
-  saveNewPosition: ->
+  saveNewPosition: (eve) ->
+    eve.preventDefault()
     alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
     @model.set(@_serializeForm())
 
