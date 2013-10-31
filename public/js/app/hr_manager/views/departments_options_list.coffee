@@ -1,5 +1,8 @@
 class App.DepartmentsOptionsList extends App.MainTemplate
-  tagName: 'li',
+  tagName: 'select',
+  className: 'form-control'
+  attributes:
+    id: 'inputDepartments'
 
   initialize: ->
     @collection.on('sync', @render, @)
@@ -7,11 +10,9 @@ class App.DepartmentsOptionsList extends App.MainTemplate
   render: (list) ->
     data = list.toJSON()
     liTpl = new EJS url: 'templates/department_page/option_li_list.ejs'
-    liListArray = []
+    el = @$el
 
     _.each data, (obj, key) ->
-      liListArray.push liTpl.render
+      el.append liTpl.render
         id: obj.id
         name: obj.name
-
-

@@ -56,7 +56,10 @@ $(function(){
                 'js/app/core/views/popupWindow.js',
                 'js/app/hr_manager/views/add_new_position.js',
                 'js/app/hr_manager/views/position-panel.js',
-                'js/app/hr_manager/views/delete-alert-window.js'
+                'js/app/hr_manager/views/delete-alert-window.js',
+                'js/app/hr_manager/models/department_model.js',
+                'js/app/hr_manager/collections/departments_list_coll.js',
+                'js/app/hr_manager/views/departments_options_list.js'
             ]);
 
             var positions = new App.PosColl();

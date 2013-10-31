@@ -38,6 +38,7 @@
         modalTitle: 'Add New Position',
         modalBody: formTpl.render()
       }));
+      this.$el.find('.dep-list').html(list);
       return this;
     };
 
@@ -88,9 +89,10 @@
       var departmentList, options;
       departmentList = new App.DepartmentsListColl();
       departmentList.fetch();
-      return options = new App.DepartmentsOptionsList({
+      options = new App.DepartmentsOptionsList({
         collection: departmentList
       });
+      return options.el;
     };
 
     return addNewPosition;

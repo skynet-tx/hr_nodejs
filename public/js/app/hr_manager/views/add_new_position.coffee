@@ -17,6 +17,8 @@ class App.addNewPosition extends App.PopupWondow
       modalBody: formTpl.render()
       # TODO: make Edit mod of App(add btn name, fill the empty fields and ets
 
+    @$el.find('.dep-list').html(list)
+
     @
   saveNewPosition: (eve) ->
     eve.preventDefault()
@@ -51,4 +53,5 @@ class App.addNewPosition extends App.PopupWondow
     departmentList = new App.DepartmentsListColl()
     departmentList.fetch()
     options = new App.DepartmentsOptionsList({collection: departmentList})
-    # TODO: Made ejs template for select options
+    options.el
+

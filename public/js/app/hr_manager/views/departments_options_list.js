@@ -12,21 +12,27 @@
       return _ref;
     }
 
-    DepartmentsOptionsList.prototype.tagName = 'li';
+    DepartmentsOptionsList.prototype.tagName = 'select';
+
+    DepartmentsOptionsList.prototype.className = 'form-control';
+
+    DepartmentsOptionsList.prototype.attributes = {
+      id: 'inputDepartments'
+    };
 
     DepartmentsOptionsList.prototype.initialize = function() {
       return this.collection.on('sync', this.render, this);
     };
 
     DepartmentsOptionsList.prototype.render = function(list) {
-      var data, liListArray, liTpl;
+      var data, el, liTpl;
       data = list.toJSON();
       liTpl = new EJS({
         url: 'templates/department_page/option_li_list.ejs'
       });
-      liListArray = [];
+      el = this.$el;
       return _.each(data, function(obj, key) {
-        return liListArray.push(liTpl.render({
+        return el.append(liTpl.render({
           id: obj.id,
           name: obj.name
         }));

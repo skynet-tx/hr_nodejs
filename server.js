@@ -29,17 +29,21 @@ app.get('/positions-list', function (req, res) {
 /**
  * Add new position
  */
-app.post('/position', function(req, res) {
+app.post('/position', function (req, res) {
     query_model.setPosition(req, res);
 });
 /**
  * Delete position
  */
-app.delete('/position/:id', function(req, res){
+app.delete('/position/:id', function (req, res) {
     query_model.deletePosition(req, res);
 });
-
-
+/**
+ * Get Departments list
+ */
+app.get('/departments-list', function (req, res) {
+    query_model.getDepartments(req, res);
+});
 
 
 app.listen(port, function () {
