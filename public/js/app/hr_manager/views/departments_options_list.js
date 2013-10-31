@@ -17,7 +17,8 @@
     DepartmentsOptionsList.prototype.className = 'form-control';
 
     DepartmentsOptionsList.prototype.attributes = {
-      id: 'inputDepartments'
+      id: 'inputDepartments',
+      name: 'department_id'
     };
 
     DepartmentsOptionsList.prototype.initialize = function() {

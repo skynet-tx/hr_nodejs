@@ -3,6 +3,7 @@ class App.DepartmentsOptionsList extends App.MainTemplate
   className: 'form-control'
   attributes:
     id: 'inputDepartments'
+    name: 'department_id'
 
   initialize: ->
     @collection.on('sync', @render, @)

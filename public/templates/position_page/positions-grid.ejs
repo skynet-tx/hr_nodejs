@@ -26,14 +26,22 @@
                 width: 120
             },
             {
+                field: "department",
+                title: "Department",
+                width: 70
+            },
+            {
                 field: "skills",
                 title: "Skills",
-                width: 80
+                width: 70,
+                template: function(item){
+                    return helper.ucfirst(item.skills);
+                }
             },
             {
                 field: "description",
                 title: "Description",
-                width: 200
+                width: 160
             },
             {
                 field: "date",

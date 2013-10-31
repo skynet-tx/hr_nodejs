@@ -61,6 +61,10 @@ var helper = {
                 $(el).addClass('btn-primary');
             }
         });
+    },
+    ucfirst: function (str) {
+        var first = str.charAt(0).toUpperCase();
+        return first + str.substr(1);
     }
 }
 

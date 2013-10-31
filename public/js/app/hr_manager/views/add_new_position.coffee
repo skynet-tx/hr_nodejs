@@ -8,6 +8,7 @@ class App.addNewPosition extends App.PopupWondow
 
   initialize: ->
     @render()
+
   render: ->
     formTpl = new EJS url: 'templates/position_page/add-form.ejs'
     list = @_getSelectDept()
@@ -18,8 +19,8 @@ class App.addNewPosition extends App.PopupWondow
       # TODO: make Edit mod of App(add btn name, fill the empty fields and ets
 
     @$el.find('.dep-list').html(list)
-
     @
+
   saveNewPosition: (eve) ->
     eve.preventDefault()
     alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'

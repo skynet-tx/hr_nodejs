@@ -19,6 +19,7 @@
       name: 'Empty name',
       skills: 'Trainee',
       description: 'Position for reserve',
+      department_id: 1,
       date: new Date()
     };
 
