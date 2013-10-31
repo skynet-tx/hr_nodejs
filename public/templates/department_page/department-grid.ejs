@@ -1,0 +1,55 @@
+<script>
+    var self = this;
+        $("#grid").kendoGrid({
+            dataSource: {
+                data: App.gridData,
+                schema: {
+                    models: {
+                        fields: {
+                            id: { type: "number" },
+                            description: { type: "string" },
+                            name: { type: "string", validation: { required: true} }
+                        }
+                    }
+                },
+                pageSize: 20
+            },
+            height: 430,
+            filterable: true,
+            sortable: true,
+            pageable: true,
+            columns: [
+                {
+                    field: "name",
+                    title: "Department",
+                    width: 120
+                },
+                {
+                    field: "description",
+                    title: "Description",
+                    width: 160
+                },
+                {
+                    field: "date",
+                    title: "Create Date",
+                    width: 80,
+                    template: function(item){
+                        return new Date(item.date).toLocaleString();
+                    }
+                },
+                {
+                    width: 90,
+                    template:function(items){
+                        return '<button id="edit-' + items.id + '" type="button" data-obj=\'' + JSON.stringify(items) + '\' ' +
+                                'class="btn btn-sm btn-info btn-edit-record">' +
+                                '<span class="glyphicon glyphicon-plus"></span>   Edit</button>' +
+                                '&nbsp;' +
+                                '<button data-id="' + items.id + '" type="button" ' +
+                                'class="btn btn-sm btn-danger btn-delete-item">Delete</button>';
+
+                    }
+                }
+            ],
+            editable: "inline"
+        });
+</script>
