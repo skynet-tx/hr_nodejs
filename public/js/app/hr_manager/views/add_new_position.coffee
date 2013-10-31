@@ -10,6 +10,7 @@ class App.addNewPosition extends App.PopupWondow
     @render()
   render: ->
     formTpl = new EJS url: 'templates/position_page/add-form.ejs'
+    list = @_getSelectDept()
 
     @$el.html @template.render
       modalTitle: 'Add New Position'
@@ -45,3 +46,9 @@ class App.addNewPosition extends App.PopupWondow
 
     formData['date'] = new Date()
     formData
+
+  _getSelectDept: ->
+    departmentList = new App.DepartmentsListColl()
+    departmentList.fetch()
+    options = new App.DepartmentsOptionsList({collection: departmentList})
+    # TODO: Made ejs template for select options

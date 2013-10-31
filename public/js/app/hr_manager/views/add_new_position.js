@@ -29,10 +29,11 @@
     };
 
     addNewPosition.prototype.render = function() {
-      var formTpl;
+      var formTpl, list;
       formTpl = new EJS({
         url: 'templates/position_page/add-form.ejs'
       });
+      list = this._getSelectDept();
       this.$el.html(this.template.render({
         modalTitle: 'Add New Position',
         modalBody: formTpl.render()
@@ -81,6 +82,15 @@
       });
       formData['date'] = new Date();
       return formData;
+    };
+
+    addNewPosition.prototype._getSelectDept = function() {
+      var departmentList, options;
+      departmentList = new App.DepartmentsListColl();
+      departmentList.fetch();
+      return options = new App.DepartmentsOptionsList({
+        collection: departmentList
+      });
     };
 
     return addNewPosition;
