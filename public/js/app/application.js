@@ -42,8 +42,17 @@ $(function(){
 
         departmant: function() {
             this.currentView ? this.currentView.close() : null;
+            requere([
+                'js/app/hr_manager/models/department_model.js',
+                'js/app/hr_manager/collections/departments_list_coll.js',
+                'js/app/hr_manager/views/department-panel.js'
+            ]);
 
-            this.currentView = null; // TODO make view
+            var departments = new App.DepartmentsListColl();
+            this.currentView = new App.Dep.Panel({collection: departments});
+            this.currentView.render();
+
+            departments.fetch();
             helper.selectMenuButton();
             Log('page: departmant');
         },

@@ -17,3 +17,4 @@ class App.DepartmentsOptionsList extends App.MainTemplate
       el.append liTpl.render
         id: obj.id
         name: obj.name
+
