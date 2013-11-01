@@ -26,8 +26,6 @@ class App.addNewPosition extends App.PopupWondow
         modalBody: formTpl.render()
       @$el.find('.dep-list').html(list)
       @_fiilFormValues()
-
-
     @
 
   eventSelection: (eve) ->
