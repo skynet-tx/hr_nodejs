@@ -65,7 +65,7 @@ app.delete('/department/:id', function (req, res) {
 /**
  * Update position
  */
-app.put('/position/:id',function (req, res){
+app.put('/department/:id',function (req, res){
     query_model.updateDepartment(req, res);
 });
 
