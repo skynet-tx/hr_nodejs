@@ -30,7 +30,7 @@
     };
 
     addNewDepartment.prototype.render = function() {
-      var formTpl, list, positionName;
+      var departmentName, formTpl, list;
       formTpl = new EJS({
         url: 'templates/position_page/add-dep-form.ejs'
       });
@@ -40,15 +40,12 @@
           modalTitle: 'Add New Department',
           modalBody: formTpl.render()
         }));
-        this.$el.find('.dep-list').html(list);
       } else {
-        positionName = this.model.get('name');
+        departmentName = this.model.get('name');
         this.$el.html(this.template.render({
-          modalTitle: 'Edit record "<strong>' + positionName + '</strong>"',
+          modalTitle: 'Edit record "<strong>' + departmentName + '</strong>"',
           modalBody: formTpl.render()
         }));
-        this.$el.find('.dep-list').html(list);
-        this._fiilFormValues();
       }
       return this;
     };

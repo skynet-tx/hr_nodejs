@@ -3,12 +3,18 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/position-panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/delete-alert-window.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_new_department.js" />
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/core/views/popupWindow.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/position-panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/delete-alert-window.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_new_department.js" />
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/core/views/popupWindow.js" />
     </CLASSES>
     <SOURCES />
   </library>

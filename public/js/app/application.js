@@ -44,7 +44,6 @@ $(function(){
 
         departmant: function() {
             this.currentView ? this.currentView.close() : null;
-          
             requere([
                 'js/app/hr_manager/models/department_model.js',
                 'js/app/hr_manager/collections/departments_list_coll.js',

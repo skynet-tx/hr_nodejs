@@ -19,15 +19,12 @@ class App.addNewDepartment extends App.PopupWondow
       @$el.html @template.render
         modalTitle: 'Add New Department'
         modalBody: formTpl.render()
-      @$el.find('.dep-list').html(list)
-    else
-      positionName = @model.get 'name'
-      @$el.html @template.render
-        modalTitle: 'Edit record "<strong>' + positionName + '</strong>"'
-        modalBody: formTpl.render()
-      @$el.find('.dep-list').html(list)
-      @_fiilFormValues()
 
+    else
+      departmentName = @model.get 'name'
+      @$el.html @template.render
+        modalTitle: 'Edit record "<strong>' + departmentName + '</strong>"'
+        modalBody: formTpl.render()
 
     @
 

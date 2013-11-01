@@ -36,6 +36,17 @@
       return this;
     };
 
+    DepPanel.prototype.reloadGrid = function() {
+      var gridTpl;
+      $('#grid').html(' ');
+      gridTpl = new EJS({
+        url: 'templates/department_page/department-grid.ejs'
+      });
+      App.gridData = this.collection.toJSON();
+      $('#grid').html(gridTpl.render());
+      return Log('Grid is reloaded..');
+    };
+
     DepPanel.prototype.addDepartmentList = function(departments) {
       var gridTpl;
       Log('Show Grid');
@@ -46,16 +57,6 @@
       App.gridData = departments.toJSON();
       $('#grid').html(gridTpl.render());
       return this;
-    };
-
-    DepPanel.prototype.reloadGrid = function() {
-      var gridTpl;
-      $('#grid').html(' ');
-      gridTpl = new EJS({
-        url: 'templates/department_page/department-grid.ejs'
-      });
-      App.gridData = this.collection.toJSON();
-      return $('#grid').html(gridTpl.render());
     };
 
     DepPanel.prototype.addNewDepartment = function() {
