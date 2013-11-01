@@ -42,6 +42,11 @@ $(function(){
 
         departmant: function() {
             this.currentView ? this.currentView.close() : null;
+            requere([
+                'js/app/hr_manager/models/position_model.js',
+                'js/app/hr_manager/collections/postions_collection.js',
+                'js/app/core/views/popupWindow.js'
+            ]);
 
             this.currentView = null; // TODO make view
             helper.selectMenuButton();
@@ -66,7 +71,7 @@ $(function(){
             this.currentView = new App.PosPanel({collection: positions});
             this.currentView.render();
 
-            positions.fetch();
+            positions.fetch({reset: true});
             helper.selectMenuButton();
             Log('page: positions');
         },

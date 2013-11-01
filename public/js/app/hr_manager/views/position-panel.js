@@ -20,12 +20,12 @@
 
     PosPanel.prototype.events = {
       'click #add-new': 'addNewPosition',
-      'click .btn-edit-record': 'editPosition',
+      'click .btn-edit-record': 'editPositioin',
       'click .btn-delete-item': 'deleteItem'
     };
 
     PosPanel.prototype.initialize = function() {
-      this.collection.on('sync', this.addPositionsList, this);
+      this.collection.on('reset', this.addPositionsList, this);
       return this.collection.on('destroy', this.reloadGrid, this);
     };
 
@@ -42,8 +42,10 @@
       gridTpl = new EJS({
         url: 'templates/position_page/positions-grid.ejs'
       });
+      Log(this.collection.toJSON());
       App.gridData = this.collection.toJSON();
-      return $('#grid').html(gridTpl.render());
+      $('#grid').html(gridTpl.render());
+      return Log('Grid is reloaded..');
     };
 
     PosPanel.prototype.addPositionsList = function(positions) {
@@ -64,7 +66,7 @@
       });
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();
-      return Log('Add new position window open');
+      return Log('Add new position window is open');
     };
 
     PosPanel.prototype.deleteItem = function(eve) {
@@ -78,7 +80,23 @@
       });
       $('#for-modal').html(deleteAlertWindow.el);
       $('#popup-window').modal();
-      return Log('Delet alert window open');
+      return Log('Delet alert window is open');
+    };
+
+    PosPanel.prototype.editPositioin = function(eve) {
+      var addWindow, position, recordId;
+      recordId = $(eve.target).attr('data-id');
+      position = this.collection.findWhere({
+        id: parseInt(recordId, 10)
+      });
+      addWindow = new App.addNewPosition({
+        model: position,
+        collection: this.collection,
+        isEdit: true
+      });
+      $('#for-modal').html(addWindow.el);
+      $('#popup-window').modal();
+      return Log('Edit position window is open');
     };
 
     return PosPanel;

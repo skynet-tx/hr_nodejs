@@ -21,25 +21,44 @@
     addNewPosition.prototype.model = new App.PositionModel;
 
     addNewPosition.prototype.events = {
-      'click #form-save': 'saveNewPosition'
+      'click #form-save': 'eventSelection'
     };
 
-    addNewPosition.prototype.initialize = function() {
+    addNewPosition.prototype.initialize = function(params) {
+      this.isEdit = params.isEdit;
       return this.render();
     };
 
     addNewPosition.prototype.render = function() {
-      var formTpl, list;
+      var formTpl, list, positionName;
       formTpl = new EJS({
         url: 'templates/position_page/add-form.ejs'
       });
       list = this._getSelectDept();
-      this.$el.html(this.template.render({
-        modalTitle: 'Add New Position',
-        modalBody: formTpl.render()
-      }));
-      this.$el.find('.dep-list').html(list);
+      if (!this.isEdit) {
+        this.$el.html(this.template.render({
+          modalTitle: 'Add New Position',
+          modalBody: formTpl.render()
+        }));
+        this.$el.find('.dep-list').html(list);
+      } else {
+        positionName = this.model.get('name');
+        this.$el.html(this.template.render({
+          modalTitle: 'Edit record "<strong>' + positionName + '</strong>"',
+          modalBody: formTpl.render()
+        }));
+        this.$el.find('.dep-list').html(list);
+        this._fiilFormValues();
+      }
       return this;
+    };
+
+    addNewPosition.prototype.eventSelection = function(eve) {
+      if (!this.isEdit) {
+        return this.saveNewPosition(eve);
+      } else {
+        return this.editRecord(eve);
+      }
     };
 
     addNewPosition.prototype.saveNewPosition = function(eve) {
@@ -93,6 +112,50 @@
         collection: departmentList
       });
       return options.el;
+    };
+
+    addNewPosition.prototype.editRecord = function(eve) {
+      var alertTpl,
+        _this = this;
+      eve.preventDefault();
+      alertTpl = new EJS({
+        url: 'templates/general/alert-danger-tpl.ejs'
+      });
+      this.model.set(this._serializeForm());
+      return this.model.save(this.model.toJSON(), {
+        error: function() {
+          return $('#alert-message').html(alertTpl.render({
+            alertMessage: "Server Error. Can't save your data. Try again later."
+          }));
+        },
+        success: function() {
+          $('#popup-window').modal('hide');
+          Log('Add new position window was closed');
+          return _this.collection.fetch({
+            reset: true
+          });
+        }
+      });
+    };
+
+    addNewPosition.prototype._fiilFormValues = function() {
+      var form,
+        _this = this;
+      form = this.$el.find('#add-position-form');
+      form.find('#inputName').val(this.model.get('name'));
+      form.find('#inputDescription').val(this.model.get('description'));
+      form.find('#inputSkills').children().each(function(key, el) {
+        if ($(el).val() === _this.model.get('skills')) {
+          return $(el).attr('selected', 'selected');
+        }
+      });
+      return setTimeout(function() {
+        return form.find('#inputDepartments').children().each(function(key, el) {
+          if (parseInt($(el).val()) === parseInt(_this.model.get('department_id'))) {
+            return $(el).attr('selected', 'selected');
+          }
+        });
+      }, 300);
     };
 
     return addNewPosition;
