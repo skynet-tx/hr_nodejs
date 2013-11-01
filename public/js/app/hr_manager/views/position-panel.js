@@ -42,7 +42,6 @@
       gridTpl = new EJS({
         url: 'templates/position_page/positions-grid.ejs'
       });
-      Log(this.collection.toJSON());
       App.gridData = this.collection.toJSON();
       $('#grid').html(gridTpl.render());
       return Log('Grid is reloaded..');
