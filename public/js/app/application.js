@@ -59,7 +59,7 @@ $(function(){
                 'js/app/hr_manager/models/position_model.js',
                 'js/app/hr_manager/collections/postions_collection.js',
                 'js/app/core/views/popupWindow.js',
-                'js/app/hr_manager/views/add_new_position.js',
+                'js/app/hr_manager/views/add_edit_position.js',
                 'js/app/hr_manager/views/position-panel.js',
                 'js/app/hr_manager/views/delete-alert-window.js',
                 'js/app/hr_manager/models/department_model.js',
