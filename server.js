@@ -57,15 +57,15 @@ app.post('/department', function (req, res) {
     query_model.setDepartment(req, res);
 });
 /**
- * Delete position
+ * Delete Department
  */
 app.delete('/department/:id', function (req, res) {
     query_model.deleteDepartment(req, res);
 });
 /**
- * Update position
+ * Update Department
  */
-app.put('/position/:id',function (req, res){
+app.put('/department/:id',function (req, res){
     query_model.updateDepartment(req, res);
 });
 

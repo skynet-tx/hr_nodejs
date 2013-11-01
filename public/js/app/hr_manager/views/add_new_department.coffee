@@ -60,3 +60,23 @@ class App.addNewDepartment extends App.PopupWondow
 
     formData['date'] = new Date()
     formData
+
+  editRecord: (eve) ->
+    eve.preventDefault()
+    alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
+    @model.set(@_serializeForm())
+    @model.save @model.toJSON(),
+      error: ->
+        $('#alert-message').html alertTpl.render
+          alertMessage: "Server Error. Can't save your data. Try again later."
+
+      success: =>
+        $('#popup-window').modal 'hide'
+        Log('Add new department window was closed')
+        @collection.fetch({reset: true})
+
+  _fiilFormValues: ->
+    form = @$el.find '#add-dep-form'
+    form.find('#inputName').val @model.get 'name'
+    form.find('#inputDescription').val @model.get 'description'
+

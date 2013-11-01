@@ -101,6 +101,37 @@
       return formData;
     };
 
+    addNewDepartment.prototype.editRecord = function(eve) {
+      var alertTpl,
+        _this = this;
+      eve.preventDefault();
+      alertTpl = new EJS({
+        url: 'templates/general/alert-danger-tpl.ejs'
+      });
+      this.model.set(this._serializeForm());
+      return this.model.save(this.model.toJSON(), {
+        error: function() {
+          return $('#alert-message').html(alertTpl.render({
+            alertMessage: "Server Error. Can't save your data. Try again later."
+          }));
+        },
+        success: function() {
+          $('#popup-window').modal('hide');
+          Log('Add new department window was closed');
+          return _this.collection.fetch({
+            reset: true
+          });
+        }
+      });
+    };
+
+    addNewDepartment.prototype._fiilFormValues = function() {
+      var form;
+      form = this.$el.find('#add-dep-form');
+      form.find('#inputName').val(this.model.get('name'));
+      return form.find('#inputDescription').val(this.model.get('description'));
+    };
+
     return addNewDepartment;
 
   })(App.PopupWondow);

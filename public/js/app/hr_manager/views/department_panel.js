@@ -19,7 +19,9 @@
     });
 
     DepPanel.prototype.events = {
-      'click #add-new': 'addNewDepartment'
+      'click #add-new': 'addNewDepartment',
+      'click .btn-edit-record': 'editPositioin',
+      'click .btn-delete-item': 'deleteItem'
     };
 
     DepPanel.prototype.initialize = function() {
@@ -67,6 +69,36 @@
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();
       return Log('Add new department window open');
+    };
+
+    DepPanel.prototype.editPositioin = function(eve) {
+      var addWindow, department, recordId;
+      recordId = $(eve.target).attr('data-id');
+      department = this.collection.findWhere({
+        id: parseInt(recordId, 10)
+      });
+      addWindow = new App.addNewDepartment({
+        model: department,
+        collection: this.collection,
+        isEdit: true
+      });
+      $('#for-modal').html(addWindow.el);
+      $('#popup-window').modal();
+      return Log('Edit department window is open');
+    };
+
+    DepPanel.prototype.deleteItem = function(eve) {
+      var deleteAlertWindow, model, recordId;
+      recordId = $(eve.target).attr('data-id');
+      model = this.collection.findWhere({
+        id: parseInt(recordId, 10)
+      });
+      deleteAlertWindow = new App.DeleteDepAlertWindow({
+        model: model
+      });
+      $('#for-modal').html(deleteAlertWindow.el);
+      $('#popup-window').modal();
+      return Log('Delet alert window is open');
     };
 
     return DepPanel;

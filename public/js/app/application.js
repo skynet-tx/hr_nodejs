@@ -49,7 +49,9 @@ $(function(){
                 'js/app/hr_manager/collections/departments_list_coll.js',
                 'js/app/hr_manager/views/department_panel.js',
                 'js/app/core/views/popupWindow.js',
-                'js/app/hr_manager/views/add_new_department.js'
+                'js/app/hr_manager/views/add_new_department.js',
+                'js/app/hr_manager/views/delete-deptm-alert-window.js'
+
             ]);
 
             var departments = new App.DepartmentsListColl();

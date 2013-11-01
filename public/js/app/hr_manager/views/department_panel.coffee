@@ -3,6 +3,8 @@ class App.DepPanel extends App.MainTemplate
   template: new EJS url: 'templates/general/list-conainer.ejs'
   events:
     'click #add-new': 'addNewDepartment'
+    'click .btn-edit-record': 'editPositioin'
+    'click .btn-delete-item': 'deleteItem'
 
 
 
@@ -42,3 +44,24 @@ class App.DepPanel extends App.MainTemplate
     $('#for-modal').html addWindow.el
     $('#popup-window').modal();
     Log 'Add new department window open';
+
+  editPositioin: (eve)  ->
+    recordId = $(eve.target).attr 'data-id'
+    department = @collection.findWhere id: parseInt(recordId, 10)
+
+    addWindow = new App.addNewDepartment
+      model: department
+      collection: @collection
+      isEdit: true
+
+    $('#for-modal').html addWindow.el
+    $('#popup-window').modal();
+    Log 'Edit department window is open'
+
+  deleteItem: (eve) ->
+    recordId = $(eve.target).attr('data-id')
+    model = @collection.findWhere id: parseInt(recordId, 10)
+    deleteAlertWindow = new App.DeleteDepAlertWindow model: model
+    $('#for-modal').html deleteAlertWindow.el
+    $('#popup-window').modal()
+    Log 'Delet alert window is open'
