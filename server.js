@@ -50,6 +50,12 @@ app.put('/position/:id',function (req, res){
 app.get('/departments-list', function (req, res) {
     query_model.getDepartments(req, res);
 });
+/**
+ * Add new Department
+ */
+app.post('/department', function (req, res) {
+    query_model.setDepartment(req, res);
+});
 
 
 app.listen(port, function () {

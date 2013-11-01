@@ -1,4 +1,5 @@
 class App.DepartmentModel extends Backbone.Model
+  urlRoot: location.origin + "/department"
   defaults:
     id: null
     name: null
