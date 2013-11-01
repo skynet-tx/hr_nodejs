@@ -13,7 +13,6 @@ class App.addNewDepartment extends App.PopupWondow
 
   render: ->
     formTpl = new EJS url: 'templates/position_page/add-dep-form.ejs'
-    list = @_getSelectDept()
 
     if not @isEdit
       @$el.html @template.render

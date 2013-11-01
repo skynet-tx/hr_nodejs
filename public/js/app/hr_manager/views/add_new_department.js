@@ -30,11 +30,10 @@
     };
 
     addNewDepartment.prototype.render = function() {
-      var departmentName, formTpl, list;
+      var departmentName, formTpl;
       formTpl = new EJS({
         url: 'templates/position_page/add-dep-form.ejs'
       });
-      list = this._getSelectDept();
       if (!this.isEdit) {
         this.$el.html(this.template.render({
           modalTitle: 'Add New Department',
