@@ -42,6 +42,7 @@ $(function(){
 
         departmant: function() {
             this.currentView ? this.currentView.close() : null;
+          
             requere([
                 'js/app/hr_manager/models/department_model.js',
                 'js/app/hr_manager/collections/departments_list_coll.js',
@@ -75,7 +76,7 @@ $(function(){
             this.currentView = new App.PosPanel({collection: positions});
             this.currentView.render();
 
-            positions.fetch();
+            positions.fetch({reset: true});
             helper.selectMenuButton();
             Log('page: positions');
         },

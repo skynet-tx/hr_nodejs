@@ -39,6 +39,12 @@ app.delete('/position/:id', function (req, res) {
     query_model.deletePosition(req, res);
 });
 /**
+ * Update position
+ */
+app.put('/position/:id',function (req, res){
+    query_model.updatePosition(req, res);
+});
+/**
  * Get Departments list
  */
 app.get('/departments-list', function (req, res) {

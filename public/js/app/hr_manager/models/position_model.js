@@ -15,7 +15,6 @@
     PositionModel.prototype.urlRoot = location.origin + "/position";
 
     PositionModel.prototype.defaults = {
-      id: null,
       name: 'Empty name',
       skills: 'Trainee',
       description: 'Position for reserve',
