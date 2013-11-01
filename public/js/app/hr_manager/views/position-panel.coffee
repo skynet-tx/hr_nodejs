@@ -17,7 +17,7 @@ class App.PosPanel extends App.MainTemplate
   reloadGrid: ->
     $('#grid').html(' ')
     gridTpl = new EJS url: 'templates/position_page/positions-grid.ejs'
-    Log @collection.toJSON()
+
     App.gridData = @collection.toJSON()
     $('#grid').html(gridTpl.render())
     Log 'Grid is reloaded..'
@@ -58,3 +58,4 @@ class App.PosPanel extends App.MainTemplate
     $('#for-modal').html addWindow.el
     $('#popup-window').modal();
     Log 'Edit position window is open'
+
