@@ -5,20 +5,44 @@ class App.addNewDepartment extends App.PopupWondow
   model: new App.DepartmentModel
 
   events:
-    'click #form-save': 'saveNewDepartment'
+    'click #form-save': 'eventSelection'
 
-  initialize: ->
+  initialize: (params) ->
+    @isEdit = params.isEdit
     @render()
 
+  render: ->
+    formTpl = new EJS url: 'templates/position_page/add-dep-form.ejs'
+    list = @_getSelectDept()
 
-  saveNewDepa: (eve) ->
+    if not @isEdit
+      @$el.html @template.render
+        modalTitle: 'Add New Department'
+        modalBody: formTpl.render()
+      @$el.find('.dep-list').html(list)
+    else
+      positionName = @model.get 'name'
+      @$el.html @template.render
+        modalTitle: 'Edit record "<strong>' + positionName + '</strong>"'
+        modalBody: formTpl.render()
+      @$el.find('.dep-list').html(list)
+      @_fiilFormValues()
+
+
+    @
+
+  eventSelection: (eve) ->
+    if not @isEdit
+      @saveNewDepartment eve
+    else
+      @editRecord eve
+
+  saveNewDepartment: (eve) ->
     eve.preventDefault()
     alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
     @model.set(@_serializeForm())
-
     @model.on 'invalid', (model, error) =>
       $('#alert-message').html(alertTpl.render alertMessage: error)
-
     @model.save  @model.toJSON(),
       error: ->
         $('#alert-message').html alertTpl.render

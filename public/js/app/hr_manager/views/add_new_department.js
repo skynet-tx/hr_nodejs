@@ -21,14 +21,47 @@
     addNewDepartment.prototype.model = new App.DepartmentModel;
 
     addNewDepartment.prototype.events = {
-      'click #form-save': 'saveNewDepartment'
+      'click #form-save': 'eventSelection'
     };
 
-    addNewDepartment.prototype.initialize = function() {
+    addNewDepartment.prototype.initialize = function(params) {
+      this.isEdit = params.isEdit;
       return this.render();
     };
 
-    addNewDepartment.prototype.saveNewDepa = function(eve) {
+    addNewDepartment.prototype.render = function() {
+      var formTpl, list, positionName;
+      formTpl = new EJS({
+        url: 'templates/position_page/add-dep-form.ejs'
+      });
+      list = this._getSelectDept();
+      if (!this.isEdit) {
+        this.$el.html(this.template.render({
+          modalTitle: 'Add New Department',
+          modalBody: formTpl.render()
+        }));
+        this.$el.find('.dep-list').html(list);
+      } else {
+        positionName = this.model.get('name');
+        this.$el.html(this.template.render({
+          modalTitle: 'Edit record "<strong>' + positionName + '</strong>"',
+          modalBody: formTpl.render()
+        }));
+        this.$el.find('.dep-list').html(list);
+        this._fiilFormValues();
+      }
+      return this;
+    };
+
+    addNewDepartment.prototype.eventSelection = function(eve) {
+      if (!this.isEdit) {
+        return this.saveNewDepartment(eve);
+      } else {
+        return this.editRecord(eve);
+      }
+    };
+
+    addNewDepartment.prototype.saveNewDepartment = function(eve) {
       var alertTpl,
         _this = this;
       eve.preventDefault();
