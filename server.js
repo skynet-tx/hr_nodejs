@@ -56,6 +56,21 @@ app.get('/departments-list', function (req, res) {
 app.post('/department', function (req, res) {
     query_model.setDepartment(req, res);
 });
+/**
+ * Delete position
+ */
+app.delete('/department/:id', function (req, res) {
+    query_model.deleteDepartment(req, res);
+});
+/**
+ * Update position
+ */
+app.put('/position/:id',function (req, res){
+    query_model.updateDepartment(req, res);
+});
+
+
+
 
 
 app.listen(port, function () {
