@@ -12,6 +12,8 @@
       return _ref;
     }
 
+    DepartmentModel.prototype.urlRoot = location.origin + "/department";
+
     DepartmentModel.prototype.defaults = {
       id: null,
       name: null,
