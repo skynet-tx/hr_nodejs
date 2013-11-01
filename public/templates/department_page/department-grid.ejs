@@ -38,14 +38,14 @@
                     }
                 },
                 {
-                    width: 90,
+                    width: 80,
                     template:function(items){
-                        return '<button id="edit-' + items.id + '" type="button" data-obj=\'' + JSON.stringify(items) + '\' ' +
-                                'class="btn btn-sm btn-info btn-edit-record">' +
-                                '<span class="glyphicon glyphicon-plus"></span>   Edit</button>' +
+                        return '<button  type="button" data-id="' + items.id + '" ' +
+                                'class="glyphicon glyphicon-edit btn btn-sm btn-info btn-edit-record">' +
+                                '</button>' +
                                 '&nbsp;' +
                                 '<button data-id="' + items.id + '" type="button" ' +
-                                'class="btn btn-sm btn-danger btn-delete-item">Delete</button>';
+                                'class="glyphicon glyphicon-remove btn btn-sm btn-danger btn-delete-item"></button>';
 
                     }
                 }
