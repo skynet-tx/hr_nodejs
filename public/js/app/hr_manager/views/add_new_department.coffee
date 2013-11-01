@@ -12,7 +12,8 @@ class App.addNewDepartment extends App.PopupWondow
     @render()
 
   render: ->
-    formTpl = new EJS url: 'templates/position_page/add-dep-form.ejs'
+    formTpl = new EJS url: 'templates/department_page/add-dep-form.ejs'
+    Log 'The window is opened'
 
     if not @isEdit
       @$el.html @template.render
