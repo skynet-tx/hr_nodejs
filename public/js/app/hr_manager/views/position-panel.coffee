@@ -5,6 +5,7 @@ class App.PosPanel extends App.MainTemplate
     'click #add-new': 'addNewPosition'
     'click .btn-edit-record': 'editPositioin'
     'click .btn-delete-item': 'deleteItem'
+    'submit': 'seachBy'
 
   initialize: ->
     @collection.on('reset', @addPositionsList, @)
@@ -12,13 +13,21 @@ class App.PosPanel extends App.MainTemplate
 
   render: ->
     @$el.html @template.render({pageName: 'List of Positions'})
+    seachFormTpl = new EJS url: 'templates/position_page/filter_area_tpl.ejs'
+    $('.filter-form').prepend seachFormTpl.render()
+
     @
 
-  reloadGrid: ->
+  reloadGrid: (gridData) ->
     $('#grid').html(' ')
     gridTpl = new EJS url: 'templates/position_page/positions-grid.ejs'
 
-    App.gridData = @collection.toJSON()
+    if gridData
+      App.gridData = gridData
+    else
+      @$el.find('#search-by').val() # Clear search
+      App.gridData = @collection.toJSON()
+
     $('#grid').html(gridTpl.render())
     Log 'Grid is reloaded..'
 
@@ -26,7 +35,7 @@ class App.PosPanel extends App.MainTemplate
   addPositionsList: (positions) ->
     Log('Show Grid')
     gridTpl = new EJS url: 'templates/position_page/positions-grid.ejs'
-
+    @$el.find('#search-by').val() # Clear search
     App.gridData = positions.toJSON()
     $('#grid').html(gridTpl.render())
     @
@@ -58,4 +67,22 @@ class App.PosPanel extends App.MainTemplate
     $('#for-modal').html addWindow.el
     $('#popup-window').modal();
     Log 'Edit position window is open'
+
+  seachBy:(eve) ->
+    eve.preventDefault()
+
+    formValue = @$el.find('.filter-form input').val()
+    positions = @collection.toJSON()
+
+    searchData = _.filter positions, (obj) ->
+      keys = null
+      _.each obj, (val, key) ->
+        if obj[key] == formValue
+          keys = key
+      obj[keys] == formValue
+
+    if searchData.length > 0
+      @reloadGrid(searchData)
+    else
+      @reloadGrid()
 

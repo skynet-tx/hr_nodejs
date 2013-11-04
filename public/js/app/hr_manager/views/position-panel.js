@@ -21,7 +21,8 @@
     PosPanel.prototype.events = {
       'click #add-new': 'addNewPosition',
       'click .btn-edit-record': 'editPositioin',
-      'click .btn-delete-item': 'deleteItem'
+      'click .btn-delete-item': 'deleteItem',
+      'submit': 'seachBy'
     };
 
     PosPanel.prototype.initialize = function() {
@@ -30,19 +31,29 @@
     };
 
     PosPanel.prototype.render = function() {
+      var seachFormTpl;
       this.$el.html(this.template.render({
         pageName: 'List of Positions'
       }));
+      seachFormTpl = new EJS({
+        url: 'templates/position_page/filter_area_tpl.ejs'
+      });
+      $('.filter-form').prepend(seachFormTpl.render());
       return this;
     };
 
-    PosPanel.prototype.reloadGrid = function() {
+    PosPanel.prototype.reloadGrid = function(gridData) {
       var gridTpl;
       $('#grid').html(' ');
       gridTpl = new EJS({
         url: 'templates/position_page/positions-grid.ejs'
       });
-      App.gridData = this.collection.toJSON();
+      if (gridData) {
+        App.gridData = gridData;
+      } else {
+        this.$el.find('#search-by').val();
+        App.gridData = this.collection.toJSON();
+      }
       $('#grid').html(gridTpl.render());
       return Log('Grid is reloaded..');
     };
@@ -53,6 +64,7 @@
       gridTpl = new EJS({
         url: 'templates/position_page/positions-grid.ejs'
       });
+      this.$el.find('#search-by').val();
       App.gridData = positions.toJSON();
       $('#grid').html(gridTpl.render());
       return this;
@@ -96,6 +108,28 @@
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();
       return Log('Edit position window is open');
+    };
+
+    PosPanel.prototype.seachBy = function(eve) {
+      var formValue, positions, searchData;
+      eve.preventDefault();
+      formValue = this.$el.find('.filter-form input').val();
+      positions = this.collection.toJSON();
+      searchData = _.filter(positions, function(obj) {
+        var keys;
+        keys = null;
+        _.each(obj, function(val, key) {
+          if (obj[key] === formValue) {
+            return keys = key;
+          }
+        });
+        return obj[keys] === formValue;
+      });
+      if (searchData.length > 0) {
+        return this.reloadGrid(searchData);
+      } else {
+        return this.reloadGrid();
+      }
     };
 
     return PosPanel;
