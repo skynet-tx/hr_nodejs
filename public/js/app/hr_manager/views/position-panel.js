@@ -113,17 +113,20 @@
     PosPanel.prototype.seachBy = function(eve) {
       var formValue, positions, searchData;
       eve.preventDefault();
-      formValue = this.$el.find('.filter-form input').val();
+      formValue = this.$el.find('.filter-form input').val().toLowerCase();
       positions = this.collection.toJSON();
       searchData = _.filter(positions, function(obj) {
         var keys;
         keys = null;
         _.each(obj, function(val, key) {
-          if (obj[key] === formValue) {
+          if (obj[key].toString().toLowerCase() === formValue) {
             return keys = key;
           }
         });
-        return obj[keys] === formValue;
+        if (!obj[keys]) {
+          return false;
+        }
+        return obj[keys].toString().toLowerCase() === formValue;
       });
       if (searchData.length > 0) {
         return this.reloadGrid(searchData);

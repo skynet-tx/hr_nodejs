@@ -70,15 +70,16 @@ class App.PosPanel extends App.MainTemplate
   seachBy:(eve) ->
     eve.preventDefault()
 
-    formValue = @$el.find('.filter-form input').val()
+    formValue = @$el.find('.filter-form input').val().toLowerCase()
     positions = @collection.toJSON()
 
     searchData = _.filter positions, (obj) ->
       keys = null
       _.each obj, (val, key) ->
-        if obj[key] == formValue
+        if obj[key].toString().toLowerCase() == formValue
           keys = key
-      obj[keys] == formValue
+      return false if not obj[keys]
+      obj[keys].toString().toLowerCase() == formValue
 
     if searchData.length > 0
       @reloadGrid(searchData)
