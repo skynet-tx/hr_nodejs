@@ -34,6 +34,11 @@ $(function(){
 
         staff: function(){
             this.currentView ? this.currentView.close() : null;
+            requere([
+                'js/app/hr_manager/models/staff_model.js',
+                'js/app/hr_manager/collections/staff_collection.js'
+
+            ]);
 
             this.currentView = null; // TODO make view
             helper.selectMenuButton();
