@@ -19,6 +19,7 @@
     MainTemplate.prototype.close = function() {
       helper.log('Removed all events...');
       this.stopListening();
+      this.undelegateEvents();
       return $(this.el).empty();
     };
 

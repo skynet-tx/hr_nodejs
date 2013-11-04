@@ -15,7 +15,6 @@ class App.PosPanel extends App.MainTemplate
     @$el.html @template.render({pageName: 'List of Positions'})
     seachFormTpl = new EJS url: 'templates/position_page/filter_area_tpl.ejs'
     $('.filter-form').prepend seachFormTpl.render()
-
     @
 
   reloadGrid: (gridData) ->
