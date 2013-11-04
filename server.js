@@ -68,8 +68,30 @@ app.delete('/department/:id', function (req, res) {
 app.put('/department/:id',function (req, res){
     query_model.updateDepartment(req, res);
 });
-
-
+/**
+ * Get Staff list
+ */
+app.get('/staff-list', function (req, res) {
+    query_model.getStaff(req, res);
+});
+/**
+ * Add new Employee
+ */
+app.post('/employee', function (req, res) {
+    query_model.setEmployee(req, res);
+});
+/**
+ * Delete Employee
+ */
+app.delete('/employee/:id', function (req, res) {
+    query_model.deleteEmployee(req, res);
+});
+/**
+ * Update Department
+ */
+app.put('/employee/:id',function (req, res){
+    query_model.updateEmployee(req, res);
+});
 
 
 
