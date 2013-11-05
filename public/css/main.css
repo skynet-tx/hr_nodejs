@@ -1,3 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Ewert);
+@import url(http://fonts.googleapis.com/css?family=Vast+Shadow);
+body{
+    background: url('../img/brickwall_@2X.png');
+    height: 100%;
+}
 .main-menu{
     padding-left: 0;
     list-style-type: none;
@@ -19,4 +25,18 @@
 }
 .datepicker.dropdown-menu{
     z-index: 2000;
+}
+.login-page{
+    position: relative;
+    margin-top: 10%;
+}
+.login-page  h2, h3{
+    font-family: 'Ewert', cursive;
+    padding-bottom: 8px;
+}
+.login-form label, button {
+    font-family: 'Vast Shadow', cursive;
+}
+.btn-login{
+    color: #000000;
 }

@@ -2,23 +2,23 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/department_model.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/position_model.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/staff_collection.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/staff_model.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_page.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/postions_collection.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/departments_list_coll.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_edit_position.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/login_view.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/login_model.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/delete-alert-window.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/delete-deptm-alert-window.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_new_department.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/department_model.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/staff_collection.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/position_model.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/staff_model.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/postions_collection.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_page.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/departments_list_coll.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_edit_position.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/login_view.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/login_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/delete-alert-window.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/delete-deptm-alert-window.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_new_department.js" />
     </CLASSES>
     <SOURCES />
   </library>

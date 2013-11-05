@@ -20,6 +20,7 @@ $(function(){
             '(staff)': 'staff',
             'departmant': 'departmant',
             'positions': 'positions',
+            'login': 'login',
             '*path': 'notFound'
         },
 
@@ -89,6 +90,17 @@ $(function(){
             positions.fetch({reset: true});
             helper.selectMenuButton();
             Log('page: positions');
+        },
+
+        login: function() {
+            this.currentView ? this.currentView.remove() : null;
+            requere([
+                'js/app/hr_manager/models/login_model.js',
+                'js/app/hr_manager/views/login_view.js'
+            ]);
+
+            this.currentView = new App.LoginView
+            Log('Login page');
         },
 
         notFound: function(path) {
