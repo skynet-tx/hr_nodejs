@@ -28,9 +28,9 @@ body{
 }
 .login-page{
     position: relative;
-    margin-top: 20%;
+    margin-top: 10%;
 }
-.login-page  h2{
+.login-page  h2, h3{
     font-family: 'Ewert', cursive;
     padding-bottom: 8px;
 }
