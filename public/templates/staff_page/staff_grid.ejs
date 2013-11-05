@@ -7,14 +7,14 @@
                 models: {
                     fields: {
                         id: { type: "number" },
-                        name: {type: "string" },
-                        surname: {type: "string" },
+                        name: { type: "string", validation: { required: true} },
+                        surname: { type: "string", validation: { required: true} },
                         middle_name: {type: "string" },
                         birthday: {type: "date" },
-                        city: {type: "string" },
+                        city: { type: "string", validation: { required: true} },
                         department_id: { type: "number" },
                         position_id: { type: "number" },
-                        salary: { type: "number" },
+                        salary: validation: { type: "number", validation: required: true} },
                         date: {type: "date"}
                     }
                 }
@@ -25,11 +25,12 @@
         filterable: true,
         sortable: true,
         pageable: true,
+        resizable: true,
         columns: [
             {
                 field: "id",
                 title: "ID",
-                width: 10
+                width: 20
             },
             {
                 field: "name",
@@ -42,16 +43,11 @@
                 width: 60
             },
             {
-                field: "description",
-                title: "Description",
-                width: 160
-            },
-            {
                 field: "birthday",
                 title: "Birthday",
                 width: 40,
-                template: function(item){
-                return new Date(item.date).toLocaleString();
+                format: "{0:MM/dd/yyyy}"
+
             },
             {
                 field: "city",
@@ -61,26 +57,25 @@
             {
                 field: "department_id",
                 title: "D_ID",
-                width: 10
+                width: 20
             },
                 {
                  field: "position_id",
                  title: "P_ID",
-                 width: 10
+                 width: 20
             },
 
             {
                  field: "salary",
                  title: "Salary",
-                 width: 30
+                 width: 40
             },
 
             {
                  field: "date",
                  title: "Date",
                  width: 80,
-                 template: function(item){
-                    return new Date(item.date).toLocaleString();
+                 format: "{0:MM/dd/yyyy}"
                  }
             },
 
