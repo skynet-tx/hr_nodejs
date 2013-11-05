@@ -1,12 +1,14 @@
 class App.StaffModel extends Backbone.Model
-  urlRoot: location.origin + "/staff"
+  urlRoot: location.origin + "/employee"
   defaults:
-    name: 'Empty name'
+    id: null
+    name: null
     surname: null
+    middle_name: null
     birthday: null
     city: null
-    department: null
-    position: null
+    department_id: null
+    position_id: null
     salary: null
     startDate: null
     date: new Date()

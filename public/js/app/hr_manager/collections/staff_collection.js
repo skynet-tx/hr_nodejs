@@ -12,15 +12,22 @@
       return _ref;
     }
 
+    StaffColl.prototype.url = location.origin + '/staff-list';
+
+    StaffColl.prototype.model = App.StaffModel;
+
     return StaffColl;
 
   })(Backbone.Collection);
 
+<<<<<<< HEAD
   ({
     model: App.StaffModel,
     url: location.origin + '/staff-list'
   });
 
+=======
+>>>>>>> origin/master
 }).call(this);
 
 /*

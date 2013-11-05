@@ -27,8 +27,24 @@
     };
 
     LoginView.prototype.submitForm = function(eve) {
+      var formData;
       eve.preventDefault();
-      return Log('tap');
+      formData = this._serializeForm();
+      return Log(formData);
+    };
+
+    LoginView.prototype._serializeForm = function() {
+      var formData, formFields;
+      formFields = this.$el.find('.form-horizontal').serializeArray();
+      formData = {};
+      $.each(formFields, function(key, obj) {
+        if (!obj['value']) {
+          null;
+        }
+        return formData[obj['name']] = obj['value'];
+      });
+      formData['date'] = new Date();
+      return formData;
     };
 
     return LoginView;

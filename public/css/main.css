@@ -32,6 +32,8 @@ body{
 }
 .login-page  h2, h3{
     font-family: 'Ewert', cursive;
+}
+.login-page  h2{
     padding-bottom: 8px;
 }
 .login-form label, button {

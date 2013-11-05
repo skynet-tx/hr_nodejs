@@ -12,24 +12,14 @@
       return _ref;
     }
 
-    StaffModel.prototype.urlRoot = location.origin + "/staff";
+    StaffModel.prototype.urlRoot = location.origin + "/employee";
 
     StaffModel.prototype.defaults = {
-      name: 'Empty name',
+      id: null,
+      name: null,
       surname: null,
-      birthday: null,
-      city: null,
-      department: null,
-      position: null,
-      salary: null,
-      startDate: null,
-      date: new Date()
-    };
-
-    StaffModel.prototype.validate = function(attrs) {
-      if (attrs.name === 'Empty name' || !attrs.name) {
-        return 'Validation Error: Fill the Name field';
-      }
+      middle_name: null,
+      birthday: null
     };
 
     return StaffModel;
