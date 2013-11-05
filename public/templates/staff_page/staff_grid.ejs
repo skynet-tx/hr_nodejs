@@ -1,0 +1,102 @@
+<script>
+    var self = this;
+    $("#grid").kendoGrid({
+        dataSource: {
+            data: App.gridData,
+            schema: {
+                models: {
+                    fields: {
+                        id: { type: "number" },
+                        name: {type: "string" },
+                        surname: {type: "string" },
+                        middle_name: {type: "string" },
+                        birthday: {type: "date" },
+                        city: {type: "string" },
+                        department_id: { type: "number" },
+                        position_id: { type: "number" },
+                        salary: { type: "number" },
+                        date: {type: "date"}
+                    }
+                }
+            },
+            pageSize: 20
+        },
+        height: 430,
+        filterable: true,
+        sortable: true,
+        pageable: true,
+        columns: [
+            {
+                field: "id",
+                title: "ID",
+                width: 10
+            },
+            {
+                field: "name",
+                title: "Name",
+                width: 60
+            },
+            {
+                field: "middle_name",
+                title: "Middle Name",
+                width: 60
+            },
+            {
+                field: "description",
+                title: "Description",
+                width: 160
+            },
+            {
+                field: "birthday",
+                title: "Birthday",
+                width: 40,
+                template: function(item){
+                return new Date(item.date).toLocaleString();
+            },
+            {
+                field: "city",
+                title: "City",
+                width: 40
+            },
+            {
+                field: "department_id",
+                title: "D_ID",
+                width: 10
+            },
+                {
+                 field: "position_id",
+                 title: "P_ID",
+                 width: 10
+            },
+
+            {
+                 field: "salary",
+                 title: "Salary",
+                 width: 30
+            },
+
+            {
+                 field: "date",
+                 title: "Date",
+                 width: 80,
+                 template: function(item){
+                    return new Date(item.date).toLocaleString();
+                 }
+            },
+
+            {
+                width: 80,
+                template:function(items){
+                    return '<button  type="button" data-id="' + items.id + '" ' +
+                            'class="glyphicon glyphicon-edit btn btn-sm btn-info btn-edit-record">' +
+                            '</button>' +
+                            '&nbsp;' +
+                            '<button data-id="' + items.id + '" type="button" ' +
+                            'class="glyphicon glyphicon-remove btn btn-sm btn-danger btn-delete-item"></button>';
+
+                }
+            }
+        ],
+        editable: "inline"
+    });
+</script>
