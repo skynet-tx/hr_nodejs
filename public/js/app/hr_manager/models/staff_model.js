@@ -19,7 +19,13 @@
       name: null,
       surname: null,
       middle_name: null,
-      birthday: null
+      birthday: null,
+      city: null,
+      department_id: null,
+      position_id: null,
+      salary: null,
+      startDate: null,
+      date: new Date()
     };
 
     return StaffModel;
