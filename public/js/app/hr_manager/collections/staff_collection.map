@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "staff_collection.js",
+  "sourceRoot": "",
+  "sources": [
+    "staff_collection.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,GAAA,EAAA;KAAA;oSAAA;;CAAA,CAAM,CAAG;CACP;;;;;CAAA;;CAAA,EAAA,GAAK,EAAQ,KAAb;;CAAA,EACO,EAAP,KADA;;CAAA;;CAD0B,OAAQ;CAApC"
+}

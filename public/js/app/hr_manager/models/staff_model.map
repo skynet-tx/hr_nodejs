@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "staff_model.js",
+  "sourceRoot": "",
+  "sources": [
+    "staff_model.coffee"
+  ],
+  "names": [],
+  "mappings": ";AAAA;CAAA,GAAA,EAAA;KAAA;oSAAA;;CAAA,CAAM,CAAG;CACP;;;;;CAAA;;CAAA,EAAS,GAAA,CAAT,CAAiB,GAAjB;;CAAA,EAEE,KADF;CACE,CAAA,EAAA,EAAA;CAAA,CACM,EAAN,EAAA;CADA,CAES,EAFT,EAEA,CAAA;CAFA,CAGa,EAHb,EAGA,KAAA;CAHA,CAIU,EAJV,EAIA,EAAA;CANF,KAAA;;CAAA;;CAD2B,OAAQ;CAArC"
+}
