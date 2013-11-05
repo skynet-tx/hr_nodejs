@@ -38,12 +38,14 @@ $(function(){
             requere([
                 'js/app/hr_manager/models/staff_model.js',
                 'js/app/hr_manager/collections/staff_collection.js',
+                'js/app/hr_manager/views/staff_panel.js'
             ]);
 
             var staffList = new App.StaffColl();
-            staffList.fetch({reset: true});
+            this.currentView = new App.StaffPanel({collection: staffList});
+            this.currentView.render();
 
-            this.currentView = null; // TODO make view
+            staffList.fetch({reset: true});
             helper.selectMenuButton();
             Log('page: staff');
         },

@@ -12,6 +12,66 @@
       return _ref;
     }
 
+    StaffPanel.prototype.el = '.list-container';
+
+    StaffPanel.prototype.template = new EJS({
+      url: 'templates/general/list-conainer.ejs'
+    });
+
+    StaffPanel.prototype.events = {
+      'click #add-new': 'addNewEmployee',
+      'click .btn-edit-record': 'editEmployee',
+      'click .btn-delete-item': 'deleteEmployee',
+      'submit': 'seachBy'
+    };
+
+    StaffPanel.prototype.initialize = function() {
+      Log('staff-list');
+      this.collection.on('sync', this.addStaffList, this);
+      return this.collection.on('destroy', this.reloadGrid, this);
+    };
+
+    StaffPanel.prototype.render = function() {
+      var seachFormTpl;
+      this.$el.html(this.template.render({
+        pageName: 'Staff list'
+      }));
+      seachFormTpl = new EJS({
+        url: 'templates/position_page/filter_area_tpl.ejs'
+      });
+      $('.filter-form').prepend(seachFormTpl.render());
+      return this;
+    };
+
+    StaffPanel.prototype.reloadGrid = function(gridData) {
+      var gridTpl;
+      $('#grid').html(' ');
+      gridTpl = new EJS({
+        url: 'templates/staff_page/staff_grid.ejs'
+      });
+      if (gridData) {
+        App.gridData = gridData;
+      } else {
+        this.$el.find('#search-by').val();
+        App.gridData = this.collection.toJSON();
+      }
+      $('#grid').html(gridTpl.render());
+      return Log('Grid is reloaded..');
+    };
+
+    StaffPanel.prototype.addStaffList = function(staff) {
+      var gridTpl;
+      Log('Show Grid');
+      gridTpl = new EJS({
+        url: 'templates/staff_page/staff_grid.ejs'
+      });
+      Log('Grid');
+      this.$el.find('#search-by').val();
+      App.gridData = staff.toJSON();
+      $('#grid').html(gridTpl.render());
+      return this;
+    };
+
     return StaffPanel;
 
   })(App.MainTemplate);
