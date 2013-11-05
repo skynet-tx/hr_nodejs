@@ -1,21 +1,13 @@
 <script>
     var self = this;
-    $("#grid").kendoGrid({
+    $(#grid).kendoGrid ({
         dataSource: {
             data: App.gridData,
             schema: {
                 models: {
                     fields: {
                         id: { type: "number" },
-                        name: { type: "string", validation: { required: true} },
-                        surname: { type: "string", validation: { required: true} },
-                        middle_name: {type: "string" },
-                        birthday: {type: "date" },
-                        city: { type: "string", validation: { required: true} },
-                        department_id: { type: "number" },
-                        position_id: { type: "number" },
-                        salary: validation: { type: "number", validation: required: true} },
-                        date: {type: "date"}
+                        name: { type: "string" }
                     }
                 }
             },
@@ -24,8 +16,8 @@
         height: 430,
         filterable: true,
         sortable: true,
-        pageable: true,
         resizable: true,
+        pageable: true,
         columns: [
             {
                 field: "id",
@@ -36,62 +28,8 @@
                 field: "name",
                 title: "Name",
                 width: 60
-            },
-            {
-                field: "middle_name",
-                title: "Middle Name",
-                width: 60
-            },
-            {
-                field: "birthday",
-                title: "Birthday",
-                width: 40,
-                format: "{0:MM/dd/yyyy}"
-
-            },
-            {
-                field: "city",
-                title: "City",
-                width: 40
-            },
-            {
-                field: "department_id",
-                title: "D_ID",
-                width: 20
-            },
-                {
-                 field: "position_id",
-                 title: "P_ID",
-                 width: 20
-            },
-
-            {
-                 field: "salary",
-                 title: "Salary",
-                 width: 40
-            },
-
-            {
-                 field: "date",
-                 title: "Date",
-                 width: 80,
-                 format: "{0:MM/dd/yyyy}"
-                 }
-            },
-
-            {
-                width: 80,
-                template:function(items){
-                    return '<button  type="button" data-id="' + items.id + '" ' +
-                            'class="glyphicon glyphicon-edit btn btn-sm btn-info btn-edit-record">' +
-                            '</button>' +
-                            '&nbsp;' +
-                            '<button data-id="' + items.id + '" type="button" ' +
-                            'class="glyphicon glyphicon-remove btn btn-sm btn-danger btn-delete-item"></button>';
-
-                }
             }
-        ],
-        editable: "inline"
+        ]
     });
 </script>
+

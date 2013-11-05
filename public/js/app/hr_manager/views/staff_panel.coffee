@@ -9,7 +9,7 @@ class App.StaffPanel extends App.MainTemplate
 
   initialize: ->
     Log 'staff-list'
-    @collection.on('sync', @addStaffList, @)
+    @collection.on('reset', @addStaffList, @)
     @collection.on('destroy', @reloadGrid, @)
 
   render: ->
@@ -21,7 +21,6 @@ class App.StaffPanel extends App.MainTemplate
   reloadGrid: (gridData) ->
     $('#grid').html(' ')
     gridTpl = new EJS url: 'templates/staff_page/staff_grid.ejs'
-
     if gridData
       App.gridData = gridData
     else
@@ -35,6 +34,7 @@ class App.StaffPanel extends App.MainTemplate
     Log('Show Grid')
     gridTpl = new EJS url: 'templates/staff_page/staff_grid.ejs'
     Log('Grid')
+    Log staff.toJSON()
 
     @$el.find('#search-by').val() # Clear search
     App.gridData = staff.toJSON()

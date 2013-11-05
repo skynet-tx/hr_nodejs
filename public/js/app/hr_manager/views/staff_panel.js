@@ -27,7 +27,7 @@
 
     StaffPanel.prototype.initialize = function() {
       Log('staff-list');
-      this.collection.on('sync', this.addStaffList, this);
+      this.collection.on('reset', this.addStaffList, this);
       return this.collection.on('destroy', this.reloadGrid, this);
     };
 
@@ -66,6 +66,7 @@
         url: 'templates/staff_page/staff_grid.ejs'
       });
       Log('Grid');
+      Log(staff.toJSON());
       this.$el.find('#search-by').val();
       App.gridData = staff.toJSON();
       $('#grid').html(gridTpl.render());
