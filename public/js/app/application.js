@@ -38,7 +38,10 @@ $(function(){
             requere([
                 'js/app/hr_manager/models/staff_model.js',
                 'js/app/hr_manager/collections/staff_collection.js',
-                'js/app/hr_manager/views/staff_panel.js'
+                'js/app/hr_manager/views/staff_panel.js',
+                'js/app/core/views/popupWindow.js',
+                'js/app/hr_manager/views/add_new_staff.js'
+
             ]);
 
             var staffList = new App.StaffColl();

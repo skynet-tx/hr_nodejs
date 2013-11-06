@@ -8,6 +8,7 @@
                     fields: {
                         id: { type: "number" },
                         department: { type: "string" },
+                        pasition: { type: "string" },
                         name: { type: "string" },
                         middle_name: { type: "string" },
                         surname: { type: "string"},
@@ -37,9 +38,14 @@
 
             },
             {
+                field: "pasition",
+                title: "Position",
+                width: 20
+            },
+            {
                 field: "name",
                 title: "Name",
-                width: 30
+                width: 25
             },
             {
                 field: "middle_name",
@@ -54,7 +60,7 @@
             {
                 field: "birthday",
                 title: "Birthday",
-                width: 30,
+                width: 25,
                 template: function(item){
                     return new Date(item.date).toLocaleString();
                 }
@@ -73,7 +79,7 @@
             {
                 field: "date",
                 title: "Start date",
-                width: 30,
+                width: 25,
                 template: function(item){
                     return new Date(item.date).toLocaleString();
                 }

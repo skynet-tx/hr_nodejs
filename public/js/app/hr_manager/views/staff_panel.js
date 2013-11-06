@@ -73,6 +73,16 @@
       return this;
     };
 
+    StaffPanel.prototype.addNewEmployee = function() {
+      var addWindow;
+      addWindow = new App.addNewStaff({
+        collection: this.collection
+      });
+      $('#for-modal').html(addWindow.el);
+      $('#popup-window').modal();
+      return Log('Add new staff window is open');
+    };
+
     return StaffPanel;
 
   })(App.MainTemplate);

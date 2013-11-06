@@ -40,3 +40,10 @@ class App.StaffPanel extends App.MainTemplate
     App.gridData = staff.toJSON()
     $('#grid').html(gridTpl.render())
     @
+
+  addNewEmployee: ->
+    addWindow = new App.addNewStaff
+      collection: @collection
+    $('#for-modal').html addWindow.el
+    $('#popup-window').modal();
+    Log 'Add new staff window is open'
