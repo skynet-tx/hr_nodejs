@@ -7,6 +7,7 @@
                 models: {
                     fields: {
                         id: { type: "number" },
+                        department: { type: "string" },
                         name: { type: "string" },
                         middle_name: { type: "string" },
                         surname: { type: "string"},
@@ -30,6 +31,11 @@
                 title: "ID",
                 width: 7
             },
+            {   field: "department",
+                title: "Department",
+                width: 30
+
+            },
             {
                 field: "name",
                 title: "Name",
@@ -49,7 +55,10 @@
                 field: "birthday",
                 title: "Birthday",
                 width: 30,
-                format: "{0:MM/dd/yyyy}"
+                template: function(item){
+                    return new Date(item.date).toLocaleString();
+                }
+
             },
             {
                 field: "city",
@@ -64,7 +73,10 @@
             {
                 field: "date",
                 title: "Start date",
-                width: 30
+                width: 30,
+                template: function(item){
+                    return new Date(item.date).toLocaleString();
+                }
             },
             {
                 width: 24,
