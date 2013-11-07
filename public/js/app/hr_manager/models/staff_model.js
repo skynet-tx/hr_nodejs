@@ -28,6 +28,12 @@
       date: new Date()
     };
 
+    StaffModel.prototype.validate = function(attrs) {
+      if (attrs.name === 'Empty name' || !attrs.name) {
+        return 'Validation Error: Fill the Name field';
+      }
+    };
+
     return StaffModel;
 
   })(Backbone.Model);

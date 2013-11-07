@@ -20,9 +20,46 @@
       url: 'templates/general/main-page-tpl.ejs'
     });
 
+    StaffPage.prototype.events = {
+      'click .btn-logout': 'logout'
+    };
+
+    StaffPage.prototype.initialize = function(attrs) {
+      this.positions = attrs.positions;
+      this.model.on('sync', this.setAuth, this);
+      return this.render();
+    };
+
     StaffPage.prototype.render = function() {
       this.$el.html(this.template.render());
       return this;
+    };
+
+    StaffPage.prototype.setAuth = function(model) {
+      App.isLoggin = model.get('isLoggin');
+      if (!App.isLoggin) {
+        return App.startApp.navigate('/login', {
+          trigger: true,
+          replace: true
+        });
+      }
+    };
+
+    StaffPage.prototype.logout = function() {
+      var _this = this;
+      this.model.set({
+        isLoggin: false
+      });
+      return this.model.save(this.model.toJSON(), {
+        error: function() {
+          return $('#alert-message').html(alertTpl.render({
+            alertMessage: "Server Error. Can't save your data. Try again later."
+          }));
+        },
+        success: function() {
+          return window.location.href = location.origin + '/#login';
+        }
+      });
     };
 
     return StaffPage;

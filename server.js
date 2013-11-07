@@ -130,6 +130,12 @@ app.get('/check-app', function(req, res){
     res.send({isLoggin: app.set('email')});
 });
 
+app.post('/check-app', function(req, res){
+    app.set('email', null);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send({success: true});
+});
 
 /**
  * Login
