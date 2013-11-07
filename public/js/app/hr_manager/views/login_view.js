@@ -23,21 +23,26 @@
     };
 
     LoginView.prototype.render = function() {
-      return this.$el.html(this.template.render());
+      this.$el.html(this.template.render());
+      setTimeout(function() {
+        if (App.isLoggin) {
+          return window.location.href = location.origin + '/';
+        }
+      }, 300);
+      return this;
     };
 
     LoginView.prototype.submitForm = function(eve) {
       var formData;
       eve.preventDefault();
-      formData = this._serializeForm();
-      return Log(formData);
+      formData = this._serializeForm($(eve.target));
+      return this._onLogin(formData);
     };
 
-    LoginView.prototype._serializeForm = function() {
-      var formData, formFields;
-      formFields = this.$el.find('.form-horizontal').serializeArray();
+    LoginView.prototype._serializeForm = function(formFields) {
+      var formData;
       formData = {};
-      $.each(formFields, function(key, obj) {
+      $.each(formFields.serializeArray(), function(key, obj) {
         if (!obj['value']) {
           null;
         }
@@ -45,6 +50,36 @@
       });
       formData['date'] = new Date();
       return formData;
+    };
+
+    LoginView.prototype._onLogin = function(formData) {
+      var alertTpl,
+        _this = this;
+      alertTpl = new EJS({
+        url: 'templates/general/alert-danger-tpl.ejs'
+      });
+      this.model.set(formData);
+      this.model.on('invalid', function(model, error) {
+        return $('#alert-message').html(alertTpl.render({
+          alertMessage: error
+        }));
+      });
+      return this.model.save(this.model.toJSON(), {
+        error: function(model, xhr, options) {
+          var errorMessage;
+          errorMessage = "Server Error. Can't save your data. Try again later.";
+          if (xhr.responseJSON && xhr.responseJSON.error && xhr.responseJSON.error.message) {
+            errorMessage = xhr.responseJSON.error.message;
+          }
+          return $('#alert-message').html(alertTpl.render({
+            alertMessage: errorMessage
+          }));
+        },
+        success: function() {
+          Log('Login success!');
+          return window.location.href = location.origin + '/';
+        }
+      });
     };
 
     return LoginView;

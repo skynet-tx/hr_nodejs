@@ -13,7 +13,7 @@ App = {
     Controller: {}
 };
 
-$(function(){
+$(function () {
     App.Start = Backbone.Router.extend({
         currentView: null,
         routes: {
@@ -24,18 +24,35 @@ $(function(){
             '*path': 'notFound'
         },
 
-        initialize: function(){
-            this.loadAppPage();
+        initialize: function () {
+                this.loadAppPage();
         },
 
-        loadAppPage: function(){
-            requere('js/app/hr_manager/views/staff_page.js');
-            new App.StaffPage();
+        loadAppPage: function () {
+            requere([
+                'js/app/hr_manager/models/add_edit_employee.js',
+
+                'js/app/hr_manager/models/app_model.js',
+                'js/app/hr_manager/views/staff_page.js'
+            ]);
+            var editModel = new App.AddEditEmployee();
+            editModel.fetch();
+
+
+            var model = new App.ApplicationModel();
+            model.fetch();
+
+            new App.StaffPage({model: model});
         },
 
-        staff: function(){
+        staff: function () {
+            if ($('.container.main-page').length < 1) {
+                this.loadAppPage();
+            }
+
             this.currentView ? this.currentView.close() : null;
             requere([
+                'js/app/hr_manager/models/app_model.js',
                 'js/app/hr_manager/models/staff_model.js',
                 'js/app/hr_manager/collections/staff_collection.js',
                 'js/app/hr_manager/views/staff_panel.js',
@@ -54,8 +71,7 @@ $(function(){
         },
 
 
-
-        departmant: function() {
+        departmant: function () {
             this.currentView ? this.currentView.close() : null;
             requere([
                 'js/app/hr_manager/models/department_model.js',
@@ -76,7 +92,7 @@ $(function(){
             Log('page: departmant');
         },
 
-        positions: function() {
+        positions: function () {
             this.currentView ? this.currentView.close() : null;
             requere([
                 'js/app/hr_manager/models/position_model.js',
@@ -99,18 +115,18 @@ $(function(){
             Log('page: positions');
         },
 
-        login: function() {
+        login: function () {
             this.currentView ? this.currentView.remove() : null;
             requere([
                 'js/app/hr_manager/models/login_model.js',
                 'js/app/hr_manager/views/login_view.js'
             ]);
-
-            this.currentView = new App.LoginView
+            var loginModel = new App.LoginModel();
+            this.currentView = new App.LoginView({model: loginModel});
             Log('Login page');
         },
 
-        notFound: function(path) {
+        notFound: function (path) {
             alert('Sorry! There is no content here.');
         }
     });

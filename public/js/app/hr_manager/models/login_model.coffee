@@ -3,8 +3,8 @@ class App.LoginModel extends Backbone.Model
   defaults:
     'email': null
     'password': null
-    'isRemember': false
+    'date': new Date()
 
   validate: (attrs) ->
-    if not attrs.email and not attrs.password
+    if not attrs.email or not attrs.password
       'Validation Error: Fill the Email or Password'

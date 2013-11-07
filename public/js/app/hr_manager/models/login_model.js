@@ -17,11 +17,11 @@
     LoginModel.prototype.defaults = {
       'email': null,
       'password': null,
-      'isRemember': false
+      'date': new Date()
     };
 
     LoginModel.prototype.validate = function(attrs) {
-      if (!attrs.email && !attrs.password) {
+      if (!attrs.email || !attrs.password) {
         return 'Validation Error: Fill the Email or Password';
       }
     };

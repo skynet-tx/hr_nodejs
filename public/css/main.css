@@ -42,3 +42,8 @@ body{
 .btn-login{
     color: #000000;
 }
+.btn-logout{
+    position: absolute;
+    right: 0;
+    top: 10px;
+}
