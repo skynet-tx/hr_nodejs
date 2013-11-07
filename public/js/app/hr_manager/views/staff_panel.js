@@ -74,9 +74,12 @@
     };
 
     StaffPanel.prototype.addNewEmployee = function() {
-      var addWindow;
+      var addWindow, selectModel;
+      selectModel = new App.AddEditEmployee;
+      selectModel.fetch();
       addWindow = new App.addNewStaff({
-        collection: this.collection
+        collection: this.collection,
+        model: selectModel
       });
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();

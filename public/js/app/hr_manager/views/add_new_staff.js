@@ -16,21 +16,30 @@
       url: 'templates/general/modal-tpl.ejs'
     });
 
-    addNewStaff.prototype.model = new App.StaffModel;
+    addNewStaff.prototype.staffModel = new App.StaffModel;
 
     addNewStaff.prototype.initialize = function() {
-      return this.render();
+      return this.model.on('sync', this.showForm, this);
     };
 
-    addNewStaff.prototype.render = function() {
-      var formTpl;
+    addNewStaff.prototype.render = function(model) {
+      return Log(model);
+    };
+
+    addNewStaff.prototype.showForm = function(model) {
+      var editionParams, formTpl;
+      Log(model.toJSON());
+      editionParams = model.toJSON();
       formTpl = new EJS({
         url: 'templates/staff_page/add_employee.ejs'
       });
       Log('The ADD window is opened');
       return this.$el.html(this.template.render({
         modalTitle: 'Add New Employee',
-        modalBody: formTpl.render()
+        modalBody: formTpl.render({
+          position: editionParams.positions,
+          department: editionParams.departments
+        })
       }));
     };
 

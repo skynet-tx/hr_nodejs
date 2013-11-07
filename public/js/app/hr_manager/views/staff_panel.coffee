@@ -42,8 +42,12 @@ class App.StaffPanel extends App.MainTemplate
     @
 
   addNewEmployee: ->
+    selectModel = new App.AddEditEmployee
+    selectModel.fetch()
+
     addWindow = new App.addNewStaff
       collection: @collection
+      model: selectModel
     $('#for-modal').html addWindow.el
     $('#popup-window').modal();
     Log 'Add new staff window is open'

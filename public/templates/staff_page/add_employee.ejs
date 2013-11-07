@@ -21,31 +21,27 @@
         <div class="col-lg-7">
              <input type="text" name="name" class="form-control" id="inputCity" placeholder="Enter city">
         </div>
+        <label for="inputDepartment" class="col-lg-4 control-label">Department</label>
+        <div class="col-lg-7">
+            <select name="departments" class="form-control" id="inputDepartment" placeholder="Enter Department">
+                <% for(var i=0; i<department.length; i++) {%>
+                <option value="<%= department[i]["departmentId"]%>"><%= department[i]["departmentName"] %></option>
+                <% } %>
+            </select>
+        </div>
         <label for="inputPosition" class="col-lg-4 control-label">Position</label>
         <div class="col-lg-7">
-            <input type="text" name="name" class="form-control" id="inputPosition" placeholder="Enter Position">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="inputDepartment" class="col-lg-4 control-label">Department</label>
-        <div class="col-lg-4">
-            <select name="departments.id" class="form-control" id="inputDepartment" placeholder="Enter Department">
-                <option value="1">Reserve</option>
-                <option value="2">Логистика</option>
-                <option value="3">Бухгалтерия</option>
-                <option value="4">ОПП</option>
+            <select name="positions" class="form-control">
+                <% for(var i=0; i<position.length; i++) {%>
+                <option value="<%= position[i]["positionId"]%>"><%= position[i]["positionsName"] %> (<li value="<%= position[i]["positionId"]%>"><%= position[i]["positionsSkill"] %>)</option>
+                <% } %>
             </select>
         </div>
-    </div>
-    <div class="form-group">
         <label for="inputSkill" class="col-lg-4 control-label">Skills</label>
-        <div class="col-lg-4">
-            <select name="skill" class="form-control" id="inputSkill" placeholder="Enter Skills">
-                <option value="1"></option>
-                <option value="2"></option>
-                <option value="3"></option>
-                <option value="4"></option>
-            </select>
+        <div class="col-lg-7">
+
+
+             <input type="text" name="positions" class="form-control" placeholder="" disabled>
         </div>
     </div>
 </form>
