@@ -35,9 +35,6 @@ $(function () {
                 'js/app/hr_manager/models/app_model.js',
                 'js/app/hr_manager/views/staff_page.js'
             ]);
-            var editModel = new App.AddEditEmployee();
-            editModel.fetch();
-
 
             var model = new App.ApplicationModel();
             model.fetch();

@@ -9,32 +9,17 @@ var express = require('express'),
     port = process.env.PORT || 3000,
     path = require("path"),
     application_root = __dirname,
-    mysql = require('mysql').createPool({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'hr_db',
-        timezone: 'UTC+2'
-    }),
-    MySQLStore = require('connect-mysql')(express),
     query_model = require('app_models/query_model.js');
 
 // Config
 app.configure(function () {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
-    app.use(app.router);
     app.use(express.static(path.join(__dirname, "public")));
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
-    app.use(express.bodyParser());
-//    app.use(express.cookieParser());
-//    app.use(express.session({
-//        secret: 'supersecretkeygoeshere',
-//        cookie: {maxAge: new Date(Date.now() + 3600000)}, // 1 hour
-//        maxAge: new Date(Date.now() + 3600000), // 1 hour
-//        store: new MySQLStore({ client: mysql})
-//    }));
+    app.use(express.cookieParser());
+    app.use(express.cookieSession({secret : 'My super password'}));
 });
 
 
@@ -127,12 +112,11 @@ app.get('/add-edit-employee', function(req, res){
  */
 app.get('/check-app', function(req, res){
     res.setHeader('Content-Type', 'application/json');
-    res.send({isLoggin: app.set('email')});
+    res.send({isLoggin: req.session.email, authorizedAs: req.session.success });
 });
 
 app.post('/check-app', function(req, res){
-    app.set('email', null);
-
+    req.session = null;
     res.setHeader('Content-Type', 'application/json');
     res.send({success: true});
 });
@@ -151,30 +135,14 @@ app.get('/logout', function(req, res){
     });
 });
 
-app.get('/login', function(req, res){
-    res.redirect('/#login');
-});
 
 app.post('/login-page', function(req, res){
     auth.authenticate(req.body.email, req.body.password, function(err, user){
         if (user) {
-//
-//            // Regenerate session when signing in
-//            // to prevent fixation
-//            req.session.regenerate(function(){
-//                // Store the user's primary key
-//                // in the session store to be retrieved,
-//                // or in this case the entire user object
-//                req.session.email = email;
-//                req.session.success = 'Authenticated as ' + user.email;
-//
-//                res.setHeader('Content-Type', 'application/json');
-//                res.send({success: true});
-//            });
-//                req.session.email = 'my';
-
-//            app.set('authorized ', user.email);
-            app.set('email', user.email);
+            // Regenerate session when signing in
+            // to prevent fixation
+            req.session.email = user.email;
+            req.session.success = 'Authenticated as ' + user.email;
 
             res.setHeader('Content-Type', 'application/json');
             res.send({success: true});

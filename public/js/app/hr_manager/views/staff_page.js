@@ -37,6 +37,7 @@
 
     StaffPage.prototype.setAuth = function(model) {
       App.isLoggin = model.get('isLoggin');
+      this.setAuthorizedAs(model.get('authorizedAs'));
       if (!App.isLoggin) {
         return App.startApp.navigate('/login', {
           trigger: true,
@@ -60,6 +61,10 @@
           return window.location.href = location.origin + '/#login';
         }
       });
+    };
+
+    StaffPage.prototype.setAuthorizedAs = function(email) {
+      return this.$el.find('.authorizedAs').text(email);
     };
 
     return StaffPage;

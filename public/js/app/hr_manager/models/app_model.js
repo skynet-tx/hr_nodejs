@@ -15,7 +15,8 @@
     ApplicationModel.prototype.urlRoot = location.origin + "/check-app";
 
     ApplicationModel.prototype.defaults = {
-      isLoggin: null
+      isLoggin: null,
+      authorizedAs: null
     };
 
     return ApplicationModel;
