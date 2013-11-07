@@ -18,7 +18,8 @@ class App.StaffPage extends App.MainTemplate
     return @
 
   setAuth: (model) ->
-    App.isLoggin = model.get('isLoggin');
+    App.isLoggin = model.get('isLoggin')
+    @setAuthorizedAs(model.get('authorizedAs'))
     if not App.isLoggin
       App.startApp.navigate('/login', {trigger: true, replace: true})
 
@@ -31,3 +32,6 @@ class App.StaffPage extends App.MainTemplate
 
       success: =>
         window.location.href = location.origin + '/#login'
+
+  setAuthorizedAs: (email) ->
+    @$el.find('.authorizedAs').text(email);
