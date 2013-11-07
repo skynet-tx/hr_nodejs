@@ -1,13 +1,19 @@
 <script>
     var self = this;
-    $(#grid).kendoGrid ({
+    $("#grid").kendoGrid ({
         dataSource: {
             data: App.gridData,
             schema: {
                 models: {
                     fields: {
                         id: { type: "number" },
-                        name: { type: "string" }
+                        name: { type: "string" },
+                        middle_name: { type: "string" },
+                        surname: { type: "string"},
+                        birthday: { type: "date"},
+                        city: { type: "string"},
+                        salary: { type: "number"},
+                        date: { type: "date"}
                     }
                 }
             },
@@ -22,12 +28,54 @@
             {
                 field: "id",
                 title: "ID",
-                width: 20
+                width: 7
             },
             {
                 field: "name",
                 title: "Name",
-                width: 60
+                width: 30
+            },
+            {
+                field: "middle_name",
+                title: "Middle name",
+                width: 30
+            },
+            {
+                field: "surname",
+                title: "Surname",
+                width: 30
+            },
+            {
+                field: "birthday",
+                title: "Birthday",
+                width: 30,
+                format: "{0:MM/dd/yyyy}"
+            },
+            {
+                field: "city",
+                title: "City",
+                width: 25
+            },
+            {
+                field: "salary",
+                title: "Salary",
+                width: 20
+            },
+            {
+                field: "date",
+                title: "Start date",
+                width: 30
+            },
+            {
+                width: 24,
+                template:function(items){
+                    return '<button type="button" data-id="' + items.id + '" ' +
+                    'class="glyphicon glyphicon-edit btn btn-sm btn-info btn-edit-record">' +
+                    '</button>' +
+                    '&nbsp;' +
+                    '<button data-id="' + items.id + '" type="button" ' +
+                    'class="glyphicon glyphicon-remove btn btn-sm btn-danger btn-delete-item"></button>';
+                }
             }
         ]
     });
