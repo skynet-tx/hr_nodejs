@@ -70,7 +70,7 @@ class App.PosPanel extends App.MainTemplate
   seachBy:(eve) ->
     eve.preventDefault()
 
-    formValue = @$el.find('.filter-form input').val().toLowerCase()
+    formValue = @$el.find('.filter-form input').val().toLowerCase().trim()
     positions = @collection.toJSON()
 
     searchData = _.filter positions, (obj) ->

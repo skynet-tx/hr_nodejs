@@ -6,6 +6,7 @@
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/app_model.js" />
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_page.js" />
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/position-panel.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -13,6 +14,7 @@
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_page.js" />
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/app_model.js" />
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/position-panel.js" />
     </CLASSES>
     <SOURCES />
   </library>
