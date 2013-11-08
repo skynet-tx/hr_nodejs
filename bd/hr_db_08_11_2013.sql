@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Ноя 08 2013 г., 15:50
+-- Время создания: Ноя 08 2013 г., 18:27
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -127,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
+  `salt` varchar(45) NOT NULL,
   `hash` varchar(255) NOT NULL,
   `created` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -137,9 +138,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `hash`, `created`) VALUES
-(1, 'Admin', 'admin@adm.com', '21232f297a57a5a743894a0e4a801fc3', '2013-10-30 10:00:00'),
-(2, 'manager', 'manager@adm.com', '1d0258c2440a8d19e716292b231e3190', '2013-10-30 10:00:00');
+INSERT INTO `users` (`id`, `name`, `email`, `salt`, `hash`, `created`) VALUES
+(1, 'Admin', 'adm@adm.com', '121212', 'JYPuR5YKGEIoteFamiA+y0fpBSFAdRP73qcU6sf3EdCvEt5DKmpxOP6pLPjfWRN+S7KserFXZYNTsxxOybgduiEQVUrC0Lc+Vb0Z3o50B/ja21QCDb3zCve2XjJs0y5GxkVlE3lSh5B7fHiZdYdnqJveW8azjSrfJFn8t8Nd4pU=', '2013-10-30 10:00:00'),
+(2, 'manager', 'manager@adm.com', '', '1d0258c2440a8d19e716292b231e3190', '2013-10-30 10:00:00');
 
 DELIMITER $$
 --
