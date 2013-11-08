@@ -14,7 +14,6 @@ class App.DepPanel extends App.MainTemplate
     @collection.on('destroy', @reloadGrid, @)
 
   render: ->
-    Log 'here'
     @$el.html @template.render({pageName: 'List of Departments'})
     @
 

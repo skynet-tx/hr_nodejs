@@ -113,7 +113,7 @@
     PosPanel.prototype.seachBy = function(eve) {
       var formValue, positions, searchData;
       eve.preventDefault();
-      formValue = this.$el.find('.filter-form input').val().toLowerCase();
+      formValue = this.$el.find('.filter-form input').val().toLowerCase().trim();
       positions = this.collection.toJSON();
       searchData = _.filter(positions, function(obj) {
         var keys;

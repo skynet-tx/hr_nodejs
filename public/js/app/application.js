@@ -40,13 +40,11 @@ $(function () {
             model.fetch();
 
             new App.StaffPage({model: model});
+            Log('Init main page');
         },
 
         staff: function () {
-            if ($('.container.main-page').length < 1) {
-                this.loadAppPage();
-            }
-
+            this.reloadMainPage();
             this.currentView ? this.currentView.close() : null;
             requere([
                 'js/app/hr_manager/models/app_model.js',
@@ -75,6 +73,7 @@ $(function () {
 
 
         departmant: function () {
+            this.reloadMainPage();
             this.currentView ? this.currentView.close() : null;
             requere([
                 'js/app/hr_manager/models/department_model.js',
@@ -96,6 +95,7 @@ $(function () {
         },
 
         positions: function () {
+            this.reloadMainPage();
             this.currentView ? this.currentView.close() : null;
             requere([
                 'js/app/hr_manager/models/position_model.js',
@@ -131,6 +131,12 @@ $(function () {
 
         notFound: function (path) {
             alert('Sorry! There is no content here.');
+        },
+
+        reloadMainPage: function(){
+            if ($('.container.main-page').length < 1)
+                this.loadAppPage();
+
         }
     });
 

@@ -31,7 +31,6 @@
     };
 
     DepPanel.prototype.render = function() {
-      Log('here');
       this.$el.html(this.template.render({
         pageName: 'List of Departments'
       }));
