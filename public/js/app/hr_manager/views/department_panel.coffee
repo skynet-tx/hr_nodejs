@@ -3,10 +3,9 @@ class App.DepPanel extends App.MainTemplate
   template: new EJS url: 'templates/general/list-conainer.ejs'
   events:
     'click #add-new': 'addNewDepartment'
-    'click .btn-edit-record': 'editPositioin'
+    'click .btn-edit-record': 'editDepartment'
     'click .btn-delete-item': 'deleteItem'
-
-
+    'submit': 'seachBy'
 
   initialize: ->
     Log 'departments'
@@ -15,16 +14,22 @@ class App.DepPanel extends App.MainTemplate
 
   render: ->
     @$el.html @template.render({pageName: 'List of Departments'})
+    seachFormTpl = new EJS url: 'templates/position_page/filter_area_tpl.ejs'
+    $('.filter-form').prepend seachFormTpl.render()
     @
 
-  reloadGrid: ->
+  reloadGrid: (gridData) ->
     $('#grid').html(' ')
     gridTpl = new EJS url: 'templates/department_page/department-grid.ejs'
 
-    App.gridData = @collection.toJSON()
+    if gridData
+      App.gridData = gridData
+    else
+      @$el.find('#search-by').val()
+      App.gridData = @collection.toJSON()
+
     $('#grid').html(gridTpl.render())
     Log 'Grid is reloaded..'
-
 
 
   addDepartmentList: (departments) ->
@@ -44,7 +49,8 @@ class App.DepPanel extends App.MainTemplate
     $('#popup-window').modal();
     Log 'Add new department window open';
 
-  editPositioin: (eve)  ->
+  editDepartment: (eve)  ->
+    Log "Edit button clicked"
     recordId = $(eve.target).attr 'data-id'
     department = @collection.findWhere id: parseInt(recordId, 10)
 

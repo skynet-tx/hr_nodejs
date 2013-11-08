@@ -16,13 +16,17 @@
       url: 'templates/general/modal-tpl.ejs'
     });
 
+    addNewStaff.prototype.isEdit = false;
+
     addNewStaff.prototype.staffModel = new App.StaffModel;
 
     addNewStaff.prototype.events = {
+      'click #form-save': 'eventSelection',
       "change #inputPosition": "fillSkills"
     };
 
-    addNewStaff.prototype.initialize = function() {
+    addNewStaff.prototype.initialize = function(params) {
+      this.isEdit = params.isEdit;
       return this.model.on('sync', this.showForm, this);
     };
 
@@ -31,20 +35,37 @@
     };
 
     addNewStaff.prototype.showForm = function(model) {
-      var formTpl;
+      var employeeSurname, formTpl;
       Log(model.toJSON());
       this.editionParams = model.toJSON();
       formTpl = new EJS({
         url: 'templates/staff_page/add_employee.ejs'
       });
-      Log('The ADD window is opened');
-      return this.$el.html(this.template.render({
-        modalTitle: 'Add New Employee',
-        modalBody: formTpl.render({
-          position: this.editionParams.positions,
-          department: this.editionParams.departments
-        })
-      }));
+      if (!this.isEdit) {
+        Log('The ADD window is opened');
+        this.$el.html(this.template.render({
+          modalTitle: 'Add New Employee',
+          modalBody: formTpl.render({
+            position: this.editionParams.positions,
+            department: this.editionParams.departments
+          })
+        }));
+      } else {
+        employeeSurname = this.staffModel.get('surname');
+        this.$el.html(this.template.render({
+          modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"',
+          modalBody: formTpl.render()
+        }));
+      }
+      return this;
+    };
+
+    addNewStaff.prototype.eventSelection = function(eve) {
+      if (!this.isEdit) {
+        return this.saveNewEmployee(eve);
+      } else {
+        return this.editRecord(eve);
+      }
     };
 
     addNewStaff.prototype.fillSkills = function(eve) {
@@ -56,6 +77,49 @@
       });
       Log(position);
       return this.$el.find('#inputSkill').val(helper.ucfirst(position.positionsSkill));
+    };
+
+    addNewStaff.prototype.saveNewEmployee = function(eve) {
+      var alertTpl,
+        _this = this;
+      eve.preventDefault();
+      alertTpl = new EJS({
+        url: 'templates/general/alert-danger-tpl.ejs'
+      });
+      this.staffModel.set(this._serializeForm());
+      this.staffModel.on('invalid', function(model, error) {
+        return $('#alert-message').html(alertTpl.render({
+          alertMessage: error
+        }));
+      });
+      return this.staffModel.save(this.staffModel.toJSON(), {
+        error: function() {
+          return $('#alert-message').html(alertTpl.render({
+            alertMessage: "Server Error. Can't save your data. Try again later."
+          }));
+        },
+        success: function() {
+          $('#popup-window').staffModel('hide');
+          Log('Add new position window was closed');
+          return _this.collection.fetch({
+            reset: true
+          });
+        }
+      });
+    };
+
+    addNewStaff.prototype._serializeForm = function() {
+      var formData, formFields;
+      formFields = this.$el.find('#add-employee-form').serializeArray();
+      formData = {};
+      $.each(formFields, function(key, obj) {
+        if (!obj['value']) {
+          null;
+        }
+        return formData[obj['name']] = obj['value'];
+      });
+      formData['date'] = new Date();
+      return formData;
     };
 
     return addNewStaff;

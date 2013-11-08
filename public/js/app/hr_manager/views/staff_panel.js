@@ -20,7 +20,7 @@
 
     StaffPanel.prototype.events = {
       'click #add-new': 'addNewEmployee',
-      'click .btn-edit-record': 'editEmployee',
+      'click .btn-edit-record2': 'editEmployee',
       'click .btn-delete-item': 'deleteEmployee',
       'submit': 'seachBy'
     };
@@ -84,6 +84,23 @@
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();
       return Log('Add new staff window is open');
+    };
+
+    StaffPanel.prototype.editEmployee = function(eve) {
+      var addWindow, employee, recordId;
+      Log("Edit button clicked");
+      recordId = $(eve.target).attr('data-id');
+      employee = this.collection.findWhere({
+        id: parseInt(recordId, 10)
+      });
+      addWindow = new App.addNewStaff({
+        model: employee,
+        collection: this.collection,
+        isEdit: true
+      });
+      $('#for-modal').html(addWindow.el);
+      $('#popup-window').modal();
+      return Log('Edit employee window is open');
     };
 
     return StaffPanel;

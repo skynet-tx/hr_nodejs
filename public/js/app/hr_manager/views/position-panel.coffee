@@ -3,7 +3,7 @@ class App.PosPanel extends App.MainTemplate
   template: new EJS url: 'templates/general/list-conainer.ejs'
   events:
     'click #add-new': 'addNewPosition'
-    'click .btn-edit-record': 'editPositioin'
+    'click .btn-edit-record': 'editPosition'
     'click .btn-delete-item': 'deleteItem'
     'submit': 'seachBy'
 
@@ -54,7 +54,7 @@ class App.PosPanel extends App.MainTemplate
     $('#popup-window').modal()
     Log 'Delet alert window is open'
 
-  editPositioin: (eve)  ->
+  editPosition: (eve)  ->
     recordId = $(eve.target).attr 'data-id'
     position = @collection.findWhere id: parseInt(recordId, 10)
 

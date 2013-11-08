@@ -1,12 +1,16 @@
 class App.addNewStaff extends App.PopupWondow
+
   template: new EJS url: 'templates/general/modal-tpl.ejs'
+  isEdit: false
   staffModel: new App.StaffModel
 
   events:
+    'click #form-save': 'eventSelection'
     "change #inputPosition": "fillSkills"
 
 
-  initialize: ->
+  initialize: (params) ->
+    @isEdit = params.isEdit
     @model.on('sync', @showForm, @)
 
 
@@ -17,37 +21,69 @@ class App.addNewStaff extends App.PopupWondow
     Log model.toJSON()
     @editionParams = model.toJSON()
     formTpl = new EJS url: 'templates/staff_page/add_employee.ejs'
-    Log 'The ADD window is opened'
-    @$el.html @template.render
-      modalTitle: 'Add New Employee'
-      modalBody: formTpl.render
-        position: @editionParams.positions
-        department: @editionParams.departments
+#    listDep = @_getSelectDept()
+#    listPos = @_getSelectPost()
+
+    if not @isEdit
+      Log 'The ADD window is opened'
+      @$el.html @template.render
+        modalTitle: 'Add New Employee'
+        modalBody: formTpl.render
+          position: @editionParams.positions
+          department: @editionParams.departments
+#        @$el.find('.dep-list').html(list)
+    else
+      employeeSurname = @staffModel.get 'surname'
+      @$el.html @template.render
+        modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"'
+        modalBody: formTpl.render()
+#      @$el.find('.dep-list').html(list)
+#      @_fiilFormValues()
+    @
+
+  eventSelection: (eve) ->
+    if not @isEdit
+      @saveNewEmployee eve
+    else
+      @editRecord eve
 
   fillSkills: (eve) ->
     Log "change"
-#    skill = $('#inputSkill').val()
-
-#    skill = @$el.find("select option:selected").each() ->
-#
-
-#    skill = @$el.find("select option:selected").each() =>
-#      @val()== @el.get('skills')
-
-
-#    Log skill
-#    @$el.find('#inputPosition').val()
-#    @$el.find('#inputSkill').val(@$el.find('#inputPosition').val())
 
     positionId = $(eve.target).val()
-
-
     position = _.find @editionParams.positions, (Obj) ->
       parseInt(positionId, 10) is parseInt(Obj.positionId, 10)
 
     Log position
-
     @$el.find('#inputSkill').val helper.ucfirst position.positionsSkill
+
+  saveNewEmployee: (eve) ->
+    eve.preventDefault()
+    alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
+    @staffModel.set(@_serializeForm())
+    @staffModel.on 'invalid', (model, error) =>
+      $('#alert-message').html(alertTpl.render alertMessage: error)
+    @staffModel.save @staffModel.toJSON(),
+      error: ->
+        $('#alert-message').html alertTpl.render
+          alertMessage: "Server Error. Can't save your data. Try again later."
+
+      success: =>
+        $('#popup-window').staffModel 'hide'
+        Log('Add new position window was closed')
+        @collection.fetch({reset: true})
+
+  _serializeForm: ->
+    formFields = @$el.find('#add-employee-form').serializeArray()
+    formData = {}
+
+    $.each formFields,(key, obj)  ->
+      null if not obj['value']
+      formData[obj['name']] = obj['value']
+
+    formData['date'] = new Date()
+    formData
+
 
 
 

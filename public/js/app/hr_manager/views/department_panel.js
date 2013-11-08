@@ -20,8 +20,9 @@
 
     DepPanel.prototype.events = {
       'click #add-new': 'addNewDepartment',
-      'click .btn-edit-record': 'editPositioin',
-      'click .btn-delete-item': 'deleteItem'
+      'click .btn-edit-record': 'editDepartment',
+      'click .btn-delete-item': 'deleteItem',
+      'submit': 'seachBy'
     };
 
     DepPanel.prototype.initialize = function() {
@@ -31,19 +32,29 @@
     };
 
     DepPanel.prototype.render = function() {
+      var seachFormTpl;
       this.$el.html(this.template.render({
         pageName: 'List of Departments'
       }));
+      seachFormTpl = new EJS({
+        url: 'templates/position_page/filter_area_tpl.ejs'
+      });
+      $('.filter-form').prepend(seachFormTpl.render());
       return this;
     };
 
-    DepPanel.prototype.reloadGrid = function() {
+    DepPanel.prototype.reloadGrid = function(gridData) {
       var gridTpl;
       $('#grid').html(' ');
       gridTpl = new EJS({
         url: 'templates/department_page/department-grid.ejs'
       });
-      App.gridData = this.collection.toJSON();
+      if (gridData) {
+        App.gridData = gridData;
+      } else {
+        this.$el.find('#search-by').val();
+        App.gridData = this.collection.toJSON();
+      }
       $('#grid').html(gridTpl.render());
       return Log('Grid is reloaded..');
     };
@@ -70,8 +81,9 @@
       return Log('Add new department window open');
     };
 
-    DepPanel.prototype.editPositioin = function(eve) {
+    DepPanel.prototype.editDepartment = function(eve) {
       var addWindow, department, recordId;
+      Log("Edit button clicked");
       recordId = $(eve.target).attr('data-id');
       department = this.collection.findWhere({
         id: parseInt(recordId, 10)

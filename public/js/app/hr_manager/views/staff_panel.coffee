@@ -3,7 +3,7 @@ class App.StaffPanel extends App.MainTemplate
   template: new EJS url: 'templates/general/list-conainer.ejs'
   events:
     'click #add-new': 'addNewEmployee'
-    'click .btn-edit-record': 'editEmployee'
+    'click .btn-edit-record2': 'editEmployee'
     'click .btn-delete-item': 'deleteEmployee'
     'submit': 'seachBy'
 
@@ -51,3 +51,18 @@ class App.StaffPanel extends App.MainTemplate
     $('#for-modal').html addWindow.el
     $('#popup-window').modal();
     Log 'Add new staff window is open'
+
+
+  editEmployee: (eve)  ->
+    Log "Edit button clicked"
+    recordId = $(eve.target).attr 'data-id'
+    employee = @collection.findWhere id: parseInt(recordId, 10)
+
+    addWindow = new App.addNewStaff
+      model: employee
+      collection: @collection
+      isEdit: true
+
+    $('#for-modal').html addWindow.el
+    $('#popup-window').modal();
+    Log 'Edit employee window is open'

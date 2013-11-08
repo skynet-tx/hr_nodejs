@@ -20,7 +20,7 @@
 
     PosPanel.prototype.events = {
       'click #add-new': 'addNewPosition',
-      'click .btn-edit-record': 'editPositioin',
+      'click .btn-edit-record': 'editPosition',
       'click .btn-delete-item': 'deleteItem',
       'submit': 'seachBy'
     };
@@ -94,7 +94,7 @@
       return Log('Delet alert window is open');
     };
 
-    PosPanel.prototype.editPositioin = function(eve) {
+    PosPanel.prototype.editPosition = function(eve) {
       var addWindow, position, recordId;
       recordId = $(eve.target).attr('data-id');
       position = this.collection.findWhere({
