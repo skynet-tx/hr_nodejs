@@ -31,17 +31,15 @@
         </div>
         <label for="inputPosition" class="col-lg-4 control-label">Position</label>
         <div class="col-lg-7">
-            <select name="positions" class="form-control">
+            <select name="positions" class="form-control" id="inputPosition">
                 <% for(var i=0; i<position.length; i++) {%>
-                <option value="<%= position[i]["positionId"]%>"><%= position[i]["positionsName"] %> (<li value="<%= position[i]["positionId"]%>"><%= position[i]["positionsSkill"] %>)</option>
+                <option value="<%= position[i]["positionId"]%>"><%= position[i]["positionsName"] %> (<li value="<%= position[i]["positionId"]%>"><%= position[i][id="positionsSkill"] %>)</option>
                 <% } %>
             </select>
         </div>
         <label for="inputSkill" class="col-lg-4 control-label">Skills</label>
         <div class="col-lg-7">
-
-
-             <input type="text" name="positions" class="form-control" placeholder="" disabled>
+            <input type="text" class="form-control" id="inputSkill" disabled>
         </div>
     </div>
 </form>

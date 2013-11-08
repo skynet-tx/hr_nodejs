@@ -18,6 +18,10 @@
 
     addNewStaff.prototype.staffModel = new App.StaffModel;
 
+    addNewStaff.prototype.events = {
+      "change #inputPosition": "fillSkills"
+    };
+
     addNewStaff.prototype.initialize = function() {
       return this.model.on('sync', this.showForm, this);
     };
@@ -27,9 +31,9 @@
     };
 
     addNewStaff.prototype.showForm = function(model) {
-      var editionParams, formTpl;
+      var formTpl;
       Log(model.toJSON());
-      editionParams = model.toJSON();
+      this.editionParams = model.toJSON();
       formTpl = new EJS({
         url: 'templates/staff_page/add_employee.ejs'
       });
@@ -37,10 +41,21 @@
       return this.$el.html(this.template.render({
         modalTitle: 'Add New Employee',
         modalBody: formTpl.render({
-          position: editionParams.positions,
-          department: editionParams.departments
+          position: this.editionParams.positions,
+          department: this.editionParams.departments
         })
       }));
+    };
+
+    addNewStaff.prototype.fillSkills = function(eve) {
+      var position, positionId;
+      Log("change");
+      positionId = $(eve.target).val();
+      position = _.find(this.editionParams.positions, function(Obj) {
+        return parseInt(positionId, 10) === parseInt(Obj.positionId, 10);
+      });
+      Log(position);
+      return this.$el.find('#inputSkill').val(helper.ucfirst(position.positionsSkill));
     };
 
     return addNewStaff;
