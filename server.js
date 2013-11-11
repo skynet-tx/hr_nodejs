@@ -108,15 +108,38 @@ app.get('/add-edit-employee', function(req, res){
 });
 
 /**
+ * Get managers and Admins of app
+ */
+app.get('/adm/users-list', function (req, res) {
+    if(req.session.role !== 'admin'){
+        res.setHeader('Content-Type', 'application/json');
+        res.send({success: false});
+    } else {
+        query_model.getUsers(req, res);
+    }
+});
+
+
+
+
+
+/**
  * Check app on user exists
  */
 app.get('/check-app', function(req, res){
+    res.setHeader("Set-Cookie", ["role=" + req.session.role + "", "language=javascript"]);
     res.setHeader('Content-Type', 'application/json');
-    res.send({isLoggin: req.session.email, authorizedAs: req.session.success });
+    res.send({
+        isLoggin: req.session.email,
+        authorizedAs: req.session.success,
+        role: req.session.role
+//        role: 'manager'
+    });
 });
 
 app.post('/check-app', function(req, res){
     req.session = null;
+
     res.setHeader('Content-Type', 'application/json');
     res.send({success: true});
 });
@@ -143,6 +166,7 @@ app.post('/login-page', function(req, res){
             // to prevent fixation
             req.session.email = user.email;
             req.session.success = 'Authenticated as ' + user.email;
+            req.session.role = user.role;
 
             res.setHeader('Content-Type', 'application/json');
             res.send({success: true});

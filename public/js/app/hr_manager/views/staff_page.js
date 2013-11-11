@@ -36,14 +36,15 @@
     };
 
     StaffPage.prototype.setAuth = function(model) {
-      App.isLoggin = model.get('isLoggin');
-      this.setAuthorizedAs(model.get('authorizedAs'));
-      if (!App.isLoggin) {
-        return App.startApp.navigate('/login', {
+      this.isLoggin = model.get('isLoggin');
+      if (!this.isLoggin) {
+        App.startApp.navigate('/login', {
           trigger: true,
           replace: true
         });
       }
+      this._setAuthorizedAs(model.get('authorizedAs'));
+      return this._setSettingsLink(model.get('role'));
     };
 
     StaffPage.prototype.logout = function() {
@@ -63,8 +64,17 @@
       });
     };
 
-    StaffPage.prototype.setAuthorizedAs = function(email) {
+    StaffPage.prototype._setAuthorizedAs = function(email) {
       return this.$el.find('.authorizedAs').text(email);
+    };
+
+    StaffPage.prototype._setSettingsLink = function(role) {
+      var linkTpl;
+      linkTpl = '<a href="/#adm/settings" class="btn btn-link glyphicon glyphicon-wrench btn-settings"></a>';
+      if (role === 'admin') {
+        this.$el.find('.page-settings').append(linkTpl);
+        return App.checkIsAdmin = true;
+      }
     };
 
     return StaffPage;

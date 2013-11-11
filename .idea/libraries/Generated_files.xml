@@ -2,21 +2,39 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/user_model.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/staff_model.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/app_model.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/settings_panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_edit_user.js" />
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_edit_position.js" />
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/login_model.js" />
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_page.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/app_model.js" />
-        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
         <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/position-panel.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_new_staff.js" />
+        <item url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/users_collection.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/setting_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/settings_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/setting_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/settings_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/user_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/staff_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/settings_panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/app_model.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_edit_user.js" />
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_edit_position.js" />
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/login_model.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/models/app_model.js" />
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/staff_page.js" />
-      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/department_panel.js" />
       <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/position-panel.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/views/add_new_staff.js" />
+      <root url="file://$PROJECT_DIR$/public/js/app/hr_manager/collections/users_collection.js" />
     </CLASSES>
     <SOURCES />
   </library>
