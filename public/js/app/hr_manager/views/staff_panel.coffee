@@ -51,13 +51,15 @@ class App.StaffPanel extends App.MainTemplate
 
 
   editEmployee: (eve)  ->
-    Log "Edit button clicked"
+    selectModel = new App.AddEditEmployee()
+    selectModel.fetch()
+
     recordId = $(eve.target).attr 'data-id'
-    staffModel = @collection.findWhere id: parseInt(recordId, 10)
 
     addWindow = new App.addNewStaff
-      model: staffModel
       collection: @collection
+      model: selectModel
+      recordId: recordId
       isEdit: true
 
     $('#for-modal').html addWindow.el

@@ -12,7 +12,7 @@ class App.addNewStaff extends App.PopupWondow
   initialize: (params) ->
     @isEdit = params.isEdit
     @model.on('sync', @showForm, @)
-
+    @recordId = params.recordId
 
   render: (model) ->
     Log model
@@ -21,8 +21,8 @@ class App.addNewStaff extends App.PopupWondow
     Log model.toJSON()
     @editionParams = model.toJSON()
     formTpl = new EJS url: 'templates/staff_page/add_employee.ejs'
-#    listDep = @_getSelectDept()
-#    listPos = @_getSelectPost()
+
+    Log @editionParams
 
     if not @isEdit
       Log 'The ADD window is opened'
@@ -33,11 +33,11 @@ class App.addNewStaff extends App.PopupWondow
           department: @editionParams.departments
 
     else
-      employeeSurname = @staffModel.get 'surname'
+      @model = @collection.findWhere id: parseInt(@recordId, 10)
+      employeeSurname = @model.get 'surname'
       @$el.html @template.render
         modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"'
-        modalBody: formTpl.render()
-#      @$el.find('.dep-list').html(list)
+        modalBody: formTpl.render
           position: @editionParams.positions
           department: @editionParams.departments
       @_fiilFormValues()
@@ -89,8 +89,8 @@ class App.addNewStaff extends App.PopupWondow
   editRecord: (eve) ->
     eve.preventDefault()
     alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
-    @staffModel.set(@_serializeForm())
-    @staffModel.save @staffModel.toJSON(),
+    @model.set(@_serializeForm())
+    @model.save @model.toJSON(),
       error: ->
         $('#alert-message').html alertTpl.render
           alertMessage: "Server Error. Can't save your data. Try again later."
@@ -101,15 +101,29 @@ class App.addNewStaff extends App.PopupWondow
         @collection.fetch({reset: true})
 
   _fiilFormValues: ->
+    Log @recordId
+    @model = @collection.findWhere id: parseInt(@recordId, 10)
+
     form = @$el.find '#add-employee-form'
-    form.find('#inputName').val @staffModel.get 'name'
-    form.find('#inputMiddlename').val @staffModel.get 'middle_name'
-    form.find('#inputSurname').val @staffModel.get 'surname'
-    form.find('#inputBirthday').val @staffModel.get 'birthday'
-    form.find('#inputCity').val @staffModel.get 'city'
-    form.find('#inputSalary').val @staffModel.get 'salary'
-#    form.find('#inputDepartment').val @staffModel.get 'departments'
-#    form.find('#inputPosition').val @staffModel.get 'positions'
+    form.find('#inputName').val @model.get 'name'
+    form.find('#inputMiddlename').val @model.get 'middle_name'
+    form.find('#inputSurname').val @model.get 'surname'
+    form.find('#inputBirthday').val @model.get 'birthday'
+    form.find('#inputCity').val @model.get 'city'
+    form.find('#inputSalary').val @model.get 'salary'
+
+    position = _.find @editionParams.positions, (Obj) ->
+      parseInt($(position, 10).val()) is parseInt(Obj.positionId, 10)
+    form.find('#inputPosition').val position
+
+
+#    departmentId = _.find @editionParams.departments, (Obj) ->
+#      parseInt($(departmentId, 10).val()) is parseInt(Obj.departmentId, 10)
+#    form.find('#inputDepartment').val department
+
+
+
+
 
 
 

@@ -83,15 +83,14 @@
     };
 
     StaffPanel.prototype.editEmployee = function(eve) {
-      var addWindow, recordId, staffModel;
-      Log("Edit button clicked");
+      var addWindow, recordId, selectModel;
+      selectModel = new App.AddEditEmployee();
+      selectModel.fetch();
       recordId = $(eve.target).attr('data-id');
-      staffModel = this.collection.findWhere({
-        id: parseInt(recordId, 10)
-      });
       addWindow = new App.addNewStaff({
-        model: staffModel,
         collection: this.collection,
+        model: selectModel,
+        recordId: recordId,
         isEdit: true
       });
       $('#for-modal').html(addWindow.el);

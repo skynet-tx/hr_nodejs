@@ -27,7 +27,8 @@
 
     addNewStaff.prototype.initialize = function(params) {
       this.isEdit = params.isEdit;
-      return this.model.on('sync', this.showForm, this);
+      this.model.on('sync', this.showForm, this);
+      return this.recordId = params.recordId;
     };
 
     addNewStaff.prototype.render = function(model) {
@@ -41,6 +42,7 @@
       formTpl = new EJS({
         url: 'templates/staff_page/add_employee.ejs'
       });
+      Log(this.editionParams);
       if (!this.isEdit) {
         Log('The ADD window is opened');
         this.$el.html(this.template.render({
@@ -51,10 +53,13 @@
           })
         }));
       } else {
-        employeeSurname = this.staffModel.get('surname');
+        this.model = this.collection.findWhere({
+          id: parseInt(this.recordId, 10)
+        });
+        employeeSurname = this.model.get('surname');
         this.$el.html(this.template.render({
           modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"',
-          modalBody: formTpl.render()({
+          modalBody: formTpl.render({
             position: this.editionParams.positions,
             department: this.editionParams.departments
           })
@@ -132,8 +137,8 @@
       alertTpl = new EJS({
         url: 'templates/general/alert-danger-tpl.ejs'
       });
-      this.staffModel.set(this._serializeForm());
-      return this.staffModel.save(this.staffModel.toJSON(), {
+      this.model.set(this._serializeForm());
+      return this.model.save(this.model.toJSON(), {
         error: function() {
           return $('#alert-message').html(alertTpl.render({
             alertMessage: "Server Error. Can't save your data. Try again later."
@@ -150,14 +155,22 @@
     };
 
     addNewStaff.prototype._fiilFormValues = function() {
-      var form;
+      var form, position;
+      Log(this.recordId);
+      this.model = this.collection.findWhere({
+        id: parseInt(this.recordId, 10)
+      });
       form = this.$el.find('#add-employee-form');
-      form.find('#inputName').val(this.staffModel.get('name'));
-      form.find('#inputMiddlename').val(this.staffModel.get('middle_name'));
-      form.find('#inputSurname').val(this.staffModel.get('surname'));
-      form.find('#inputBirthday').val(this.staffModel.get('birthday'));
-      form.find('#inputCity').val(this.staffModel.get('city'));
-      return form.find('#inputSalary').val(this.staffModel.get('salary'));
+      form.find('#inputName').val(this.model.get('name'));
+      form.find('#inputMiddlename').val(this.model.get('middle_name'));
+      form.find('#inputSurname').val(this.model.get('surname'));
+      form.find('#inputBirthday').val(this.model.get('birthday'));
+      form.find('#inputCity').val(this.model.get('city'));
+      form.find('#inputSalary').val(this.model.get('salary'));
+      position = _.find(this.editionParams.positions, function(Obj) {
+        return parseInt($(position, 10).val()) === parseInt(Obj.positionId, 10);
+      });
+      return form.find('#inputPosition').val(position);
     };
 
     return addNewStaff;
