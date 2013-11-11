@@ -2,7 +2,7 @@ class App.addNewStaff extends App.PopupWondow
 
   template: new EJS url: 'templates/general/modal-tpl.ejs'
   isEdit: false
-  staffModel: new App.StaffModel
+  staffModel: new App.StaffModel()
 
   events:
     'click #form-save': 'eventSelection'
@@ -31,14 +31,16 @@ class App.addNewStaff extends App.PopupWondow
         modalBody: formTpl.render
           position: @editionParams.positions
           department: @editionParams.departments
-#        @$el.find('.dep-list').html(list)
+
     else
       employeeSurname = @staffModel.get 'surname'
       @$el.html @template.render
         modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"'
         modalBody: formTpl.render()
 #      @$el.find('.dep-list').html(list)
-#      @_fiilFormValues()
+          position: @editionParams.positions
+          department: @editionParams.departments
+      @_fiilFormValues()
     @
 
   eventSelection: (eve) ->
@@ -48,8 +50,6 @@ class App.addNewStaff extends App.PopupWondow
       @editRecord eve
 
   fillSkills: (eve) ->
-    Log "change"
-
     positionId = $(eve.target).val()
     position = _.find @editionParams.positions, (Obj) ->
       parseInt(positionId, 10) is parseInt(Obj.positionId, 10)
@@ -69,8 +69,8 @@ class App.addNewStaff extends App.PopupWondow
           alertMessage: "Server Error. Can't save your data. Try again later."
 
       success: =>
-        $('#popup-window').staffModel 'hide'
-        Log('Add new position window was closed')
+        $('#popup-window').modal 'hide'
+        Log('Add new employee window was closed')
         @collection.fetch({reset: true})
 
   _serializeForm: ->
@@ -84,6 +84,32 @@ class App.addNewStaff extends App.PopupWondow
     formData['date'] = new Date()
     formData
 
+
+
+  editRecord: (eve) ->
+    eve.preventDefault()
+    alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
+    @staffModel.set(@_serializeForm())
+    @staffModel.save @staffModel.toJSON(),
+      error: ->
+        $('#alert-message').html alertTpl.render
+          alertMessage: "Server Error. Can't save your data. Try again later."
+
+      success: =>
+        $('#popup-window').modal 'hide'
+        Log('Add new department window was closed')
+        @collection.fetch({reset: true})
+
+  _fiilFormValues: ->
+    form = @$el.find '#add-employee-form'
+    form.find('#inputName').val @staffModel.get 'name'
+    form.find('#inputMiddlename').val @staffModel.get 'middle_name'
+    form.find('#inputSurname').val @staffModel.get 'surname'
+    form.find('#inputBirthday').val @staffModel.get 'birthday'
+    form.find('#inputCity').val @staffModel.get 'city'
+    form.find('#inputSalary').val @staffModel.get 'salary'
+#    form.find('#inputDepartment').val @staffModel.get 'departments'
+#    form.find('#inputPosition').val @staffModel.get 'positions'
 
 
 

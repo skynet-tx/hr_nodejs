@@ -60,8 +60,6 @@ $(function () {
 
             ]);
 
-
-
             var staffList = new App.StaffColl();
             this.currentView = new App.StaffPanel({collection: staffList});
             this.currentView.render();

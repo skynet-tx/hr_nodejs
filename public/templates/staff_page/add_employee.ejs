@@ -7,23 +7,23 @@
         </div>
         <label for="inputMiddlename" class="col-lg-4 control-label">Middle name</label>
         <div class="col-lg-7">
-            <input type="text" name="name" class="form-control" id="inputMiddlename" placeholder="Enter middle name">
+            <input type="text" name="middle_name" class="form-control" id="inputMiddlename" placeholder="Enter middle name">
         </div>
         <label for="inputSurname" class="col-lg-4 control-label">Surname</label>
         <div class="col-lg-7">
-             <input type="text" name="name" class="form-control" id="inputSurname" placeholder="Enter surname">
+             <input type="text" name="surname" class="form-control" id="inputSurname" placeholder="Enter surname">
         </div>
         <label for="inputBirthday" class="col-lg-4 control-label">Birthday</label>
         <div class="col-lg-7">
-             <input type="date" name="name" class="form-control" id="inputBirthday">
+             <input type="date" name="birthday" class="form-control" id="inputBirthday">
         </div>
         <label for="inputCity" class="col-lg-4 control-label">City</label>
         <div class="col-lg-7">
-             <input type="text" name="name" class="form-control" id="inputCity" placeholder="Enter city">
+             <input type="text" name="city" class="form-control" id="inputCity" placeholder="Enter city">
         </div>
         <label for="inputDepartment" class="col-lg-4 control-label">Department</label>
         <div class="col-lg-7">
-            <select name="departments" class="form-control" id="inputDepartment" placeholder="Enter Department">
+            <select name="department_id" class="form-control" id="inputDepartment" placeholder="Enter Department">
                 <% for(var i=0; i<department.length; i++) {%>
                 <option value="<%= department[i]["departmentId"]%>"><%= department[i]["departmentName"] %></option>
                 <% } %>
@@ -31,7 +31,7 @@
         </div>
         <label for="inputPosition" class="col-lg-4 control-label">Position</label>
         <div class="col-lg-7">
-            <select name="positions" class="form-control" id="inputPosition">
+            <select name="position_id" class="form-control" id="inputPosition">
                 <% for(var i=0; i<position.length; i++) {%>
                 <option value="<%= position[i]["positionId"]%>"><%= position[i]["positionsName"] %> (<li value="<%= position[i]["positionId"]%>"><%= position[i][id="positionsSkill"] %>)</option>
                 <% } %>
@@ -40,6 +40,14 @@
         <label for="inputSkill" class="col-lg-4 control-label">Skills</label>
         <div class="col-lg-7">
             <input type="text" class="form-control" id="inputSkill" disabled>
+        </div>
+        <label for="inputSalary" class="col-lg-4 control-label">Salary</label>
+        <div class="col-lg-7">
+            <input type="text" name="salary" class="form-control" id="inputSalary" placeholder="Input Salary">
+        </div>
+        <label for="inputStartDate" class="col-lg-4 control-label">Start Date</label>
+        <div class="col-lg-7">
+            <input type="date" name="startDate" class="form-control" id="inputStartDate">
         </div>
     </div>
 </form>

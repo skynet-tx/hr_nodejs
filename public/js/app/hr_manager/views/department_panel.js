@@ -112,6 +112,31 @@
       return Log('Delet alert window is open');
     };
 
+    DepPanel.prototype.seachBy = function(eve) {
+      var departments, formValue, searchData;
+      eve.preventDefault();
+      formValue = this.$el.find('.filter-form input').val().toLowerCase().trim();
+      departments = this.collection.toJSON();
+      searchData = _.filter(departments, function(obj) {
+        var keys;
+        keys = null;
+        _.each(obj, function(val, key) {
+          if (obj[key].toString().toLowerCase() === formValue) {
+            return keys = key;
+          }
+        });
+        if (!obj[keys]) {
+          return false;
+        }
+        return obj[keys].toString().toLowerCase() === formValue;
+      });
+      if (searchData.length > 0) {
+        return this.reloadGrid(searchData);
+      } else {
+        return this.reloadGrid();
+      }
+    };
+
     return DepPanel;
 
   })(App.MainTemplate);

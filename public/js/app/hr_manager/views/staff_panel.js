@@ -26,7 +26,6 @@
     };
 
     StaffPanel.prototype.initialize = function() {
-      Log('staff-list');
       this.collection.on('reset', this.addStaffList, this);
       return this.collection.on('destroy', this.reloadGrid, this);
     };
@@ -61,12 +60,9 @@
 
     StaffPanel.prototype.addStaffList = function(staff) {
       var gridTpl;
-      Log('Show Grid');
       gridTpl = new EJS({
         url: 'templates/staff_page/staff_grid.ejs'
       });
-      Log('Grid');
-      Log(staff.toJSON());
       this.$el.find('#search-by').val();
       App.gridData = staff.toJSON();
       $('#grid').html(gridTpl.render());
@@ -87,20 +83,49 @@
     };
 
     StaffPanel.prototype.editEmployee = function(eve) {
-      var addWindow, employee, recordId;
+      var addWindow, recordId, staffModel;
       Log("Edit button clicked");
       recordId = $(eve.target).attr('data-id');
-      employee = this.collection.findWhere({
+      staffModel = this.collection.findWhere({
         id: parseInt(recordId, 10)
       });
       addWindow = new App.addNewStaff({
-        model: employee,
+        model: staffModel,
         collection: this.collection,
         isEdit: true
       });
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();
       return Log('Edit employee window is open');
+    };
+
+    StaffPanel.prototype.seachBy = function(eve) {
+      var formValue, searchData, staffList;
+      eve.preventDefault();
+      formValue = this.$el.find('.filter-form input').val().toLowerCase().trim();
+      staffList = this.collection.toJSON();
+      searchData = _.filter(staffList, function(obj) {
+        var keys;
+        Log('obj is here');
+        Log(obj);
+        keys = null;
+        _.each(obj, function(val, key) {
+          Log('key is here');
+          Log(key);
+          if (obj[key].toString().toLowerCase() === formValue) {
+            return keys = key;
+          }
+        });
+        if (!obj[keys]) {
+          return false;
+        }
+        return obj[keys].toString().toLowerCase() === formValue;
+      });
+      if (searchData.length > 0) {
+        return this.reloadGrid(searchData);
+      } else {
+        return this.reloadGrid();
+      }
     };
 
     return StaffPanel;

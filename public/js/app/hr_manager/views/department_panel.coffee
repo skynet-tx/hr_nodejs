@@ -70,3 +70,22 @@ class App.DepPanel extends App.MainTemplate
     $('#for-modal').html deleteAlertWindow.el
     $('#popup-window').modal()
     Log 'Delet alert window is open'
+
+  seachBy:(eve) ->
+    eve.preventDefault()
+
+    formValue = @$el.find('.filter-form input').val().toLowerCase().trim()
+    departments = @collection.toJSON()
+
+    searchData = _.filter departments, (obj) ->
+      keys = null
+      _.each obj, (val, key) ->
+        if obj[key].toString().toLowerCase() == formValue
+          keys = key
+      return false if not obj[keys]
+      obj[keys].toString().toLowerCase() == formValue
+
+    if searchData.length > 0
+      @reloadGrid(searchData)
+    else
+      @reloadGrid()

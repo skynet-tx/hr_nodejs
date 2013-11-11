@@ -18,7 +18,7 @@
 
     addNewStaff.prototype.isEdit = false;
 
-    addNewStaff.prototype.staffModel = new App.StaffModel;
+    addNewStaff.prototype.staffModel = new App.StaffModel();
 
     addNewStaff.prototype.events = {
       'click #form-save': 'eventSelection',
@@ -54,8 +54,12 @@
         employeeSurname = this.staffModel.get('surname');
         this.$el.html(this.template.render({
           modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"',
-          modalBody: formTpl.render()
+          modalBody: formTpl.render()({
+            position: this.editionParams.positions,
+            department: this.editionParams.departments
+          })
         }));
+        this._fiilFormValues();
       }
       return this;
     };
@@ -70,7 +74,6 @@
 
     addNewStaff.prototype.fillSkills = function(eve) {
       var position, positionId;
-      Log("change");
       positionId = $(eve.target).val();
       position = _.find(this.editionParams.positions, function(Obj) {
         return parseInt(positionId, 10) === parseInt(Obj.positionId, 10);
@@ -99,8 +102,8 @@
           }));
         },
         success: function() {
-          $('#popup-window').staffModel('hide');
-          Log('Add new position window was closed');
+          $('#popup-window').modal('hide');
+          Log('Add new employee window was closed');
           return _this.collection.fetch({
             reset: true
           });
@@ -120,6 +123,41 @@
       });
       formData['date'] = new Date();
       return formData;
+    };
+
+    addNewStaff.prototype.editRecord = function(eve) {
+      var alertTpl,
+        _this = this;
+      eve.preventDefault();
+      alertTpl = new EJS({
+        url: 'templates/general/alert-danger-tpl.ejs'
+      });
+      this.staffModel.set(this._serializeForm());
+      return this.staffModel.save(this.staffModel.toJSON(), {
+        error: function() {
+          return $('#alert-message').html(alertTpl.render({
+            alertMessage: "Server Error. Can't save your data. Try again later."
+          }));
+        },
+        success: function() {
+          $('#popup-window').modal('hide');
+          Log('Add new department window was closed');
+          return _this.collection.fetch({
+            reset: true
+          });
+        }
+      });
+    };
+
+    addNewStaff.prototype._fiilFormValues = function() {
+      var form;
+      form = this.$el.find('#add-employee-form');
+      form.find('#inputName').val(this.staffModel.get('name'));
+      form.find('#inputMiddlename').val(this.staffModel.get('middle_name'));
+      form.find('#inputSurname').val(this.staffModel.get('surname'));
+      form.find('#inputBirthday').val(this.staffModel.get('birthday'));
+      form.find('#inputCity').val(this.staffModel.get('city'));
+      return form.find('#inputSalary').val(this.staffModel.get('salary'));
     };
 
     return addNewStaff;
