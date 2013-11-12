@@ -96,6 +96,23 @@
       return Log('Delet alert window is open');
     };
 
+    Settings.prototype.editUser = function(eve) {
+      var editWindow, recordId, user;
+      eve.preventDefault();
+      recordId = $(eve.target).attr('data-id');
+      user = this.collection.findWhere({
+        id: parseInt(recordId, 10)
+      });
+      editWindow = new App.AddEditUser({
+        model: user,
+        collection: this.collection,
+        isEdit: true
+      });
+      $('#for-modal').html(editWindow.el);
+      $('#popup-window').modal();
+      return Log('Edit User window is open');
+    };
+
     return Settings;
 
   })(App.MainTemplate);

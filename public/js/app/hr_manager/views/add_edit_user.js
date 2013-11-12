@@ -110,15 +110,55 @@
         return formData[obj['name']] = obj['value'];
       });
       if (!formData['conf-password'] || formData['conf-password'] === !formData['password'] || formData['conf-password'].length < 4) {
-        $('#alert-message').html(alertTpl.render({
-          alertMessage: 'Passwords do not match'
-        }));
-        return false;
+        if (!this.isEdit) {
+          $('#alert-message').html(alertTpl.render({
+            alertMessage: 'Passwords do not match'
+          }));
+          return false;
+        } else {
+          formData['date'] = new Date();
+          return formData;
+        }
       } else {
         delete formData['conf-password'];
         formData['date'] = new Date();
         return formData;
       }
+    };
+
+    AddEditUser.prototype.editRecord = function(eve) {
+      var alertTpl,
+        _this = this;
+      eve.preventDefault();
+      alertTpl = new EJS({
+        url: 'templates/general/alert-danger-tpl.ejs'
+      });
+      this.model.set(this._serializeForm());
+      return this.model.save(this.model.changed, {
+        error: function() {
+          return $('#alert-message').html(alertTpl.render({
+            alertMessage: "Server Error. Can't save your data. Try again later."
+          }));
+        },
+        success: function() {
+          $('#popup-window').modal('hide');
+          Log('Add new position window was closed');
+          return _this.collection.fetch({
+            reset: true
+          });
+        }
+      });
+    };
+
+    AddEditUser.prototype._fiilFormValues = function() {
+      var form;
+      Log(this.model.toJSON());
+      form = this.$el.find('#add-edit-user-form');
+      form.find('#inputName').val(this.model.get('name'));
+      form.find('#inputEmail').val(this.model.get('email'));
+      form.find('#inputPosition').val(this.model.get('position'));
+      form.find('#inputFilial').val(this.model.get('filial'));
+      return form.find('#inputRole').val(this.model.get('role').toLowerCase());
     };
 
     return AddEditUser;

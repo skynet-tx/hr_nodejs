@@ -58,3 +58,17 @@ class App.Settings extends App.MainTemplate
     $('#for-modal').html deleteWindow.el
     $('#popup-window').modal()
     Log 'Delet alert window is open'
+
+  editUser: (eve) ->
+    eve.preventDefault()
+    recordId = $(eve.target).attr 'data-id'
+    user = @collection.findWhere id: parseInt(recordId, 10)
+
+    editWindow = new App.AddEditUser
+      model: user
+      collection: @collection
+      isEdit: true
+
+    $('#for-modal').html editWindow.el
+    $('#popup-window').modal();
+    Log 'Edit User window is open'

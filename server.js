@@ -196,6 +196,23 @@ app.post('/adm/user', function (req, res) {
 app.delete('/adm/user/:id', function (req, res) {
     query_model.deleteManagerAdmin(req, res);
 });
+/**
+ * Edit Admin or Manager record
+ */
+app.put('/adm/user/:id', function (req, res) {
+    if(!req.body.password){
+        query_model.updateUser(req, res);
+    } else {
+        auth.getCredentials(req.body.password, function (err, result) {
+            if (err) {
+                res.setHeader('Content-Type', 'application/json');
+                res.send({success: false});
+            } else {
+                query_model.updateUser(req, res, result);
+            }
+        });
+    }
+});
 
 
 app.listen(port, function () {
