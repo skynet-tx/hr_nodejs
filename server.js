@@ -190,6 +190,13 @@ app.post('/adm/user', function (req, res) {
     });
 });
 
+/**
+ * Delete Manager or Admin
+ */
+app.delete('/adm/user/:id', function (req, res) {
+    query_model.deleteManagerAdmin(req, res);
+});
+
 
 app.listen(port, function () {
     console.log('Server is ready. Listening on port ', port)

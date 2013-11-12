@@ -19,11 +19,12 @@
     });
 
     Settings.prototype.events = {
-      'click #add-new': 'addNewUser'
+      'click #add-new': 'addNewUser',
+      'click .btn-edit-record': 'editUser',
+      'click .btn-delete-item': 'deleteUser'
     };
 
     Settings.prototype.initialize = function() {
-      Log('staff-list');
       this.collection.on('reset', this.addStaffList, this);
       return this.collection.on('destroy', this.reloadGrid, this);
     };
@@ -46,7 +47,7 @@
       gridTpl = new EJS({
         url: 'templates/users/users-grid.ejs'
       });
-      if (gridData) {
+      if (gridData && gridData.hasOwnProperty('cid') === false) {
         App.gridData = gridData;
       } else {
         this.$el.find('#search-by').val();
@@ -62,7 +63,6 @@
       gridTpl = new EJS({
         url: 'templates/users/users-grid.ejs'
       });
-      Log('Grid');
       this.$el.find('#search-by').val();
       App.gridData = usersData.toJSON();
       $('#grid').html(gridTpl.render());
@@ -79,6 +79,21 @@
       $('#for-modal').html(addWindow.el);
       $('#popup-window').modal();
       return Log('Add new user window is open');
+    };
+
+    Settings.prototype.deleteUser = function(eve) {
+      var deleteWindow, model, recordId;
+      eve.preventDefault();
+      recordId = $(eve.target).attr('data-id');
+      model = this.collection.findWhere({
+        id: parseInt(recordId, 10)
+      });
+      deleteWindow = new App.DeleteUserWindow({
+        model: model
+      });
+      $('#for-modal').html(deleteWindow.el);
+      $('#popup-window').modal();
+      return Log('Delet alert window is open');
     };
 
     return Settings;

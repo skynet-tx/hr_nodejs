@@ -4,9 +4,10 @@ class App.Settings extends App.MainTemplate
 
   events:
     'click #add-new': 'addNewUser'
+    'click .btn-edit-record': 'editUser'
+    'click .btn-delete-item': 'deleteUser'
 
   initialize: ->
-    Log 'staff-list'
     @collection.on('reset', @addStaffList, @)
     @collection.on('destroy', @reloadGrid, @)
 
@@ -19,7 +20,8 @@ class App.Settings extends App.MainTemplate
   reloadGrid: (gridData) ->
     $('#grid').html(' ')
     gridTpl = new EJS url: 'templates/users/users-grid.ejs'
-    if gridData
+
+    if gridData and gridData.hasOwnProperty('cid') is false
       App.gridData = gridData
     else
       @$el.find('#search-by').val() # Clear search
@@ -31,11 +33,9 @@ class App.Settings extends App.MainTemplate
 
   addStaffList: (usersData) ->
     gridTpl = new EJS url: 'templates/users/users-grid.ejs'
-    Log('Grid')
 
     @$el.find('#search-by').val() # Clear search
     App.gridData = usersData.toJSON()
-
     $('#grid').html(gridTpl.render())
     Log('Show Grid')
     @
@@ -48,3 +48,13 @@ class App.Settings extends App.MainTemplate
     $('#for-modal').html addWindow.el
     $('#popup-window').modal();
     Log 'Add new user window is open'
+
+  deleteUser: (eve) ->
+    eve.preventDefault()
+    recordId = $(eve.target).attr('data-id')
+    model = @collection.findWhere id: parseInt(recordId, 10)
+
+    deleteWindow = new App.DeleteUserWindow model: model
+    $('#for-modal').html deleteWindow.el
+    $('#popup-window').modal()
+    Log 'Delet alert window is open'

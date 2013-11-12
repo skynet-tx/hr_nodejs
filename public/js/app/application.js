@@ -133,7 +133,8 @@ $(function () {
                 'js/app/hr_manager/collections/users_collection.js',
                 'js/app/core/views/popupWindow.js',
                 'js/app/hr_manager/views/add_edit_user.js',
-                'js/app/hr_manager/views/settings_panel.js'
+                'js/app/hr_manager/views/settings_panel.js',
+                'js/app/hr_manager/views/delete_user_window.js'
             ]);
 
             var users = new App.Users();
