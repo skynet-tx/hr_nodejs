@@ -178,7 +178,8 @@
       departmentId = _.find(this.editionParams.departments, function(Obj) {
         return departmName === Obj.departmentName;
       });
-      return form.find('#inputDepartment').val(departmentId.departmentId);
+      form.find('#inputDepartment').val(departmentId.departmentId);
+      return form.find('#inputSkill').val(helper.ucfirst(position.positionsSkill));
     };
 
     return addNewStaff;

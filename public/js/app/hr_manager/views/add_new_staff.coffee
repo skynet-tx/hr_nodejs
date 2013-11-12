@@ -125,6 +125,10 @@ class App.addNewStaff extends App.PopupWondow
       departmName is Obj.departmentName
     form.find('#inputDepartment').val departmentId.departmentId
 
+    form.find('#inputSkill').val helper.ucfirst position.positionsSkill
+
+
+
 
 
 
