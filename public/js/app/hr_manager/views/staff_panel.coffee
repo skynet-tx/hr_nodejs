@@ -4,7 +4,7 @@ class App.StaffPanel extends App.MainTemplate
   events:
     'click #add-new': 'addNewEmployee'
     'click .btn-edit-record2': 'editEmployee'
-    'click .btn-delete-item': 'deleteEmployee'
+    'click .btn-delete-item2': 'deleteEmployee'
     'submit': 'seachBy'
 
   initialize: ->
@@ -53,7 +53,6 @@ class App.StaffPanel extends App.MainTemplate
   editEmployee: (eve)  ->
     selectModel = new App.AddEditEmployee()
     selectModel.fetch()
-
     recordId = $(eve.target).attr 'data-id'
 
     addWindow = new App.addNewStaff
@@ -66,22 +65,35 @@ class App.StaffPanel extends App.MainTemplate
     $('#popup-window').modal();
     Log 'Edit employee window is open'
 
+  deleteEmployee: (eve) ->
+    selectModel = new App.AddEditEmployee()
+    selectModel.fetch()
+    recordId = $(eve.target).attr 'data-id'
+    selectModel = @collection.findWhere id: parseInt(recordId, 10)
+
+    deleteAlertWindow = new App.DeleteEmplAlertWindow
+      collection: @collection
+      model: selectModel
+      recordId: recordId
+    $('#for-modal').html deleteAlertWindow.el
+    $('#popup-window').modal()
+    Log 'Delet alert window is open'
+
   seachBy:(eve) ->
     eve.preventDefault()
 
     formValue = @$el.find('.filter-form input').val().toLowerCase().trim()
     staffList = @collection.toJSON()
+
     searchData = _.filter staffList, (obj) ->
-      Log 'obj is here'
-      Log obj
       keys = null
       _.each obj, (val, key) ->
-        Log 'key is here'
-        Log key
-        if obj[key].toString().toLowerCase() == formValue
+        value = obj[key]+''
+        if value.toLowerCase() == formValue
           keys = key
-      return false if not obj[keys]
-      obj[keys].toString().toLowerCase() == formValue
+        return if not obj[key] or obj[key] == null
+      value_keys = obj[keys]+''
+      value_keys.toLowerCase() == formValue
 
     if searchData.length > 0
       @reloadGrid(searchData)

@@ -21,7 +21,7 @@
     StaffPanel.prototype.events = {
       'click #add-new': 'addNewEmployee',
       'click .btn-edit-record2': 'editEmployee',
-      'click .btn-delete-item': 'deleteEmployee',
+      'click .btn-delete-item2': 'deleteEmployee',
       'submit': 'seachBy'
     };
 
@@ -98,27 +98,44 @@
       return Log('Edit employee window is open');
     };
 
+    StaffPanel.prototype.deleteEmployee = function(eve) {
+      var deleteAlertWindow, recordId, selectModel;
+      selectModel = new App.AddEditEmployee();
+      selectModel.fetch();
+      recordId = $(eve.target).attr('data-id');
+      selectModel = this.collection.findWhere({
+        id: parseInt(recordId, 10)
+      });
+      deleteAlertWindow = new App.DeleteEmplAlertWindow({
+        collection: this.collection,
+        model: selectModel,
+        recordId: recordId
+      });
+      $('#for-modal').html(deleteAlertWindow.el);
+      $('#popup-window').modal();
+      return Log('Delet alert window is open');
+    };
+
     StaffPanel.prototype.seachBy = function(eve) {
       var formValue, searchData, staffList;
       eve.preventDefault();
       formValue = this.$el.find('.filter-form input').val().toLowerCase().trim();
       staffList = this.collection.toJSON();
       searchData = _.filter(staffList, function(obj) {
-        var keys;
-        Log('obj is here');
-        Log(obj);
+        var keys, value_keys;
         keys = null;
         _.each(obj, function(val, key) {
-          Log('key is here');
-          Log(key);
-          if (obj[key].toString().toLowerCase() === formValue) {
-            return keys = key;
+          var value;
+          value = obj[key] + '';
+          if (value.toLowerCase() === formValue) {
+            keys = key;
+          }
+          if (!obj[key] || obj[key] === null) {
+
           }
         });
-        if (!obj[keys]) {
-          return false;
-        }
-        return obj[keys].toString().toLowerCase() === formValue;
+        value_keys = obj[keys] + '';
+        return value_keys.toLowerCase() === formValue;
       });
       if (searchData.length > 0) {
         return this.reloadGrid(searchData);
