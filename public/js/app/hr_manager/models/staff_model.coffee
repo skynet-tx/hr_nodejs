@@ -13,5 +13,5 @@ class App.StaffModel extends Backbone.Model
     startDate: null
     date: new Date()
 
-  validate: (attrs) ->
-    'Validation Error: Fill the Name field' if (attrs.name is 'Empty name' or not attrs.name)
+#  validate: (attrs) ->
+#    'Validation Error: Fill the Name field' if (attrs.name is 'Empty name' or not attrs.name)

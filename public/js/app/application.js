@@ -21,6 +21,7 @@ $(function () {
             'departmant': 'departmant',
             'positions': 'positions',
             'login': 'login',
+            'adm/settings': 'settings',
             '*path': 'notFound'
         },
 
@@ -114,6 +115,32 @@ $(function () {
             positions.fetch({reset: true});
             helper.selectMenuButton();
             Log('page: positions');
+        },
+
+        settings: function() {
+            this.reloadMainPage();
+            this.currentView ? this.currentView.close() : null;
+            helper.selectMenuButton();
+
+            if(Cookie.get('role') !== 'admin'){
+               this.navigate('/staff', {trigger: true, replace: true});
+            }
+
+            requere([
+                'js/app/hr_manager/models/user_model.js',
+                'js/app/hr_manager/collections/users_collection.js',
+                'js/app/core/views/popupWindow.js',
+                'js/app/hr_manager/views/add_edit_user.js',
+                'js/app/hr_manager/views/settings_panel.js',
+                'js/app/hr_manager/views/delete_user_window.js'
+            ]);
+
+            var users = new App.Users();
+            this.currentView = new App.Settings({collection: users});
+            this.currentView.render();
+
+            users.fetch({reset: true});
+            Log('page: settings');
         },
 
         login: function () {

@@ -3,3 +3,4 @@ class App.ApplicationModel extends Backbone.Model
   defaults:
     isLoggin: null
     authorizedAs: null
+    role: 'manager'

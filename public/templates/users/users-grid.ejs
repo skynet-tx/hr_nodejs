@@ -1,0 +1,69 @@
+<script>
+    var self = this;
+    $('#grid').kendoGrid ({
+        dataSource: {
+            data: App.gridData,
+            schema: {
+                models: {
+                    fields: {
+                        id: { type: "number" },
+                        name: { type: "string" },
+                        email: { type: "string" },
+                        position: { type: "string" },
+                        filial: { type: "string" },
+                        date: { type: "date"}
+                    }
+                }
+            },
+            pageSize: 20
+        },
+        height: 430,
+        filterable: true,
+        sortable: true,
+        resizable: true,
+        pageable: true,
+        columns: [
+            {   field: "name",
+                title: "User Name",
+                width: 25
+
+            },
+            {
+                field: "email",
+                title: "E-Mail",
+                width: 50
+            },
+            {
+                field: "position",
+                title: "Position",
+                width: 30
+            },
+            {
+                field: "filial",
+                title: "Filial",
+                width: 50
+            },
+            {
+                field: "date",
+                title: "Created",
+                width: 25,
+                template: function(item){
+                    return new Date(item.date).toLocaleString();
+                }
+
+            },
+            {
+                width: 24,
+                template:function(items){
+                    return '<button type="button" data-id="' + items.id + '" ' +
+                            'class="glyphicon glyphicon-edit btn btn-sm btn-info btn-edit-record2">' +
+                            '</button>' +
+                            '&nbsp;' +
+                            '<button data-id="' + items.id + '" type="button" ' +
+                            'class="glyphicon glyphicon-remove btn btn-sm btn-danger btn-delete-item"></button>';
+                }
+            }
+        ]
+    });
+</script>
+

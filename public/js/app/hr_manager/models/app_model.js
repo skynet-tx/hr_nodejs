@@ -16,7 +16,8 @@
 
     ApplicationModel.prototype.defaults = {
       isLoggin: null,
-      authorizedAs: null
+      authorizedAs: null,
+      role: 'manager'
     };
 
     return ApplicationModel;

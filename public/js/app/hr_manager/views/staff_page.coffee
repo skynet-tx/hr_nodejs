@@ -2,7 +2,7 @@ include ['js/app/core/views/mainTpl.js']
 
 class App.StaffPage extends App.MainTemplate
   el: 'body'
-  template: new EJS({url: 'templates/general/main-page-tpl.ejs'})
+  template: new EJS url: 'templates/general/main-page-tpl.ejs'
 
   events:
     'click .btn-logout': 'logout'
@@ -18,10 +18,12 @@ class App.StaffPage extends App.MainTemplate
     return @
 
   setAuth: (model) ->
-    App.isLoggin = model.get('isLoggin')
-    @setAuthorizedAs(model.get('authorizedAs'))
-    if not App.isLoggin
-      App.startApp.navigate('/login', {trigger: true, replace: true})
+    @isLoggin = model.get('isLoggin')
+
+    if not @isLoggin
+      App.startApp.navigate '/login', trigger: true, replace: true
+    @_setAuthorizedAs model.get 'authorizedAs'
+    @_setSettingsLink model.get('role')
 
   logout: ->
     @model.set isLoggin: false
@@ -33,5 +35,11 @@ class App.StaffPage extends App.MainTemplate
       success: =>
         window.location.href = location.origin + '/#login'
 
-  setAuthorizedAs: (email) ->
+  _setAuthorizedAs: (email) ->
     @$el.find('.authorizedAs').text(email);
+
+  _setSettingsLink: (role) ->
+    linkTpl = '<a href="/#adm/settings" class="btn btn-link glyphicon glyphicon-wrench btn-settings"></a>'
+    if role is 'admin'
+      @$el.find('.page-settings').append linkTpl
+      App.checkIsAdmin = true;
