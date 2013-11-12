@@ -155,11 +155,12 @@
     };
 
     addNewStaff.prototype._fiilFormValues = function() {
-      var form, position;
-      Log(this.recordId);
+      var departmName, departmentId, form, pasition, position, skillM;
       this.model = this.collection.findWhere({
         id: parseInt(this.recordId, 10)
       });
+      Log('model here');
+      Log(this.model);
       form = this.$el.find('#add-employee-form');
       form.find('#inputName').val(this.model.get('name'));
       form.find('#inputMiddlename').val(this.model.get('middle_name'));
@@ -167,10 +168,17 @@
       form.find('#inputBirthday').val(this.model.get('birthday'));
       form.find('#inputCity').val(this.model.get('city'));
       form.find('#inputSalary').val(this.model.get('salary'));
+      pasition = this.model.get('pasition');
+      skillM = this.model.get('skill');
       position = _.find(this.editionParams.positions, function(Obj) {
-        return parseInt($(position, 10).val()) === parseInt(Obj.positionId, 10);
+        return pasition === Obj.positionsName && skillM === Obj.positionsSkill;
       });
-      return form.find('#inputPosition').val(position);
+      form.find('#inputPosition').val(position.positionId);
+      departmName = this.model.get('department');
+      departmentId = _.find(this.editionParams.departments, function(Obj) {
+        return departmName === Obj.departmentName;
+      });
+      return form.find('#inputDepartment').val(departmentId.departmentId);
     };
 
     return addNewStaff;

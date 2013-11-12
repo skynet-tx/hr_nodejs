@@ -101,8 +101,10 @@ class App.addNewStaff extends App.PopupWondow
         @collection.fetch({reset: true})
 
   _fiilFormValues: ->
-    Log @recordId
+
     @model = @collection.findWhere id: parseInt(@recordId, 10)
+    Log 'model here'
+    Log @model
 
     form = @$el.find '#add-employee-form'
     form.find('#inputName').val @model.get 'name'
@@ -112,14 +114,17 @@ class App.addNewStaff extends App.PopupWondow
     form.find('#inputCity').val @model.get 'city'
     form.find('#inputSalary').val @model.get 'salary'
 
+    pasition = @model.get 'pasition'
+    skillM = @model.get 'skill'
     position = _.find @editionParams.positions, (Obj) ->
-      parseInt($(position, 10).val()) is parseInt(Obj.positionId, 10)
-    form.find('#inputPosition').val position
+       pasition is Obj.positionsName and skillM is Obj.positionsSkill
+    form.find('#inputPosition').val position.positionId
 
+    departmName = @model.get 'department'
+    departmentId = _.find @editionParams.departments, (Obj) ->
+      departmName is Obj.departmentName
+    form.find('#inputDepartment').val departmentId.departmentId
 
-#    departmentId = _.find @editionParams.departments, (Obj) ->
-#      parseInt($(departmentId, 10).val()) is parseInt(Obj.departmentId, 10)
-#    form.find('#inputDepartment').val department
 
 
 
