@@ -11,7 +11,7 @@
                         email: { type: "string" },
                         position: { type: "string" },
                         filial: { type: "string" },
-                        created: { type: "date"}
+                        date: { type: "date"}
                     }
                 }
             },
@@ -44,11 +44,11 @@
                 width: 50
             },
             {
-                field: "created",
+                field: "date",
                 title: "Created",
                 width: 25,
                 template: function(item){
-                    return new Date(item.created).toLocaleString();
+                    return new Date(item.date).toLocaleString();
                 }
 
             },

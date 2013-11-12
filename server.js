@@ -19,10 +19,8 @@ app.configure(function () {
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 
     app.use(express.cookieParser());
-    app.use(express.cookieSession({secret : 'My super password'}));
+    app.use(express.cookieSession({secret: 'My super password'}));
 });
-
-
 
 
 /**
@@ -77,7 +75,7 @@ app.put('/department/:id', function (req, res) {
  * Get Staff list
  */
 app.get('/staff-list', function (req, res) {
-   query_model.getStaff(req, res);
+    query_model.getStaff(req, res);
 });
 /**
  * Add new Employee
@@ -103,7 +101,7 @@ app.put('/employee/:id', function (req, res) {
  *  Departments
  *  Positions
  */
-app.get('/add-edit-employee', function(req, res){
+app.get('/add-edit-employee', function (req, res) {
     query_model.getAddEditEmployeeData(req, res);
 });
 
@@ -111,7 +109,7 @@ app.get('/add-edit-employee', function(req, res){
  * Get managers and Admins of app
  */
 app.get('/adm/users-list', function (req, res) {
-    if(req.session.role !== 'admin'){
+    if (req.session.role !== 'admin') {
         res.setHeader('Content-Type', 'application/json');
         res.send({success: false});
     } else {
@@ -120,13 +118,10 @@ app.get('/adm/users-list', function (req, res) {
 });
 
 
-
-
-
 /**
  * Check app on user exists
  */
-app.get('/check-app', function(req, res){
+app.get('/check-app', function (req, res) {
     res.setHeader("Set-Cookie", ["role=" + req.session.role + "", "language=javascript"]);
     res.setHeader('Content-Type', 'application/json');
     res.send({
@@ -137,7 +132,7 @@ app.get('/check-app', function(req, res){
     });
 });
 
-app.post('/check-app', function(req, res){
+app.post('/check-app', function (req, res) {
     req.session = null;
 
     res.setHeader('Content-Type', 'application/json');
@@ -150,17 +145,19 @@ app.post('/check-app', function(req, res){
 
 var auth = require('app_controllers/authController.js');
 
-app.get('/logout', function(req, res){
+app.get('/logout', function (req, res) {
     // destroy the user's session to log them out
     // will be re-created next request
-    req.session.destroy(function(){
+    req.session.destroy(function () {
         res.redirect('/#login');
     });
 });
 
-
-app.post('/login-page', function(req, res){
-    auth.authenticate(req.body.email, req.body.password, function(err, user){
+/**
+ * Login to the site
+ */
+app.post('/login-page', function (req, res) {
+    auth.authenticate(req.body.email, req.body.password, function (err, user) {
         if (user) {
             // Regenerate session when signing in
             // to prevent fixation
@@ -171,6 +168,21 @@ app.post('/login-page', function(req, res){
             res.setHeader('Content-Type', 'application/json');
             res.send({success: true});
 
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.send({success: false});
+        }
+    });
+});
+
+/**
+ * Add new manager or admin
+ */
+app.post('/adm/user', function (req, res) {
+    auth.addNewUser(req.body, function (err, result) {
+        if (result.success) {
+            res.setHeader('Content-Type', 'application/json');
+            res.send({success: true});
         } else {
             res.setHeader('Content-Type', 'application/json');
             res.send({success: false});
