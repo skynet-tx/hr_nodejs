@@ -23,6 +23,16 @@
       return $(this.el).empty();
     };
 
+    MainTemplate.prototype.isAdmin = function() {
+      return Cookie.get('role') === 'admin';
+    };
+
+    MainTemplate.prototype._removeDelBtn = function() {
+      if (!this.isAdmin()) {
+        return this.$el.find('.btn-delete-item').remove();
+      }
+    };
+
     return MainTemplate;
 
   })(Backbone.View);

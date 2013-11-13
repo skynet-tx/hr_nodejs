@@ -55,6 +55,7 @@
         App.gridData = this.collection.toJSON();
       }
       $('#grid').html(gridTpl.render());
+      this._removeDelBtn();
       return Log('Grid is reloaded..');
     };
 
@@ -67,6 +68,7 @@
       this.$el.find('#search-by').val();
       App.gridData = positions.toJSON();
       $('#grid').html(gridTpl.render());
+      this._removeDelBtn();
       return this;
     };
 

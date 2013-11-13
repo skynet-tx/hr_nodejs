@@ -20,8 +20,8 @@
 
     StaffPanel.prototype.events = {
       'click #add-new': 'addNewEmployee',
-      'click .btn-edit-record2': 'editEmployee',
-      'click .btn-delete-item2': 'deleteEmployee',
+      'click .btn-edit-record': 'editEmployee',
+      'click .btn-delete-item': 'deleteEmployee',
       'submit': 'seachBy'
     };
 
@@ -55,6 +55,7 @@
         App.gridData = this.collection.toJSON();
       }
       $('#grid').html(gridTpl.render());
+      this._removeDelBtn();
       return Log('Grid is reloaded..');
     };
 
@@ -66,6 +67,7 @@
       this.$el.find('#search-by').val();
       App.gridData = staff.toJSON();
       $('#grid').html(gridTpl.render());
+      this._removeDelBtn();
       return this;
     };
 

@@ -56,6 +56,7 @@
         App.gridData = this.collection.toJSON();
       }
       $('#grid').html(gridTpl.render());
+      this._removeDelBtn();
       return Log('Grid is reloaded..');
     };
 
@@ -68,6 +69,7 @@
       Log('departments');
       App.gridData = departments.toJSON();
       $('#grid').html(gridTpl.render());
+      this._removeDelBtn();
       return this;
     };
 

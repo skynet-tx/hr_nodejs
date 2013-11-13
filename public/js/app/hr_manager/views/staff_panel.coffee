@@ -3,8 +3,8 @@ class App.StaffPanel extends App.MainTemplate
   template: new EJS url: 'templates/general/list-conainer.ejs'
   events:
     'click #add-new': 'addNewEmployee'
-    'click .btn-edit-record2': 'editEmployee'
-    'click .btn-delete-item2': 'deleteEmployee'
+    'click .btn-edit-record': 'editEmployee'
+    'click .btn-delete-item': 'deleteEmployee'
     'submit': 'seachBy'
 
   initialize: ->
@@ -28,6 +28,7 @@ class App.StaffPanel extends App.MainTemplate
       App.gridData = @collection.toJSON()
 
     $('#grid').html(gridTpl.render())
+    @_removeDelBtn()
     Log 'Grid is reloaded..'
 
   addStaffList: (staff) ->
@@ -36,6 +37,7 @@ class App.StaffPanel extends App.MainTemplate
     @$el.find('#search-by').val() # Clear search
     App.gridData = staff.toJSON()
     $('#grid').html(gridTpl.render())
+    @_removeDelBtn()
     @
 
   addNewEmployee: ->
@@ -89,4 +91,3 @@ class App.StaffPanel extends App.MainTemplate
       @reloadGrid(searchData)
     else
       @reloadGrid()
-

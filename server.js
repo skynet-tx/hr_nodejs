@@ -22,7 +22,6 @@ app.configure(function () {
     app.use(express.cookieSession({secret: 'My super password'}));
 });
 
-
 /**
  * Get positions
  */
@@ -39,7 +38,12 @@ app.post('/position', function (req, res) {
  * Delete position
  */
 app.delete('/position/:id', function (req, res) {
-    query_model.deletePosition(req, res);
+    if(req.session.role !== "admin"){
+        res.setHeader('Content-Type', 'application/json');
+        res.send({success: false});
+    } else{
+        query_model.deletePosition(req, res);
+    }
 });
 /**
  * Update position
@@ -63,7 +67,12 @@ app.post('/department', function (req, res) {
  * Delete Department
  */
 app.delete('/department/:id', function (req, res) {
-    query_model.deleteDepartment(req, res);
+    if(req.session.role !== "admin"){
+        res.setHeader('Content-Type', 'application/json');
+        res.send({success: false});
+    } else{
+        query_model.deleteDepartment(req, res);
+    }
 });
 /**
  * Update Department
@@ -87,7 +96,12 @@ app.post('/employee', function (req, res) {
  * Delete Employee
  */
 app.delete('/employee/:id', function (req, res) {
-    query_model.deleteEmployee(req, res);
+    if(req.session.role !== "admin"){
+        res.setHeader('Content-Type', 'application/json');
+        res.send({success: false});
+    } else{
+        query_model.deleteEmployee(req, res);
+    }
 });
 /**
  * Update Department

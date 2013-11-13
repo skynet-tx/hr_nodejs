@@ -29,6 +29,7 @@ class App.DepPanel extends App.MainTemplate
       App.gridData = @collection.toJSON()
 
     $('#grid').html(gridTpl.render())
+    @_removeDelBtn()
     Log 'Grid is reloaded..'
 
 
@@ -39,6 +40,7 @@ class App.DepPanel extends App.MainTemplate
 
     App.gridData = departments.toJSON()
     $('#grid').html(gridTpl.render())
+    @_removeDelBtn()
     @
 
 
