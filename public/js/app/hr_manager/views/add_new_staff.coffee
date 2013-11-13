@@ -6,7 +6,8 @@ class App.addNewStaff extends App.PopupWondow
 
   events:
     'click #form-save': 'eventSelection'
-    "change #inputPosition": "fillSkills"
+    'change #inputDepartment': 'onSetPositions'
+    'change #inputPosition': 'onFillSkills'
 
 
   initialize: (params) ->
@@ -14,23 +15,16 @@ class App.addNewStaff extends App.PopupWondow
     @model.on('sync', @showForm, @)
     @recordId = params.recordId
 
-  render: (model) ->
-    Log model
-
   showForm: (model) ->
-    Log model.toJSON()
     @editionParams = model.toJSON()
     formTpl = new EJS url: 'templates/staff_page/add_employee.ejs'
 
-    Log @editionParams
-
     if not @isEdit
-      Log 'The ADD window is opened'
       @$el.html @template.render
         modalTitle: 'Add New Employee'
         modalBody: formTpl.render
-          position: @editionParams.positions
           department: @editionParams.departments
+#          position: @editionParams.positions
 
     else
       @model = @collection.findWhere id: parseInt(@recordId, 10)
@@ -38,9 +32,13 @@ class App.addNewStaff extends App.PopupWondow
       @$el.html @template.render
         modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"'
         modalBody: formTpl.render
-          position: @editionParams.positions
           department: @editionParams.departments
+#          position: @editionParams.positions
       @_fiilFormValues()
+
+    @setPositions()
+
+    Log 'The Add employee window is opened'
     @
 
   eventSelection: (eve) ->
@@ -49,12 +47,31 @@ class App.addNewStaff extends App.PopupWondow
     else
       @editRecord eve
 
-  fillSkills: (eve) ->
+  onSetPositions: (eve) ->
+    departmentId = $(eve.target).val()
+    @setPositions(departmentId)
+
+  setPositions: (departmentId) ->
+    optionsTpl = new EJS url: 'templates/staff_page/positions-options.ejs'
+    if not departmentId
+      departmentId = @$el.find('#inputDepartment').val()
+
+    positions = _.filter @editionParams.positions, (obj) ->
+      obj.posDepartId is parseInt departmentId, 10
+
+    @$el.find('#inputPosition').html optionsTpl.render position: positions
+    @fillSkill()
+
+  onFillSkills: (eve) ->
     positionId = $(eve.target).val()
+    @fillSkill(positionId)
+
+  fillSkill: (positionId) ->
+    if not positionId
+      positionId = @$el.find('#inputPosition').val()
     position = _.find @editionParams.positions, (Obj) ->
       parseInt(positionId, 10) is parseInt(Obj.positionId, 10)
 
-    Log position
     @$el.find('#inputSkill').val helper.ucfirst position.positionsSkill
 
   saveNewEmployee: (eve) ->
@@ -103,8 +120,6 @@ class App.addNewStaff extends App.PopupWondow
   _fiilFormValues: ->
 
     @model = @collection.findWhere id: parseInt(@recordId, 10)
-    Log 'model here'
-    Log @model
 
     form = @$el.find '#add-employee-form'
     form.find('#inputName').val @model.get 'name'

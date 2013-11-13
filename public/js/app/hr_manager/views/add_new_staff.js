@@ -22,7 +22,8 @@
 
     addNewStaff.prototype.events = {
       'click #form-save': 'eventSelection',
-      "change #inputPosition": "fillSkills"
+      'change #inputDepartment': 'onSetPositions',
+      'change #inputPosition': 'onFillSkills'
     };
 
     addNewStaff.prototype.initialize = function(params) {
@@ -31,24 +32,16 @@
       return this.recordId = params.recordId;
     };
 
-    addNewStaff.prototype.render = function(model) {
-      return Log(model);
-    };
-
     addNewStaff.prototype.showForm = function(model) {
       var employeeSurname, formTpl;
-      Log(model.toJSON());
       this.editionParams = model.toJSON();
       formTpl = new EJS({
         url: 'templates/staff_page/add_employee.ejs'
       });
-      Log(this.editionParams);
       if (!this.isEdit) {
-        Log('The ADD window is opened');
         this.$el.html(this.template.render({
           modalTitle: 'Add New Employee',
           modalBody: formTpl.render({
-            position: this.editionParams.positions,
             department: this.editionParams.departments
           })
         }));
@@ -60,12 +53,13 @@
         this.$el.html(this.template.render({
           modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"',
           modalBody: formTpl.render({
-            position: this.editionParams.positions,
             department: this.editionParams.departments
           })
         }));
         this._fiilFormValues();
       }
+      this.setPositions();
+      Log('The Add employee window is opened');
       return this;
     };
 
@@ -77,13 +71,43 @@
       }
     };
 
-    addNewStaff.prototype.fillSkills = function(eve) {
-      var position, positionId;
+    addNewStaff.prototype.onSetPositions = function(eve) {
+      var departmentId;
+      departmentId = $(eve.target).val();
+      return this.setPositions(departmentId);
+    };
+
+    addNewStaff.prototype.setPositions = function(departmentId) {
+      var optionsTpl, positions;
+      optionsTpl = new EJS({
+        url: 'templates/staff_page/positions-options.ejs'
+      });
+      if (!departmentId) {
+        departmentId = this.$el.find('#inputDepartment').val();
+      }
+      positions = _.filter(this.editionParams.positions, function(obj) {
+        return obj.posDepartId === parseInt(departmentId, 10);
+      });
+      this.$el.find('#inputPosition').html(optionsTpl.render({
+        position: positions
+      }));
+      return this.fillSkill();
+    };
+
+    addNewStaff.prototype.onFillSkills = function(eve) {
+      var positionId;
       positionId = $(eve.target).val();
+      return this.fillSkill(positionId);
+    };
+
+    addNewStaff.prototype.fillSkill = function(positionId) {
+      var position;
+      if (!positionId) {
+        positionId = this.$el.find('#inputPosition').val();
+      }
       position = _.find(this.editionParams.positions, function(Obj) {
         return parseInt(positionId, 10) === parseInt(Obj.positionId, 10);
       });
-      Log(position);
       return this.$el.find('#inputSkill').val(helper.ucfirst(position.positionsSkill));
     };
 
@@ -159,8 +183,6 @@
       this.model = this.collection.findWhere({
         id: parseInt(this.recordId, 10)
       });
-      Log('model here');
-      Log(this.model);
       form = this.$el.find('#add-employee-form');
       form.find('#inputName').val(this.model.get('name'));
       form.find('#inputMiddlename').val(this.model.get('middle_name'));
