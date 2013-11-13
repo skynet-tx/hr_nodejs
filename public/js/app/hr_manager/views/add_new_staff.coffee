@@ -120,12 +120,18 @@ class App.addNewStaff extends App.PopupWondow
   _fiilFormValues: ->
 
     @model = @collection.findWhere id: parseInt(@recordId, 10)
+    dateBirthday = @model.get 'birthday'
+    startDate = @model.get 'startDate'
+    dateBirthday = dateBirthday.split("T")
+    startDate = startDate.split("T")
+
 
     form = @$el.find '#add-employee-form'
     form.find('#inputName').val @model.get 'name'
     form.find('#inputMiddlename').val @model.get 'middle_name'
     form.find('#inputSurname').val @model.get 'surname'
-    form.find('#inputBirthday').val @model.get 'birthday'
+    form.find('#inputBirthday').val dateBirthday[0]
+    form.find('#inputStartDate').val startDate[0]
     form.find('#inputCity').val @model.get 'city'
     form.find('#inputSalary').val @model.get 'salary'
 

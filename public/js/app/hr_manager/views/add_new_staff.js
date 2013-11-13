@@ -179,15 +179,20 @@
     };
 
     addNewStaff.prototype._fiilFormValues = function() {
-      var departmName, departmentId, form, pasition, position, skillM;
+      var dateBirthday, departmName, departmentId, form, pasition, position, skillM, startDate;
       this.model = this.collection.findWhere({
         id: parseInt(this.recordId, 10)
       });
+      dateBirthday = this.model.get('birthday');
+      startDate = this.model.get('startDate');
+      dateBirthday = dateBirthday.split("T");
+      startDate = startDate.split("T");
       form = this.$el.find('#add-employee-form');
       form.find('#inputName').val(this.model.get('name'));
       form.find('#inputMiddlename').val(this.model.get('middle_name'));
       form.find('#inputSurname').val(this.model.get('surname'));
-      form.find('#inputBirthday').val(this.model.get('birthday'));
+      form.find('#inputBirthday').val(dateBirthday[0]);
+      form.find('#inputStartDate').val(startDate[0]);
       form.find('#inputCity').val(this.model.get('city'));
       form.find('#inputSalary').val(this.model.get('salary'));
       pasition = this.model.get('pasition');

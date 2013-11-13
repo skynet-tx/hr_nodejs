@@ -1,5 +1,6 @@
 <script>
     var self = this;
+    console.log(App.gridData)
     $('#grid').kendoGrid ({
         dataSource: {
             data: App.gridData,
@@ -15,7 +16,7 @@
                         birthday: { type: "date"},
                         city: { type: "string"},
                         salary: { type: "number"},
-                        date: { type: "date"}
+                        date: { type: "string"}
                     }
                 }
             },
@@ -57,7 +58,7 @@
                 title: "Birthday",
                 width: 25,
                 template: function(item){
-                    return new Date(item.date).toLocaleString();
+                    return new Date(item.birthday).toLocaleString();
                 }
 
             },
@@ -76,7 +77,7 @@
                 title: "Start date",
                 width: 25,
                 template: function(item){
-                    return new Date(item.date).toLocaleString();
+                    return new Date(item.startDate).toLocaleString();
                 }
             },
             {
