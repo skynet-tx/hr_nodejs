@@ -9,7 +9,6 @@ class App.addNewStaff extends App.PopupWondow
     'change #inputDepartment': 'onSetPositions'
     'change #inputPosition': 'onFillSkills'
 
-
   initialize: (params) ->
     @isEdit = params.isEdit
     @model.on('sync', @showForm, @)
@@ -24,7 +23,6 @@ class App.addNewStaff extends App.PopupWondow
         modalTitle: 'Add New Employee'
         modalBody: formTpl.render
           department: @editionParams.departments
-#          position: @editionParams.positions
 
     else
       @model = @collection.findWhere id: parseInt(@recordId, 10)
@@ -33,7 +31,6 @@ class App.addNewStaff extends App.PopupWondow
         modalTitle: 'Edit record "<strong>' + employeeSurname + '</strong>"'
         modalBody: formTpl.render
           department: @editionParams.departments
-#          position: @editionParams.positions
       @_fiilFormValues()
 
     @setPositions()
@@ -101,8 +98,6 @@ class App.addNewStaff extends App.PopupWondow
     formData['date'] = new Date()
     formData
 
-
-
   editRecord: (eve) ->
     eve.preventDefault()
     alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
@@ -125,7 +120,6 @@ class App.addNewStaff extends App.PopupWondow
     dateBirthday = dateBirthday.split("T")
     startDate = startDate.split("T")
 
-
     form = @$el.find '#add-employee-form'
     form.find('#inputName').val @model.get 'name'
     form.find('#inputMiddlename').val @model.get 'middle_name'
@@ -147,13 +141,3 @@ class App.addNewStaff extends App.PopupWondow
     form.find('#inputDepartment').val departmentId.departmentId
 
     form.find('#inputSkill').val helper.ucfirst position.positionsSkill
-
-
-
-
-
-
-
-
-
-
