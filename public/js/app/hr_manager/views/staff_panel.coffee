@@ -83,19 +83,10 @@ class App.StaffPanel extends App.MainTemplate
     eve.preventDefault()
 
     formValue = @$el.find('.filter-form input').val().toLowerCase().trim()
-    staffList = @collection.toJSON()
-
-    searchData = _.filter staffList, (obj) ->
-      keys = null
-      _.each obj, (val, key) ->
-        value = obj[key]+''
-        if value.toLowerCase() == formValue
-          keys = key
-        return if not obj[key] or obj[key] == null
-      value_keys = obj[keys]+''
-      value_keys.toLowerCase() == formValue
-
+    coll = @collection.toJSON()
+    searchData = helper.filterSearch(coll, formValue)
     if searchData.length > 0
       @reloadGrid(searchData)
     else
       @reloadGrid()
+

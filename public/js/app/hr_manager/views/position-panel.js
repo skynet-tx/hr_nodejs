@@ -111,23 +111,11 @@
     };
 
     PosPanel.prototype.seachBy = function(eve) {
-      var formValue, positions, searchData;
+      var coll, formValue, searchData;
       eve.preventDefault();
       formValue = this.$el.find('.filter-form input').val().toLowerCase().trim();
-      positions = this.collection.toJSON();
-      searchData = _.filter(positions, function(obj) {
-        var keys;
-        keys = null;
-        _.each(obj, function(val, key) {
-          if (obj[key].toString().toLowerCase() === formValue) {
-            return keys = key;
-          }
-        });
-        if (!obj[keys]) {
-          return false;
-        }
-        return obj[keys].toString().toLowerCase() === formValue;
-      });
+      coll = this.collection.toJSON();
+      searchData = helper.filterSearch(coll, formValue);
       if (searchData.length > 0) {
         return this.reloadGrid(searchData);
       } else {

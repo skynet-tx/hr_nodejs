@@ -117,26 +117,11 @@
     };
 
     StaffPanel.prototype.seachBy = function(eve) {
-      var formValue, searchData, staffList;
+      var coll, formValue, searchData;
       eve.preventDefault();
       formValue = this.$el.find('.filter-form input').val().toLowerCase().trim();
-      staffList = this.collection.toJSON();
-      searchData = _.filter(staffList, function(obj) {
-        var keys, value_keys;
-        keys = null;
-        _.each(obj, function(val, key) {
-          var value;
-          value = obj[key] + '';
-          if (value.toLowerCase() === formValue) {
-            keys = key;
-          }
-          if (!obj[key] || obj[key] === null) {
-
-          }
-        });
-        value_keys = obj[keys] + '';
-        return value_keys.toLowerCase() === formValue;
-      });
+      coll = this.collection.toJSON();
+      searchData = helper.filterSearch(coll, formValue);
       if (searchData.length > 0) {
         return this.reloadGrid(searchData);
       } else {
