@@ -123,7 +123,7 @@ $(function () {
             helper.selectMenuButton();
 
             if(Cookie.get('role') !== 'admin'){
-               this.navigate('/staff', {trigger: true, replace: true});
+                return this.navigate('/staff', {trigger: true, replace: true});
             }
 
             requere([
