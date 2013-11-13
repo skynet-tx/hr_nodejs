@@ -75,16 +75,9 @@ class App.DepPanel extends App.MainTemplate
     eve.preventDefault()
 
     formValue = @$el.find('.filter-form input').val().toLowerCase().trim()
-    departments = @collection.toJSON()
+    coll = @collection.toJSON()
 
-    searchData = _.filter departments, (obj) ->
-      keys = null
-      _.each obj, (val, key) ->
-        if obj[key].toString().toLowerCase() == formValue
-          keys = key
-      return false if not obj[keys]
-      obj[keys].toString().toLowerCase() == formValue
-
+    searchData = helper.filterSearch(coll, formValue)
     if searchData.length > 0
       @reloadGrid(searchData)
     else

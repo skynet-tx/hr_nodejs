@@ -65,7 +65,28 @@ var helper = {
     ucfirst: function (str) {
         var first = str.charAt(0).toUpperCase();
         return first + str.substr(1);
+    },
+    filterSearch: function (coll, formValue) {
+         return _.filter(coll, function(obj) {
+            var keys, value_keys;
+            keys = null;
+            _.each(obj, function(val, key) {
+                var value;
+                value = obj[key] + '';
+                if (value.toLowerCase() === formValue) {
+                    keys = key;
+                }
+            if (!obj[key] || obj[key] === null) {
+                return false;
+            }
+            });
+            value_keys = obj[keys] + '';
+            return value_keys.toLowerCase() === formValue;
+        });
+
     }
+
+
 }
 
 helper = Object.seal(helper);
@@ -101,6 +122,8 @@ var include = function (path) {
 var requere = function (path) {
     return helper.loadFile(path, false);
 }
+
+
 
 
 
