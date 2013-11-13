@@ -22,7 +22,7 @@ class App.DepPanel extends App.MainTemplate
     $('#grid').html(' ')
     gridTpl = new EJS url: 'templates/department_page/department-grid.ejs'
 
-    if gridData
+    if gridData and gridData.hasOwnProperty('cid') is false
       App.gridData = gridData
     else
       @$el.find('#search-by').val()

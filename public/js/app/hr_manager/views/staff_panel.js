@@ -48,7 +48,7 @@
       gridTpl = new EJS({
         url: 'templates/staff_page/staff_grid.ejs'
       });
-      if (gridData) {
+      if (gridData && gridData.hasOwnProperty('cid') === false) {
         App.gridData = gridData;
       } else {
         this.$el.find('#search-by').val();

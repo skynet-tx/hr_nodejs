@@ -1,7 +1,7 @@
 class App.DeleteEmplAlertWindow extends App.PopupWondow
   template: new EJS url: 'templates/general/modal-delete-tpl.ejs'
   events:
-    'click #delete-item2': 'deleteRecord'
+    'click #delete-item': 'deleteRecord'
   initialize: ->
     @render()
 

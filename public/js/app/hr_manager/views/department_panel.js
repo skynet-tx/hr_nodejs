@@ -49,7 +49,7 @@
       gridTpl = new EJS({
         url: 'templates/department_page/department-grid.ejs'
       });
-      if (gridData) {
+      if (gridData && gridData.hasOwnProperty('cid') === false) {
         App.gridData = gridData;
       } else {
         this.$el.find('#search-by').val();

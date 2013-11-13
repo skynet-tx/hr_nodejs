@@ -21,7 +21,7 @@ class App.PosPanel extends App.MainTemplate
     $('#grid').html(' ')
     gridTpl = new EJS url: 'templates/position_page/positions-grid.ejs'
 
-    if gridData
+    if gridData and gridData.hasOwnProperty('cid') is false
       App.gridData = gridData
     else
       @$el.find('#search-by').val() # Clear search

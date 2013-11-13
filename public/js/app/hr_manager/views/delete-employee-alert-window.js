@@ -17,7 +17,7 @@
     });
 
     DeleteEmplAlertWindow.prototype.events = {
-      'click #delete-item2': 'deleteRecord'
+      'click #delete-item': 'deleteRecord'
     };
 
     DeleteEmplAlertWindow.prototype.initialize = function() {

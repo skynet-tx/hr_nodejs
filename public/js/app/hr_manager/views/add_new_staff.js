@@ -91,6 +91,9 @@
       this.$el.find('#inputPosition').html(optionsTpl.render({
         position: positions
       }));
+      if (this.isEdit) {
+        this._setPositionFields();
+      }
       return this.fillSkill();
     };
 
@@ -151,6 +154,7 @@
         return formData[obj['name']] = obj['value'];
       });
       formData['date'] = new Date();
+      Log(formData);
       return formData;
     };
 
@@ -161,7 +165,12 @@
       alertTpl = new EJS({
         url: 'templates/general/alert-danger-tpl.ejs'
       });
+      this.model.unset('modified');
+      this.model.unset('position');
+      this.model.unset('skill');
+      this.model.unset('department');
       this.model.set(this._serializeForm());
+      Log(this.model.toJSON());
       return this.model.save(this.model.toJSON(), {
         error: function() {
           return $('#alert-message').html(alertTpl.render({
@@ -179,7 +188,7 @@
     };
 
     addNewStaff.prototype._fiilFormValues = function() {
-      var dateBirthday, departmName, departmentId, form, pasition, position, skillM, startDate;
+      var dateBirthday, departmName, departmentId, form, startDate;
       this.model = this.collection.findWhere({
         id: parseInt(this.recordId, 10)
       });
@@ -195,17 +204,22 @@
       form.find('#inputStartDate').val(startDate[0]);
       form.find('#inputCity').val(this.model.get('city'));
       form.find('#inputSalary').val(this.model.get('salary'));
-      pasition = this.model.get('pasition');
-      skillM = this.model.get('skill');
-      position = _.find(this.editionParams.positions, function(Obj) {
-        return pasition === Obj.positionsName && skillM === Obj.positionsSkill;
-      });
-      form.find('#inputPosition').val(position.positionId);
       departmName = this.model.get('department');
       departmentId = _.find(this.editionParams.departments, function(Obj) {
         return departmName === Obj.departmentName;
       });
-      form.find('#inputDepartment').val(departmentId.departmentId);
+      return form.find('#inputDepartment').val(departmentId.departmentId);
+    };
+
+    addNewStaff.prototype._setPositionFields = function() {
+      var form, position, positionName, skillM;
+      form = this.$el.find('#add-employee-form');
+      positionName = this.model.get('position');
+      skillM = this.model.get('skill');
+      position = _.find(this.editionParams.positions, function(Obj) {
+        return positionName === Obj.positionsName && skillM === Obj.positionsSkill;
+      });
+      form.find('#inputPosition').val(position.positionId);
       return form.find('#inputSkill').val(helper.ucfirst(position.positionsSkill));
     };
 

@@ -48,7 +48,7 @@
       gridTpl = new EJS({
         url: 'templates/position_page/positions-grid.ejs'
       });
-      if (gridData) {
+      if (gridData && gridData.hasOwnProperty('cid') === false) {
         App.gridData = gridData;
       } else {
         this.$el.find('#search-by').val();

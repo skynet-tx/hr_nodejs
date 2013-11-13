@@ -57,6 +57,10 @@ class App.addNewStaff extends App.PopupWondow
       obj.posDepartId is parseInt departmentId, 10
 
     @$el.find('#inputPosition').html optionsTpl.render position: positions
+
+    if @isEdit
+      @_setPositionFields()
+
     @fillSkill()
 
   onFillSkills: (eve) ->
@@ -96,12 +100,19 @@ class App.addNewStaff extends App.PopupWondow
       formData[obj['name']] = obj['value']
 
     formData['date'] = new Date()
+    Log formData
     formData
 
   editRecord: (eve) ->
     eve.preventDefault()
     alertTpl = new EJS url: 'templates/general/alert-danger-tpl.ejs'
-    @model.set(@_serializeForm())
+    @model.unset 'modified'
+    @model.unset 'position'
+    @model.unset 'skill'
+    @model.unset 'department'
+
+    @model.set @_serializeForm()
+    Log @model.toJSON()
     @model.save @model.toJSON(),
       error: ->
         $('#alert-message').html alertTpl.render
@@ -129,15 +140,20 @@ class App.addNewStaff extends App.PopupWondow
     form.find('#inputCity').val @model.get 'city'
     form.find('#inputSalary').val @model.get 'salary'
 
-    pasition = @model.get 'pasition'
-    skillM = @model.get 'skill'
-    position = _.find @editionParams.positions, (Obj) ->
-       pasition is Obj.positionsName and skillM is Obj.positionsSkill
-    form.find('#inputPosition').val position.positionId
-
     departmName = @model.get 'department'
     departmentId = _.find @editionParams.departments, (Obj) ->
       departmName is Obj.departmentName
     form.find('#inputDepartment').val departmentId.departmentId
 
+  _setPositionFields: ->
+    form = @$el.find '#add-employee-form'
+    positionName = @model.get 'position'
+    skillM = @model.get 'skill'
+
+    position = _.find @editionParams.positions, (Obj) ->
+      positionName is Obj.positionsName and skillM is Obj.positionsSkill
+
+    form.find('#inputPosition').val position.positionId
     form.find('#inputSkill').val helper.ucfirst position.positionsSkill
+
+
