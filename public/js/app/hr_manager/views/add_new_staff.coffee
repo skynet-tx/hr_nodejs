@@ -46,9 +46,9 @@ class App.addNewStaff extends App.PopupWondow
 
   onSetPositions: (eve) ->
     departmentId = $(eve.target).val()
-    @setPositions(departmentId)
+    @setPositions(departmentId, true)
 
-  setPositions: (departmentId) ->
+  setPositions: (departmentId, isChanged) ->
     optionsTpl = new EJS url: 'templates/staff_page/positions-options.ejs'
     if not departmentId
       departmentId = @$el.find('#inputDepartment').val()
@@ -58,7 +58,7 @@ class App.addNewStaff extends App.PopupWondow
 
     @$el.find('#inputPosition').html optionsTpl.render position: positions
 
-    if @isEdit
+    if @isEdit and not isChanged
       @_setPositionFields()
 
     @fillSkill()

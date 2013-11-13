@@ -74,10 +74,10 @@
     addNewStaff.prototype.onSetPositions = function(eve) {
       var departmentId;
       departmentId = $(eve.target).val();
-      return this.setPositions(departmentId);
+      return this.setPositions(departmentId, true);
     };
 
-    addNewStaff.prototype.setPositions = function(departmentId) {
+    addNewStaff.prototype.setPositions = function(departmentId, isChanged) {
       var optionsTpl, positions;
       optionsTpl = new EJS({
         url: 'templates/staff_page/positions-options.ejs'
@@ -91,7 +91,7 @@
       this.$el.find('#inputPosition').html(optionsTpl.render({
         position: positions
       }));
-      if (this.isEdit) {
+      if (this.isEdit && !isChanged) {
         this._setPositionFields();
       }
       return this.fillSkill();
